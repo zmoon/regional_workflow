@@ -440,34 +440,22 @@ file (template_xml_fp):
   'run_task_run_nexus': ${RUN_TASK_RUN_NEXUS}
   'run_task_run_post_stat': ${RUN_TASK_RUN_POST_STAT}
 
-  'run_chem_anl_tn': ${RUN_CHEM_ANL_TN}
-  'run_gsi_anl_tn': ${RUN_GSI_ANL_TN}
-  'run_task_chem_anl': ${RUN_TASK_CHEM_ANL}
-  'run_task_dacyc': ${RUN_TASK_DACYC}
-  'use_chem_anl': ${USE_CHEM_ANL}
-
   'nnodes_add_aqm_ics': ${NNODES_ADD_AQM_ICS}
   'nnodes_add_aqm_lbcs': ${NNODES_ADD_AQM_LBCS}
   'nnodes_run_nexus': ${NNODES_RUN_NEXUS}
   'nnodes_run_post_stat': ${NNODES_RUN_POST_STAT}
-  'nnodes_run_gsi_anl': ${NNODES_RUN_GSI_ANL}
   'ppn_add_aqm_ics': ${PPN_ADD_AQM_ICS}
   'ppn_add_aqm_lbcs': ${PPN_ADD_AQM_LBCS}
   'ppn_run_nexus': ${PPN_RUN_NEXUS}
   'ppn_run_post_stat': ${PPN_RUN_POST_STAT}
-  'ppn_run_gsi_anl': ${PPN_RUN_GSI_ANL}
   'wtime_add_aqm_ics': ${WTIME_ADD_AQM_ICS}
   'wtime_add_aqm_lbcs': ${WTIME_ADD_AQM_LBCS}
   'wtime_run_nexus': ${WTIME_RUN_NEXUS}
   'wtime_run_post_stat': ${WTIME_RUN_POST_STAT}
-  'wtime_run_chem_anl': ${WTIME_RUN_CHEM_ANL}
-  'wtime_run_gsi_anl' : ${WTIME_RUN_GSI_ANL}
   'maxtries_add_aqm_ics': ${MAXTRIES_ADD_AQM_ICS}
   'maxtries_add_aqm_lbcs': ${MAXTRIES_ADD_AQM_LBCS}
   'maxtries_run_nexus': ${MAXTRIES_RUN_NEXUS}
   'maxtries_run_post_stat': ${MAXTRIES_RUN_POST_STAT}
-  'maxtries_run_chem_anl': ${MAXTRIES_RUN_CHEM_ANL}
-  'maxtries_run_gsi_anl': ${MAXTRIES_RUN_GSI_ANL}
 #
 ##### RRFS-CMAQ ########## end   #####
 #
@@ -1082,9 +1070,6 @@ fi
 { restore_shell_opts; } > /dev/null 2>&1
 
 }
-
-
-
 
 #
 #-----------------------------------------------------------------------
