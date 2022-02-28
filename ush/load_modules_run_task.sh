@@ -145,7 +145,6 @@ Sourcing platform- and compiler-specific environment file (env_fp) for the
 workflow task specified by task_name failed:
   task_name = \"${task_name}\"
   env_fp = \"${env_fp}\""
-fi
 #
 #-----------------------------------------------------------------------
 #
