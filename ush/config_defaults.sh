@@ -1270,8 +1270,6 @@ ADD_AQM_ICS_TN="add_aqm_ics"
 ADD_AQM_LBCS_TN="add_aqm_lbcs"
 RUN_NEXUS_TN="run_nexus"
 RUN_POST_STAT_TN="run_post_stat"
-RUN_CHEM_ANL_TN="run_chem_anl"
-RUN_GSI_ANL_TN="run_gsi_anl"
 #
 #-----------------------------------------------------------------------
 #
@@ -1349,14 +1347,6 @@ RUN_GSI_ANL_TN="run_gsi_anl"
 # Same as RUN_TASK_MAKE_GRID but for the air quality emission generation
 # task.
 #
-# RUN_TASK_DACYC:
-# GSI analysis for AOD PM2.5
-# Set to "TRUE" to generate PM2.5/AOD DA tasks
-#
-# RUN_TASK_CHEM_ANL:
-# Set to "TRUE" or "FALSE" to enable/disable chemical data assimilation step
-# Set to "TRUE" to generate NO2 tasks
-#
 #-----------------------------------------------------------------------
 #
 RUN_TASK_MAKE_GRID="TRUE"
@@ -1387,8 +1377,6 @@ RUN_TASK_ADD_AQM_ICS="FALSE"
 RUN_TASK_ADD_AQM_LBCS="FALSE"
 RUN_TASK_RUN_NEXUS="FALSE"
 RUN_TASK_RUN_POST_STAT="FALSE"
-RUN_TASK_DACYC="FALSE"
-RUN_TASK_CHEM_ANL="FALSE"
 #
 #-----------------------------------------------------------------------
 #
@@ -1624,7 +1612,6 @@ NNODES_ADD_AQM_ICS="1"
 NNODES_ADD_AQM_LBCS="1"
 NNODES_RUN_NEXUS="1"
 NNODES_RUN_POST_STAT="1"
-NNODES_RUN_GSI_ANL="4"
 #
 # Number of MPI processes per node.
 #
@@ -1652,7 +1639,6 @@ PPN_ADD_AQM_ICS="1"
 PPN_ADD_AQM_LBCS="24"
 PPN_RUN_NEXUS="24"
 PPN_RUN_POST_STAT="1"
-PPN_RUN_GSI_ANL="24"
 #
 # Walltimes.
 #
@@ -1680,8 +1666,6 @@ WTIME_ADD_AQM_ICS="00:30:00"
 WTIME_ADD_AQM_LBCS="00:30:00"
 WTIME_RUN_NEXUS="00:30:00"
 WTIME_RUN_POST_STAT="00:10:00"
-WTIME_RUN_CHEM_ANL="03:00:00"
-WTIME_RUN_GSI_ANL="00:50:00"
 #
 # Maximum number of attempts.
 #
@@ -1727,8 +1711,6 @@ MAXTRIES_ADD_AQM_ICS="3"
 MAXTRIES_ADD_AQM_LBCS="3"
 MAXTRIES_RUN_NEXUS="4"
 MAXTRIES_RUN_POST_STAT="3"
-MAXTRIES_RUN_CHEM_ANL="3"
-MAXTRIES_RUN_GSI_ANL="3"
 #
 #-----------------------------------------------------------------------
 #
@@ -2022,20 +2004,6 @@ OMP_STACKSIZE_RUN_POST="1024m"
 # NEXUS_GRID_FN:
 # File name of the input grid_spec file of nexus
 #
-# OPT_DA_RRFS_CMAQ:
-# Flag to turn on/off DA runs of RRFS-CMAQ
-# Set to "TRUE" for DA or "FALSE" for non-DA
-#
-# USE_CHEM_ANL:
-# Set to "TRUE" or "FALSE" to enable using updated chem analysis restart file
-#
-# DA_OBS_DIR:
-# Path to IODA formatted observation data for assimilation
-# This would be BUFR for GSI or IODA-formatted files for JEDI
-#
-# ENKF_FCST:
-# Path to ensemble members for hybrid GSI
-#
 #-----------------------------------------------------------------------
 #
 USER_AQM_RC_DIR=""
@@ -2061,20 +2029,4 @@ NEXUS_GRID_FN="grid_spec_GSD_HRRR_25km.nc"
 
 RESTART_WORKFLOW="FALSE"
 RESTART_CYCLE_DIR="/path/to/restart/cycle/dir"
-
-OPT_DA_RRFS_CMAQ="FALSE"
-USE_CHEM_ANL="TRUE"
-DA_OBS_DIR=""
-
-FIXgsi=""
-FIXcrtm=""
-AIRCRAFT_REJECT=""
-SFCOBS_USELIST=""
-OBSPATH=""
-AODPATH=""
-PMPATH=""
-AOD_LUTS="1"
-
-DA_CYCLE_INTERV="6"
-ENKF_FCST=""
 
