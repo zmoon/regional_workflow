@@ -335,7 +335,11 @@ SR_WX_APP_TOP_DIR=${scrfunc_dir%/*/*}
 #
 #-----------------------------------------------------------------------
 #
-mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/components/COMMON/Externals.cfg" )
+if [ "${FCST_MODEL}" = "ufs-weather-model" ]; then
+  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/Externals.cfg" )
+elif [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
+  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/AQM/Externals.cfg" )
+fi
 property_name="local_path"
 #
 # Get the path to the workflow scripts
@@ -391,12 +395,7 @@ fi
 #
 # Get the base directory of the forecast model code.
 #
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
-  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/components/RRFS-CMAQ/Externals.cfg" )
-else
-  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/components/RRFS/Externals.cfg" )
-fi
-external_name="${FCST_MODEL}"
+external_name="ufs-weather-model"
 UFS_WTHR_MDL_DIR=$( \
 get_manage_externals_config_property \
 "${mng_extrns_cfg_fn}" "${external_name}" "${property_name}" ) || \
@@ -413,27 +412,24 @@ Please clone the external repository containing the code in this directory,
 build the executable, and then rerun the workflow."
 fi
 
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
-  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/components/RRFS-CMAQ/Externals.cfg" )
 #
 # Get the base directory of the NEXUS code if required
 #
-  external_name="arl_nexus"
-  ARL_NEXUS_DIR=$( \
+external_name="arl_nexus"
+ARL_NEXUS_DIR=$( \
 get_manage_externals_config_property \
 "${mng_extrns_cfg_fn}" "${external_name}" "${property_name}" ) || \
 print_err_msg_exit "\
 Call to function get_manage_externals_config_property failed."
 
-  ARL_NEXUS_DIR="${SR_WX_APP_TOP_DIR}/${ARL_NEXUS_DIR}"
-  if [ ! -d "${ARL_NEXUS_DIR}" ]; then
-    print_err_msg_exit "\
+ARL_NEXUS_DIR="${SR_WX_APP_TOP_DIR}/${ARL_NEXUS_DIR}"
+if [ ! -d "${ARL_NEXUS_DIR}" ]; then
+  print_err_msg_exit "\
 The base directory in which the arl_nexus source code should be located
 (ARL_NEXUS_DIR) does not exist:
   ARL_NEXUS_DIR = \"${ARL_NEXUS_DIR}\"
 Please clone the external repository containing the code in this directory,
 build the executable, and then rerun the workflow."
-  fi
 fi
 
 #
