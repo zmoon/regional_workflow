@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 function file_location() {
 
   # Return the default location of external model files on disk
@@ -26,7 +24,6 @@ function file_location() {
   echo ${location:-}
 }
 
-
 EXTRN_MDL_SYSBASEDIR_ICS=${EXTRN_MDL_SYSBASEDIR_ICS:-$(file_location \
   ${EXTRN_MDL_NAME_ICS} \
   ${FV3GFS_FILE_FMT_ICS})}
@@ -34,8 +31,14 @@ EXTRN_MDL_SYSBASEDIR_LBCS=${EXTRN_MDL_SYSBASEDIR_LBCS:-$(file_location \
   ${EXTRN_MDL_NAME_LBCS} \
   ${FV3GFS_FILE_FMT_ICS})}
 
-# System Installations
-MODULE_INIT_PATH=${MODULE_INIT_PATH:-/apps/lmod/lmod/init/sh}
+# System scripts to source to initialize various commands within workflow
+# scripts (e.g. "module").
+if [ -z ${ENV_INIT_SCRIPTS_FPS:-""} ]; then
+  ENV_INIT_SCRIPTS_FPS=( "/etc/profile" )
+fi
+
+# Commands to run at the start of each workflow task.
+PRE_TASK_CMDS='{ ulimit -s unlimited; ulimit -a; }'
 
 # Architecture information
 WORKFLOW_MANAGER="rocoto"
@@ -64,13 +67,6 @@ AQM_LBCS_DIR=${AQM_LBCS_DIR:-"/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/LBCS/boundary_co
 AQM_GEFS_DIR=${AQM_GEFS_DIR:-"/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/GEFS_aerosol"}
 NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/scratch1/NCEPDEV/rstprod/nexus_emissions"}
 NEXUS_FIX_DIR=${NEXUS_FIX_DIR:-"/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/nexus/fix"}
-DA_OBS_DIR=${DA_OBS_DIR:-"/scratch1/NCEPDEV/da/Cory.R.Martin/Datasets/Observations/RRFS-CMAQ/"}
-FIXgsi=${FIXgsi:-"/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/GSI/fix"}
-FIXcrtm=${FIXcrtm:-"/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/CRTM/fix"}
-AIRCRAFT_REJECT=${AIRCRAFT_REJECT:-"/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/GSI/fix"}
-SFCOBS_USELIST=${SFCOBS_USELIST:-"/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/GSI/fix"}
-AODPATH=${AODPATH:-""}
-PMPATH=${PMPATH:-""}
 
 # Run commands
 RUN_CMD_SERIAL="time"
@@ -92,6 +88,3 @@ TEST_COMINgfs=/scratch2/NCEPDEV/fv3-cam/noscrub/UFS_SRW_App/COMGFS
 TEST_EXTRN_MDL_SOURCE_BASEDIR=/scratch2/BMC/det/Gerard.Ketefian/UFS_CAM/staged_extrn_mdl_files
 TEST_ALT_EXTRN_MDL_SYSBASEDIR_ICS=/scratch2/BMC/det/UFS_SRW_app/dummy_FV3GFS_sys_dir
 TEST_ALT_EXTRN_MDL_SYSBASEDIR_LBCS=/scratch2/BMC/det/UFS_SRW_app/dummy_FV3GFS_sys_dir
-
-ulimit -s unlimited
-ulimit -a
