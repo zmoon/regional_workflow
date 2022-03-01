@@ -491,9 +491,7 @@ fi
 
 if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
   if [ -z "$AQM_CONFIG_DIR" -o -z "$AQM_BIO_DIR" -o -z "$AQM_FIRE_DIR" -o -z "$AQM_LBCS_DIR" -o \ 
-       -z "$AQM_GEFS_DIR" -o -z "$NEXUS_INPUT_DIR" -o -z "$NEXUS_FIX_DIR" -o -z "DA_OBS_DIR" -o \
-       -z "$FIXgsi" -o -z "$FIXcrtm" -o -z "$AIRCRAFT_REJECT" -o -z "$SFCOBS_USELIST" -o \
-       -z "$AODPATH" -o -z "PMPATH" ]; then
+       -z "$AQM_GEFS_DIR" -o -z "$NEXUS_INPUT_DIR" -o -z "$NEXUS_FIX_DIR" ]; then
       print_err_msg_exit "\
 One or more fix file directories have not been specified for this machine:
     MACHINE = \"$MACHINE\"
@@ -503,13 +501,6 @@ One or more fix file directories have not been specified for this machine:
     AQM_LBCS_DIR = \"${AQM_LBCS_DIR:-\"\"}
     NEXUS_INPUT_DIR = \"${NEXUS_INPUT_DIR:-\"\"}
     NEXUS_FIX_DIR = \"${NEXUS_FIX_DIR:-\"\"}
-    DA_OBS_DIR = \"${DA_OBS_DIR:-\"\"}
-    FIXgsi = \"${FIXgsi:-\"\"}
-    FIXcrtm = \"${FIXcrtm:-\"\"}
-    AIRCRAFT_REJECT = \"${AIRCRAFT_REJECT:-\"\"}
-    SFCOBS_USELIST = \"${SFCOBS_USELIST:-\"\"}
-    AODPATH = \"${AODPATH:-\"\"}
-    PMPATH = \"${PMPATH:-\"\"}
 You can specify the missing location(s) in ${machine_file}"
   fi
 fi
