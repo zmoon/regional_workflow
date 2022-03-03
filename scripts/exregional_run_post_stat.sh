@@ -81,6 +81,8 @@ print_input_args valid_args
 #
 #-----------------------------------------------------------------------
 #
+set -x
+
 yyyymmdd=${cdate:0:8}
 hh=${cdate:8:2}
 
@@ -101,19 +103,18 @@ for fhr in $(seq -f "%03g" 1 ${fcst_len_hrs}); do
   input_file="NATLEV_${basetime}f${fhr}00"
 
   if [ ${fhr} = "001" ]; then
-     wgrib2 ${postprd_dir}/${input_file} -match ":${field1}" -match ":${field3}" -GRIB ${output_file} || print_err_msg_exit "\
+    wgrib2 ${postprd_dir}/${input_file} -match ":${field1}" -match ":${field3}" -GRIB ${output_file} || print_err_msg_exit "\
 Call to run wgrib2 returned with nonzero exit code."
-     wgrib2 ${postprd_dir}/${input_file} -match ":${field2}" -match ":${field3}" -append -GRIB ${output_file} || print_err_msg_exit "\
+    wgrib2 ${postprd_dir}/${input_file} -match ":${field2}" -match ":${field3}" -append -GRIB ${output_file} || print_err_msg_exit "\
 Call to run wgrib2 append returned with nonzero exit code."
   else
-     wgrib2 ${postprd_dir}/${input_file} -match ":${field1}" -match ":${field3}" -append -GRIB ${output_file} || print_err_msg_exit "\
+    wgrib2 ${postprd_dir}/${input_file} -match ":${field1}" -match ":${field3}" -append -GRIB ${output_file} || print_err_msg_exit "\
 Call to run wgrib2 append returned with nonzero exit code."
-     wgrib2 ${postprd_dir}/${input_file} -match ":${field2}" -match ":${field3}" -append -GRIB ${output_file} || print_err_msg_exit "\
+    wgrib2 ${postprd_dir}/${input_file} -match ":${field2}" -match ":${field3}" -append -GRIB ${output_file} || print_err_msg_exit "\
 Call to run wgrib2 append returned with nonzero exit code."
   fi
 
 done
-
 #
 #-----------------------------------------------------------------------
 #
@@ -130,21 +131,7 @@ export OMP_STACKSIZE=2056M
 #
 #-----------------------------------------------------------------------
 #
-case "$MACHINE" in
-
-  "WCOSS_DELL_P3")
-    ulimit -s unlimited
-    RUN_CMD_UTILS="mpirun"
-    ;;
-
-  *)
-    source ${MACHINE_FILE}
-    ;;
-
-esac
-#
-
-
+source ${MACHINE_FILE}
 #
 #-----------------------------------------------------------------------
 #
@@ -152,7 +139,7 @@ esac
 #
 #-----------------------------------------------------------------------
 #
-cp_vrfy "${SR_WX_APP_TOP_DIR}/src/upp_post_stat/PM25-O3-stat" "${EXECDIR}/"
+cp_vrfy "${SR_WX_APP_TOP_DIR}/src/AQM-utils/upp_post_stat/PM25-O3-stat" "${EXECDIR}/"
 chmod +x ${EXECDIR}/PM25-O3-stat
 
 ${RUN_CMD_UTILS} ${EXECDIR}/PM25-O3-stat || \
