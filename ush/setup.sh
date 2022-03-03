@@ -488,22 +488,6 @@ One or more fix file directories have not been specified for this machine:
   FIXLAM_NCO_BASEDIR = \"${FIXLAM_NCO_BASEDIR:-\"\"}
 You can specify the missing location(s) in ${machine_file}"
 fi
-
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
-  if [ -z "$AQM_CONFIG_DIR" -o -z "$AQM_BIO_DIR" -o -z "$AQM_FIRE_DIR" -o -z "$AQM_LBCS_DIR" -o \ 
-       -z "$AQM_GEFS_DIR" -o -z "$NEXUS_INPUT_DIR" -o -z "$NEXUS_FIX_DIR" ]; then
-      print_err_msg_exit "\
-One or more fix file directories have not been specified for this machine:
-    MACHINE = \"$MACHINE\"
-    AQM_CONFIG_DIR = \"${AQM_CONFIG_DIR:-\"\"}
-    AQM_BIO_DIR = \"${AQM_BIO_DIR:-\"\"}
-    AQM_FIRE_DIR = \"${AQM_FIRE_DIR:-\"\"}
-    AQM_LBCS_DIR = \"${AQM_LBCS_DIR:-\"\"}
-    NEXUS_INPUT_DIR = \"${NEXUS_INPUT_DIR:-\"\"}
-    NEXUS_FIX_DIR = \"${NEXUS_FIX_DIR:-\"\"}
-You can specify the missing location(s) in ${machine_file}"
-  fi
-fi
 #
 #-----------------------------------------------------------------------
 #
