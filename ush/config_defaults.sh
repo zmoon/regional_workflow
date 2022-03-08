@@ -717,6 +717,45 @@ EXTRN_MDL_SOURCE_BASEDIR_LBCS="/base/dir/containing/user/staged/extrn/mdl/files/
 EXTRN_MDL_FILES_LBCS=( "LBCS_file1" "LBCS_file2" "..." )
 #
 #-----------------------------------------------------------------------
+# User-staged input namelist or configuration files
+#
+# USE_CUSTOM_NML_CONFIG_FILES:
+# Flag that deternmines whether or not the custom input namlelist or
+# configuration files are used.
+#
+# CUSTOM_NML_CONFIG_DIR:
+# Directory where to look for the custom namelist or configuration files
+#
+# CUSTOM_CHGRES_ICS_FN_BASE:
+# Custom namelist file name of chgres_cube for ICS excluding date
+# 
+# CUSTOM_CHGRES_LBCS_FN_BASE:
+# Custom namelist file name of chgres_cube for LBCS excluding date
+#
+# CUSTOM_MDL_CONFIG_FN_BASE:
+# Custom model_configuration file name excluding date
+#
+# CUSTOM_DIAG_TABLE_FN_BASE:
+# Custom diag_table file name excluding date
+#
+# CUSTOM_NEMS_CONFIG_FN:
+# Custom nems_cofiguration file name
+#
+# CUSTOM_AQM_RC_FN_BASE:
+# Custom aqm.rc file name excluding date and init_concentrations
+#
+#-----------------------------------------------------------------------
+#
+USE_CUSTOM_NML_CONFIG_FILES="FALSE"
+CUSTOM_NML_CONFIG_DIR=""
+CUSTOM_CHGRES_ICS_FN_BASE=""
+CUSTOM_CHGRES_LBCS_FN_BASE=""
+CUSTOM_MDL_CONFIG_FN_BASE=""
+CUSTOM_DIAG_TABLE_FN_BASE=""
+CUSTOM_NEMS_CONFIG_FN=""
+CUSTOM_AQM_RC_FN_BASE=""
+#
+#-----------------------------------------------------------------------
 #
 # Set NOMADS online data associated parameters. Definitions:
 #

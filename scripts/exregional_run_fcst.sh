@@ -484,18 +484,25 @@ if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
 #
 #-----------------------------------------------------------------------
 #
-  create_aqm_rc_file \
-  cdate="${cdate}" \
-  run_dir="${run_dir}" \
-  init_concentrations="${init_concentrations}" \
-  aqm_rc_in_fn="${aqm_rc_in_fn}" \
-  aqm_rc_in_fp="${aqm_rc_in_fp}" \
-  || print_err_msg_exit "\
+  if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
+    create_aqm_rc_file \
+    cdate="${cdate}" \
+    run_dir="${run_dir}" \
+    init_concentrations="${init_concentrations}" \
+    aqm_rc_in_fn="${aqm_rc_in_fn}" \
+    aqm_rc_in_fp="${aqm_rc_in_fp}" \
+    || print_err_msg_exit "\
 Call to function to create an aqm.rc file for the current
 cycle's (cdate) run directory (run_dir) failed:
   cdate = \"${cdate}\"
   run_dir = \"${run_dir}\""
 
+  else
+    CUSTOM_AQM_RC_FN="${CUSTOM_AQM_RC_FN_BASE}_${cdate}"
+    cp_vrfy "${CUSTOM_NML_CONFIG_DIR}/${CUSTOM_AQM_RC_FN}" "${run_dir}/aqm.rc" || \
+    print_err_msg_exit "\
+FATAL ERROR: the namelist file ${CUSTOM_AQM_RC_FN} was not copied."
+  fi
 fi
 #
 #-----------------------------------------------------------------------
@@ -519,7 +526,8 @@ fi
 #
 #-----------------------------------------------------------------------
 #
-create_model_configure_file \
+if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
+  create_model_configure_file \
   cdate="$cdate" \
   run_dir="${run_dir}" \
   sub_hourly_post="${SUB_HOURLY_POST}" \
@@ -529,6 +537,12 @@ Call to function to create a model configuration file for the current
 cycle's (cdate) run directory (run_dir) failed:
   cdate = \"${cdate}\"
   run_dir = \"${run_dir}\""
+else
+  CUSTOM_MDL_CONFIG_FN="${CUSTOM_MDL_CONFIG_FN_BASE}_${cdate}"
+  cp_vrfy "${CUSTOM_NML_CONFIG_DIR}/${CUSTOM_MDL_CONFIG_FN}" "${run_dir}/model_configure" || \
+  print_err_msg_exit "\
+FATAL ERROR: the namelist file ${CUSTOM_MDL_CONFIG_FN} was not copied."
+fi
 #
 #-----------------------------------------------------------------------
 #
@@ -537,11 +551,18 @@ cycle's (cdate) run directory (run_dir) failed:
 #
 #-----------------------------------------------------------------------
 #
-create_diag_table_file \
+if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
+  create_diag_table_file \
   run_dir="${run_dir}" || print_err_msg_exit "\
 Call to function to create a diag table file for the current cycle's 
 (cdate) run directory (run_dir) failed:
   run_dir = \"${run_dir}\""
+else
+  CUSTOM_DIAG_TABLE_FN="${CUSTOM_DIAG_TABLE_FN_BASE}_${cdate}"
+  cp_vrfy "${CUSTOM_NML_CONFIG_DIR}/${CUSTOM_DIAG_TABLE_FN}" "${run_dir}/diag_table" || \
+  print_err_msg_exit "\
+FATAL ERROR: the namelist file ${CUSTOM_DIAG_TABLE_FN} was not copied."
+fi
 #
 #-----------------------------------------------------------------------
 #
@@ -551,13 +572,19 @@ Call to function to create a diag table file for the current cycle's
 #-----------------------------------------------------------------------
 #
 if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
-  create_nems_configure_file \
-  run_dir="${run_dir}" \
-  dt_atmos="${DT_ATMOS}" || print_err_msg_exit "\
+  if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
+    create_nems_configure_file \
+    run_dir="${run_dir}" \
+    dt_atmos="${DT_ATMOS}" || print_err_msg_exit "\
 Call to function to create a NEMS configuration file for the current
 cycle's (cdate) run directory (run_dir) failed:
   cdate = \"${cdate}\"
   run_dir = \"${run_dir}\""
+  else
+    cp_vrfy "${CUSTOM_NML_CONFIG_DIR}/${CUSTOM_NEMS_CONFIG_FN}" "${run_dir}/nems.configure" || \
+    print_err_msg_exit "\
+FATAL ERROR: the namelist file ${CUSTOM_NEMS_CONFIG_FN} was not copied."
+  fi
 fi
 #
 #-----------------------------------------------------------------------

@@ -518,7 +518,8 @@ fi
 # It turns out that setting the variable to an empty string also works
 # to remove it from the namelist!  Which is better to use??
 #
-settings="
+if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
+  settings="
 'config': {
  'fix_dir_input_grid': ${FIXgsm},
  'fix_dir_target_grid': ${FIXLAM},
@@ -558,8 +559,8 @@ settings="
 #
 # Call the python script to create the namelist file.
 #
-nml_fn="fort.41"
-${USHDIR}/set_namelist.py -q -u "$settings" -o ${nml_fn} || \
+  nml_fn="fort.41"
+  ${USHDIR}/set_namelist.py -q -u "$settings" -o ${nml_fn} || \
   print_err_msg_exit "\
 Call to python script set_namelist.py to set the variables in the namelist
 file read in by the ${exec_fn} executable failed.  Parameters passed to
@@ -569,6 +570,14 @@ this script are:
   Namelist settings specified on command line (these have highest precedence):
     settings =
 $settings"
+
+else
+  yyyymmddhh="${EXTRN_MDL_CDATE:0:10}"
+  CUSTOM_CHGRES_ICS_FN="${CUSTOM_CHGRES_ICS_FN_BASE}_${yyyymmddhh}"
+  cp_vrfy "${CUSTOM_NML_CONFIG_DIR}/${CUSTOM_CHGRES_ICS_FN}" "fort.41" || \
+  print_err_msg_exit "\
+FATAL ERROR: the namelist file ${CUSTOM_CHGRES_ICS_FN} was not copied."
+fi
 #
 #-----------------------------------------------------------------------
 #

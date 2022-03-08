@@ -316,7 +316,7 @@ generation executable (exec_fp):
 # Call the python script to create the namelist file.
 #
   ${USHDIR}/set_namelist.py -q -u "$settings" -o ${rgnl_grid_nml_fp} || \
-    print_err_msg_exit "\
+  print_err_msg_exit "\
 Call to python script set_namelist.py to set the variables in the
 regional_esg_grid namelist file failed.  Parameters passed to this script
 are:

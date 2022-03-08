@@ -749,6 +749,24 @@ fi
 #
 #-----------------------------------------------------------------------
 #
+# If using custom namelist and configuration files, make sure that they exist.
+#
+#-----------------------------------------------------------------------
+#
+check_var_valid_value \
+  "USE_CUSTOM_NML_CONFIG_FILES" "valid_vals_USE_CUSTOM_NML_CONFIG_FILES"
+USE_CUSTOM_NML_CONFIG_FILES=$(boolify $USE_CUSTOM_NML_CONFIG_FILES)
+if [ ${USE_CUSTOM_NML_CONFIG_FILES} = "TRUE" ]; then
+  if [ ! -d "${CUSTOM_NML_CONFIG_DIR}" ]; then
+    print_err_msg_exit "
+The custom namelist configuration directory specified by CUSTOM_NML_CONFIG_FP 
+does not exist:
+  CUSTOM_NML_CONFIG_FP = \"${CUSTOM_NML_CONFIG_FP}\""
+  fi
+fi
+#
+#-----------------------------------------------------------------------
+#
 # If using a custom post configuration file, make sure that it exists.
 #
 #-----------------------------------------------------------------------

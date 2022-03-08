@@ -442,7 +442,8 @@ list file has not specified for this external LBC model (EXTRN_MDL_NAME_LBCS):
 # It turns out that setting the variable to an empty string also works
 # to remove it from the namelist!  Which is better to use??
 #
-settings="
+if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
+  settings="
 'config': {
  'fix_dir_input_grid': ${FIXgsm},
  'fix_dir_target_grid': ${FIXLAM},
@@ -482,6 +483,16 @@ this script are:
   Namelist settings specified on command line (these have highest precedence):
     settings =
 $settings"
+
+else
+  yyyymmddhh="${EXTRN_MDL_CDATE:0:10}"
+  fcst_hhh=$( echo ${fn_atm} | grep -o -P '(?<=atmf).*(?=\.)' )
+  echo "fcst_hhh=" ${fcst_hhh}
+  CUSTOM_CHGRES_LBCS_FN="${CUSTOM_CHGRES_LBCS_FN_BASE}_${yyyymmddhh}_h${fcst_hhh}"
+  cp_vrfy "${CUSTOM_NML_CONFIG_DIR}/${CUSTOM_CHGRES_LBCS_FN}" "fort.41" || \
+  print_err_msg_exit "\
+FATAL ERROR: the namelist file ${CUSTOM_CHGRES_LBCS_FN} was not copied."
+fi
 #
 #-----------------------------------------------------------------------
 #
