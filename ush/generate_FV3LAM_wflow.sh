@@ -98,26 +98,27 @@ else
 fi
 
 #Next, check for the non-standard python packages: jinja2, yaml, and f90nml
-pkgs=(jinja2 yaml f90nml)
-for pkg in ${pkgs[@]}  ; do
-  if ! /usr/bin/env python3 -c "import ${pkg}" &> /dev/null; then
-  print_info_msg "\
+#pkgs=(jinja2 yaml f90nml)
+#for pkg in ${pkgs[@]}  ; do
+#  if ! /usr/bin/env python3 -c "import ${pkg}" &> /dev/null; then
+#  print_info_msg "\
 
-  Error: python module ${pkg} not available"
-  pyerrors=$((pyerrors+1))
-  fi
-done
+#  Error: python module ${pkg} not available"
+#  pyerrors=$((pyerrors+1))
+#  fi
+#done
 
 #Finally, check if the number of errors is >0, and if so exit with helpful message
-if [ $pyerrors -gt 0 ];then
-  print_err_msg_exit "\
-  Errors found: check your python environment
+#if [ $pyerrors -gt 0 ];then
+#  print_err_msg_exit "\
+#  Errors found: check your python environment
   
-  Instructions for setting up python environments can be found on the web:
-  https://github.com/ufs-community/ufs-srweather-app/wiki/Getting-Started
+#  Instructions for setting up python environments can be found on the web:
+#  https://github.com/ufs-community/ufs-srweather-app/wiki/Getting-Started
 
-"
-fi
+#"
+#fi
+
 #
 #-----------------------------------------------------------------------
 #
@@ -477,6 +478,8 @@ file (template_xml_fp):
   'first_fv3_file_tstr': "000:"`$DATE_UTIL -d "${DATE_FIRST_CYCL} +${DT_ATMOS} seconds" +%M:%S`
 " # End of "settings" variable.
 
+if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
+
   print_info_msg "$VERBOSE" "
 The variable \"settings\" specifying values of the rococo XML variables
 has been set as follows:
@@ -503,6 +506,13 @@ are:
   Namelist settings specified on command line:
     settings =
 $settings"
+
+else
+  cp_vrfy "${CUSTOM_NML_CONFIG_DIR}/${CUSTOM_WFLOW_XML_FN}" "${WFLOW_XML_FP}" || \
+  print_err_msg_exit "\
+FATAL ERROR: the namelist file ${CUSTOM_CHGRES_ICS_FN} was not copied."
+fi
+
 
 fi
 #
@@ -914,6 +924,9 @@ done
 #
 # Add the closing curly bracket to "settings".
 #
+
+if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
+
 settings="$settings
   }"
 
@@ -973,6 +986,12 @@ if [ "${RUN_TASK_MAKE_GRID}" = "FALSE" ]; then
 Call to function to set surface climatology file names in the FV3 namelist
 file failed."
 
+fi
+
+else
+  cp_vrfy "${CUSTOM_NML_CONFIG_DIR}/${CUSTOM_FV3_NML_FN}" "${FV3_NML_FP}" || \
+  print_err_msg_exit "\
+FATAL ERROR: the namelist file ${CUSTOM_FV3_NML_FN} was not copied."
 fi
 #
 #-----------------------------------------------------------------------

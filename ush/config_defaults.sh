@@ -726,6 +726,12 @@ EXTRN_MDL_FILES_LBCS=( "LBCS_file1" "LBCS_file2" "..." )
 # CUSTOM_NML_CONFIG_DIR:
 # Directory where to look for the custom namelist or configuration files
 #
+# CUSTOM_WFLOW_XML_FN:
+# Custom xml file name of workflow
+#
+# CUSTOM_FV3_NML_FN:
+# Custom namelist file name of FV3
+#
 # CUSTOM_CHGRES_ICS_FN_BASE:
 # Custom namelist file name of chgres_cube for ICS excluding date
 # 
@@ -748,6 +754,8 @@ EXTRN_MDL_FILES_LBCS=( "LBCS_file1" "LBCS_file2" "..." )
 #
 USE_CUSTOM_NML_CONFIG_FILES="FALSE"
 CUSTOM_NML_CONFIG_DIR=""
+CUSTOM_WFLOW_XML_FN=""
+CUSTOM_FV3_NML_FN=""
 CUSTOM_CHGRES_ICS_FN_BASE=""
 CUSTOM_CHGRES_LBCS_FN_BASE=""
 CUSTOM_MDL_CONFIG_FN_BASE=""

@@ -518,6 +518,8 @@ else
                          symlink="${run_dir}/${FV3_NML_FN}" \
                          relative="${relative_link_flag}"
 fi
+
+if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
 #
 #-----------------------------------------------------------------------
 #
@@ -526,23 +528,24 @@ fi
 #
 #-----------------------------------------------------------------------
 #
-if [ "${USE_CUSTOM_NML_CONFIG_FILES}" = "FALSE" ]; then
-  create_model_configure_file \
-  cdate="$cdate" \
-  run_dir="${run_dir}" \
-  sub_hourly_post="${SUB_HOURLY_POST}" \
-  dt_subhourly_post_mnts="${DT_SUBHOURLY_POST_MNTS}" \
-  dt_atmos="${DT_ATMOS}" || print_err_msg_exit "\
+create_model_configure_file \
+cdate="$cdate" \
+run_dir="${run_dir}" \
+sub_hourly_post="${SUB_HOURLY_POST}" \
+dt_subhourly_post_mnts="${DT_SUBHOURLY_POST_MNTS}" \
+dt_atmos="${DT_ATMOS}" || print_err_msg_exit "\
 Call to function to create a model configuration file for the current
 cycle's (cdate) run directory (run_dir) failed:
   cdate = \"${cdate}\"
   run_dir = \"${run_dir}\""
+
 else
   CUSTOM_MDL_CONFIG_FN="${CUSTOM_MDL_CONFIG_FN_BASE}_${cdate}"
   cp_vrfy "${CUSTOM_NML_CONFIG_DIR}/${CUSTOM_MDL_CONFIG_FN}" "${run_dir}/model_configure" || \
   print_err_msg_exit "\
 FATAL ERROR: the namelist file ${CUSTOM_MDL_CONFIG_FN} was not copied."
 fi
+
 #
 #-----------------------------------------------------------------------
 #
