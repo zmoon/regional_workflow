@@ -125,7 +125,7 @@ to the temporary work directory (tmp_dir):
   tmp_dir = \"${tmp_dir}\"
 ===================================================================="
 else
-  if [ ${FCST_MODEL} = "fv3gfs_aqm" ]; then
+  if [ ${CPL_AQM} = "TRUE" ]; then
     post_config_fp="${UPP_DIR}/parm/postxconfig-NT-fv3lam_cmaq.txt"
   else
     post_config_fp="${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt"
@@ -225,7 +225,7 @@ post_mn=${post_time:10:2}
 #
 # Create the input namelist file to the post-processor executable.
 #
-if [ ${FCST_MODEL} = "fv3gfs_aqm" ]; then
+if [ ${CPL_AQM} = "TRUE" ]; then
   post_itag_add="aqfcmaq_on=.true.,"
 else
   post_itag_add=""

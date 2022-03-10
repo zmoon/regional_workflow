@@ -430,6 +430,17 @@ WFLOW_LAUNCH_LOG_FN="log.launch_FV3LAM_wflow"
 #
 #-----------------------------------------------------------------------
 #
+# Set coupling parameters
+#
+# CPL_AQM:
+# Coupling flag for air quality modeling
+#
+#-----------------------------------------------------------------------
+#
+CPL_AQM="FALSE"
+#
+#-----------------------------------------------------------------------
+#
 # Set forecast parameters.  Definitions:
 #
 # DATE_FIRST_CYCL:
@@ -473,8 +484,8 @@ FCST_LEN_HRS="24"
 # frequency with which the physics is called."
 #
 # CPL: parameter for coupling
-# (set automatically based on FCST_MODEL in ush/setup.sh)
-# (ufs-weather-model:FALSE, fv3gfs_aqm:TRUE)
+# (set automatically based on CPL_AQM in ush/setup.sh)
+# (CPL_AQM=TRUE => CPL:TRUE, CPL_AQM=FALSE => CPL:FALSE)
 #
 # RESTART_INTERVAL:
 # frequency of the output restart files (unit:hour). 

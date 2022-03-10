@@ -92,7 +92,7 @@ jjob_fp="$2"
 #-----------------------------------------------------------------------
 #
 machine=$(echo_lowercase $MACHINE)
-if [[ "${FCST_MODEL}" = "fv3gfs_aqm" && ( "${task_name}" = "${RUN_NEXUS_TN}" || \
+if [[ "${CPL_AQM}" = "TRUE" && ( "${task_name}" = "${RUN_NEXUS_TN}" || \
       "${task_name}" = "${ADD_AQM_LBCS_TN}" || "${task_name}" = "${RUN_FCST_TN}" ) ]]; then
   env_fp="${SR_WX_APP_TOP_DIR}/env/build_aqm_${machine}_intel"
 else

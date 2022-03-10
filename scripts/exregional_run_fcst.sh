@@ -19,7 +19,7 @@
 #
 . $USHDIR/create_model_configure_file.sh
 . $USHDIR/create_diag_table_file.sh
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
+if [ "${CPL_AQM}" = "TRUE" ]; then
   . $USHDIR/create_aqm_rc_file.sh
   . $USHDIR/create_nems_configure_file.sh
 fi
@@ -431,7 +431,7 @@ create_symlink_to_file target="${FIELD_TABLE_FP}" \
                        symlink="${run_dir}/${FIELD_TABLE_FN}" \
                        relative="${relative_link_flag}"
 
-if [ "${FCST_MODEL}" = "ufs-weather-model" ]; then
+if [ "${CPL_AQM}" = "FALSE" ]; then
   create_symlink_to_file target="${NEMS_CONFIG_FP}" \
                        symlink="${run_dir}/${NEMS_CONFIG_FN}" \
                        relative="${relative_link_flag}"
@@ -461,7 +461,7 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
   cp_vrfy ${UPP_DIR}/parm/params_grib2_tbl_new .
 fi
 
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
+if [ "${CPL_AQM}" = "TRUE" ]; then
   # aqm_rc_in_fn: input file name of cmaq
   aqm_rc_in_fn="aqm.rc"
   aqm_rc_in_fp="${run_dir}/${aqm_rc_in_fn}"
@@ -550,7 +550,7 @@ Call to function to create a diag table file for the current cycle's
 #
 #-----------------------------------------------------------------------
 #
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
+if [ "${CPL_AQM}" = "TRUE" ]; then
   create_nems_configure_file \
   run_dir="${run_dir}" \
   dt_atmos="${DT_ATMOS}" || print_err_msg_exit "\

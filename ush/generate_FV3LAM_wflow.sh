@@ -705,7 +705,7 @@ print_info_msg "$VERBOSE" "
 cp_vrfy "${FIELD_TABLE_TMPL_FP}" "${FIELD_TABLE_FP}"
 
 
-if [ "${FCST_MODEL}" = "ufs-weather-model" ]; then
+if [ "${CPL_AQM}" = "FALSE" ]; then
   print_info_msg "$VERBOSE" "
   Copying the template NEMS configuration file to the experiment directory..."
   cp_vrfy "${NEMS_CONFIG_TMPL_FP}" "${NEMS_CONFIG_FP}"
@@ -797,7 +797,7 @@ fi
 # to remove it from the namelist!  Which is better to use??
 #
 
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
+if [ "${CPL_AQM}" = "TRUE" ]; then
 settings="\
 'atmos_model_nml': {
     'blocksize': $BLOCKSIZE,

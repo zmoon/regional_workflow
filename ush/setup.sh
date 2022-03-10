@@ -213,6 +213,20 @@ check_var_valid_value "DOT_OR_USCORE" "valid_vals_DOT_OR_USCORE"
 check_var_valid_value "USE_FVCOM" "valid_vals_USE_FVCOM"
 USE_FVCOM=$(boolify $USE_FVCOM)
 
+check_var_valid_value "CPL_AQM" "valid_vals_CPL_AQM"
+CPL_AQM=$(boolify $CPL_AQM)
+#
+#-----------------------------------------------------------------------
+#
+# Set CPL to TRUE/FALSE based on CPL_AQM.
+#
+#-----------------------------------------------------------------------
+#
+if [ "${CPL_AQM}" = "TRUE" ]; then
+  CPL="TRUE"
+else
+  CPL="FALSE"
+fi
 #
 #-----------------------------------------------------------------------
 #
@@ -262,22 +276,6 @@ FVCOM_WCSTART=$(echo_lowercase $FVCOM_WCSTART)
 #-----------------------------------------------------------------------
 #
 check_var_valid_value "FCST_MODEL" "valid_vals_FCST_MODEL"
-#
-#-----------------------------------------------------------------------
-#
-# Set CPL to TRUE/FALSE based on FCST_MODEL.
-#
-#-----------------------------------------------------------------------
-#
-if [ "${FCST_MODEL}" = "ufs-weather-model" ]; then
-  CPL="FALSE"
-elif [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
-  CPL="TRUE"
-else
-  print_err_msg_exit "\ 
-The coupling flag CPL has not been specified for this value of FCST_MODEL:
-  FCST_MODEL = \"${FCST_MODEL}\""
-fi
 #
 #-----------------------------------------------------------------------
 #
@@ -335,9 +333,9 @@ SR_WX_APP_TOP_DIR=${scrfunc_dir%/*/*}
 #
 #-----------------------------------------------------------------------
 #
-if [ "${FCST_MODEL}" = "ufs-weather-model" ]; then
+if [ "${CPL_AQM}" = "FALSE" ]; then
   mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/Externals.cfg" )
-elif [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
+elif [ "${CPL_AQM}" = "TRUE" ]; then
   mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/AQM/Externals.cfg" )
 fi
 property_name="local_path"
@@ -1011,7 +1009,7 @@ fi
 #
 #-----------------------------------------------------------------------
 #
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
+if [ "${CPL_AQM}" = "TRUE" ]; then
   check_var_valid_value "RUN_TASK_ADD_AQM_ICS" "valid_vals_RUN_TASK_ADD_AQM_ICS"
   RUN_TASK_ADD_AQM_ICS=$(boolify $RUN_TASK_ADD_AQM_ICS)
   if [ ${#ALL_CDATES[@]} -gt 1 ]; then
@@ -1197,11 +1195,11 @@ fi
 dot_ccpp_phys_suite_or_null=".${CCPP_PHYS_SUITE}"
 
 DATA_TABLE_TMPL_FN="${DATA_TABLE_FN}"
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
-  DIAG_TABLE_TMPL_FN="${DIAG_TABLE_FN}.${FCST_MODEL}_${CCPP_PHYS_SUITE}"
-  FIELD_TABLE_TMPL_FN="${FIELD_TABLE_FN}.${FCST_MODEL}_${CCPP_PHYS_SUITE}"
-  MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_FN}.${FCST_MODEL}"
-  NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_FN}.${FCST_MODEL}"
+if [ "${CPL_AQM}" = "TRUE" ]; then
+  DIAG_TABLE_TMPL_FN="${DIAG_TABLE_FN}.fv3gfs_aqm_${CCPP_PHYS_SUITE}"
+  FIELD_TABLE_TMPL_FN="${FIELD_TABLE_FN}.fv3gfs_aqm_${CCPP_PHYS_SUITE}"
+  MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_FN}.fv3gfs_aqm"
+  NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_FN}.fv3gfs_aqm"
 else
   DIAG_TABLE_TMPL_FN="${DIAG_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
   FIELD_TABLE_TMPL_FN="${FIELD_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
@@ -1265,7 +1263,7 @@ FIELD_DICT_FN="fd_nems.yaml"
 FIELD_DICT_IN_UWM_FP="${UFS_WTHR_MDL_DIR}/tests/parm/${FIELD_DICT_FN}"
 FIELD_DICT_FP="${EXPTDIR}/${FIELD_DICT_FN}"
 #
-if [ ${FCST_MODEL} = "ufs-weather-model" ]; then
+if [ ${CPL_AQM} = "FALSE" ]; then
 
 if [ ! -f "${FIELD_DICT_IN_UWM_FP}" ]; then
   print_err_msg_exit "\
