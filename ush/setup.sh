@@ -333,11 +333,12 @@ SR_WX_APP_TOP_DIR=${scrfunc_dir%/*/*}
 #
 #-----------------------------------------------------------------------
 #
-if [ "${CPL_AQM}" = "FALSE" ]; then
-  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/Externals.cfg" )
-elif [ "${CPL_AQM}" = "TRUE" ]; then
+if [ "${CPL_AQM}" = "TRUE" ]; then
   mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/AQM/Externals.cfg" )
+else
+  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/Externals.cfg" )
 fi
+
 property_name="local_path"
 #
 # Get the path to the workflow scripts
@@ -1195,17 +1196,10 @@ fi
 dot_ccpp_phys_suite_or_null=".${CCPP_PHYS_SUITE}"
 
 DATA_TABLE_TMPL_FN="${DATA_TABLE_FN}"
-if [ "${CPL_AQM}" = "TRUE" ]; then
-  DIAG_TABLE_TMPL_FN="${DIAG_TABLE_FN}.fv3gfs_aqm_${CCPP_PHYS_SUITE}"
-  FIELD_TABLE_TMPL_FN="${FIELD_TABLE_FN}.fv3gfs_aqm_${CCPP_PHYS_SUITE}"
-  MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_FN}.fv3gfs_aqm"
-  NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_FN}.fv3gfs_aqm"
-else
-  DIAG_TABLE_TMPL_FN="${DIAG_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
-  FIELD_TABLE_TMPL_FN="${FIELD_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
-  MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_FN}"
-  NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_FN}"
-fi
+DIAG_TABLE_TMPL_FN="${DIAG_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
+FIELD_TABLE_TMPL_FN="${FIELD_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
+MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_FN}"
+NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_FN}"
 DATA_TABLE_TMPL_FP="${TEMPLATE_DIR}/${DATA_TABLE_TMPL_FN}"
 DIAG_TABLE_TMPL_FP="${TEMPLATE_DIR}/${DIAG_TABLE_TMPL_FN}"
 FIELD_TABLE_TMPL_FP="${TEMPLATE_DIR}/${FIELD_TABLE_TMPL_FN}"
@@ -1263,15 +1257,11 @@ FIELD_DICT_FN="fd_nems.yaml"
 FIELD_DICT_IN_UWM_FP="${UFS_WTHR_MDL_DIR}/tests/parm/${FIELD_DICT_FN}"
 FIELD_DICT_FP="${EXPTDIR}/${FIELD_DICT_FN}"
 #
-if [ ${CPL_AQM} = "FALSE" ]; then
-
 if [ ! -f "${FIELD_DICT_IN_UWM_FP}" ]; then
   print_err_msg_exit "\
 The field dictionary file (FIELD_DICT_IN_UWM_FP) does not exist
 in the local clone of the ufs-weather-model:
   FIELD_DICT_IN_UWM_FP = \"${FIELD_DICT_IN_UWM_FP}\""
-fi
-
 fi
 #
 #-----------------------------------------------------------------------

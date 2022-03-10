@@ -19,9 +19,9 @@
 #
 . $USHDIR/create_model_configure_file.sh
 . $USHDIR/create_diag_table_file.sh
+. $USHDIR/create_nems_configure_file.sh
 if [ "${CPL_AQM}" = "TRUE" ]; then
   . $USHDIR/create_aqm_rc_file.sh
-  . $USHDIR/create_nems_configure_file.sh
 fi
 #
 #-----------------------------------------------------------------------
@@ -431,15 +431,9 @@ create_symlink_to_file target="${FIELD_TABLE_FP}" \
                        symlink="${run_dir}/${FIELD_TABLE_FN}" \
                        relative="${relative_link_flag}"
 
-if [ "${CPL_AQM}" = "FALSE" ]; then
-  create_symlink_to_file target="${NEMS_CONFIG_FP}" \
-                       symlink="${run_dir}/${NEMS_CONFIG_FN}" \
-                       relative="${relative_link_flag}"
-
-  create_symlink_to_file target="${FIELD_DICT_FP}" \
+create_symlink_to_file target="${FIELD_DICT_FP}" \
                        symlink="${run_dir}/${FIELD_DICT_FN}" \
                        relative="${relative_link_flag}"
-fi
 
 if [ ${WRITE_DOPOST} = "TRUE" ]; then
   cp_vrfy ${UPP_DIR}/parm/nam_micro_lookup.dat ./eta_micro_lookup.dat
@@ -546,19 +540,17 @@ Call to function to create a diag table file for the current cycle's
 #-----------------------------------------------------------------------
 #
 # Call the function that creates the NEMS configuration file within each
-# cycle directory for RRFS-CMAQ.
+# cycle directory.
 #
 #-----------------------------------------------------------------------
 #
-if [ "${CPL_AQM}" = "TRUE" ]; then
-  create_nems_configure_file \
+create_nems_configure_file \
   run_dir="${run_dir}" \
   dt_atmos="${DT_ATMOS}" || print_err_msg_exit "\
 Call to function to create a NEMS configuration file for the current
 cycle's (cdate) run directory (run_dir) failed:
   cdate = \"${cdate}\"
   run_dir = \"${run_dir}\""
-fi
 #
 #-----------------------------------------------------------------------
 #

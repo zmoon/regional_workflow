@@ -91,6 +91,7 @@ run directory (run_dir):
 #
   settings="\
   'dt_atmos': ${DT_ATMOS}"
+  'cpl_aqm': ${CPL_AQM}"
 
   print_info_msg $VERBOSE "
 The variable \"settings\" specifying values to be used in the \"${NEMS_CONFIG_FN}\"
