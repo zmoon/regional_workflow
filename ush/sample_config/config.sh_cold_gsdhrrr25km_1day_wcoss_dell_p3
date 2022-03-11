@@ -40,8 +40,8 @@ RUN_ADD_AQM_CHEM_LBCS="TRUE"
 RUN_ADD_AQM_GEFS_LBCS="TRUE"
 AQM_GEFS_CYC="00"
 
-FV3_NML_BASE_SUITE_FN="input.nml.fv3gfs_aqm"
-FV3_NML_YAML_CONFIG_FN="fv3gfs_aqm.input.yml"
+DIAG_TABLE_FN="diag_table_aqm"
+FIELD_TABLE_FN="field_table_aqm"
 
 #USER_AQM_RC_DIR="/gpfs/dell2/emc/modeling/save/Chan-Hoo.Jeon/rrfs_cmaq_pr/regional_workflow/ush/template"
 AQM_RC_FN="aqm.rc"

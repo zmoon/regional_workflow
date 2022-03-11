@@ -790,24 +790,6 @@ fi
 # It turns out that setting the variable to an empty string also works
 # to remove it from the namelist!  Which is better to use??
 #
-
-if [ "${CPL_AQM}" = "TRUE" ]; then
-settings="\
-'atmos_model_nml': {
-    'blocksize': $BLOCKSIZE,
-  }
-'fv_core_nml': {
-    'target_lon': ${LON_CTR},
-    'target_lat': ${LAT_CTR},
-    'stretch_fac': ${STRETCH_FAC},
-    'npx': $npx,
-    'npy': $npy,
-    'layout': [${LAYOUT_X}, ${LAYOUT_Y}],
-    'bc_update_interval': ${LBC_SPEC_INTVL_HRS},
-  }"
-
-else
-
 settings="\
 'atmos_model_nml': {
     'blocksize': $BLOCKSIZE,
@@ -837,6 +819,30 @@ settings="\
     'do_shum': ${DO_SHUM},
     'do_sppt': ${DO_SPPT},
     'do_skeb': ${DO_SKEB},
+"
+if [ "${CPL_AQM}" = "TRUE" ]; then
+  settings="$settings
+    'cplaqm': "TRUE",    
+    'cplocn2atm': "FALSE",
+    'fscav_aero': ["aacd:0.0", "acet:0.0", "acrolein:0.0", "acro_primary:0.0", "ald2:0.0", 
+"ald2_primary:0.0", "aldx:0.0", "benzene:0.0", "butadiene13:0.0", "cat1:0.0", 
+"cl2:0.0", "clno2:0.0", "co:0.0", "cres:0.0", "cron:0.0", 
+"ech4:0.0", "epox:0.0", "eth:0.0", "etha:0.0", "ethy:0.0", 
+"etoh:0.0", "facd:0.0", "fmcl:0.0", "form:0.0", "form_primary:0.0", 
+"gly:0.0", "glyd:0.0", "h2o2:0.0", "hcl:0.0", "hg:0.0", 
+"hgiigas:0.0", "hno3:0.0", "hocl:0.0", "hono:0.0", "hpld:0.0", 
+"intr:0.0", "iole:0.0", "isop:0.0", "ispd:0.0", "ispx:0.0", 
+"ket:0.0", "meoh:0.0", "mepx:0.0", "mgly:0.0", "n2o5:0.0", 
+"naph:0.0", "no:0.0", "no2:0.0", "no3:0.0", "ntr1:0.0", 
+"ntr2:0.0", "o3:0.0", "ole:0.0", "opan:0.0", "open:0.0", 
+"opo3:0.0", "pacd:0.0", "pan:0.0", "panx:0.0", "par:0.0", 
+"pcvoc:0.0", "pna:0.0", "prpa:0.0", "rooh:0.0", "sesq:0.0", 
+"so2:0.0", "soaalk:0.0", "sulf:0.0", "terp:0.0", "tol:0.0", 
+"tolu:0.0", "vivpo1:0.0", "vlvoo1:0.0", "vlvoo2:0.0", "vlvpo1:0.0", 
+"vsvoo1:0.0", "vsvoo2:0.0", "vsvoo3:0.0", "vsvpo1:0.0", "vsvpo2:0.0", 
+"vsvpo3:0.0", "xopn:0.0", "xylmn:0.0", '"*:0.2"' ],"
+fi
+settings="$settings
   }
 'nam_stochy': {
     'shum': ${SHUM_MAG},
@@ -854,8 +860,6 @@ settings="\
     'skeb_vdof': ${SKEB_VDOF},
     'use_zmtnblck': ${USE_ZMTNBLCK},
   }"
-
-fi
 #
 # Add to "settings" the values of those namelist variables that specify
 # the paths to fixed files in the FIXam directory.  As above, these namelist

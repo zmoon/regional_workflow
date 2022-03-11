@@ -1,7 +1,7 @@
 MACHINE="hera"
 ACCOUNT="naqfc"
 EXPT_BASEDIR="/scratch2/NCEPDEV/stmp3/$LOGNAME/expt_dirs"
-EXPT_SUBDIR="test_cmaq_conus13"
+EXPT_SUBDIR="uwm_aqm_conus13"
 
 PRINT_ESMF="FALSE"
 
@@ -36,13 +36,13 @@ RUN_ADD_AQM_CHEM_LBCS="TRUE"
 RUN_ADD_AQM_GEFS_LBCS="TRUE"
 AQM_GEFS_CYC="00"
 
-DIAG_TABLE_FN="diag_table_aqm"
-FIELD_TABLE_FN="field_table_aqm"
-
 DT_ATMOS="180"
 LAYOUT_X="16"
 LAYOUT_Y="10"
 BLOCKSIZE="32"
+
+DIAG_TABLE_FN="diag_table_aqm"
+FIELD_TABLE_FN="field_table_aqm"
 
 AQM_RC_FN="aqm.rc"
 

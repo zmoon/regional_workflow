@@ -49,8 +49,6 @@ function create_aqm_rc_file() {
 cdate \
 run_dir \
 init_concentrations \
-aqm_rc_in_fn \
-aqm_rc_in_fp \
   )
   process_args valid_args "$@"
 #
@@ -73,18 +71,23 @@ aqm_rc_in_fp \
   local yyyymmdd \
         aqm_rc_bio_file_fp \
         aqm_rc_fire_file_fp \
+        aqm_rc_fp \
         settings
 
 #-----------------------------------------------------------------------
 #
-# Create an aqm.rc file in the specified run directory.
+# Create the aqm.rc file in the specified run directory.
 #
 #-----------------------------------------------------------------------
 #
   print_info_msg "$VERBOSE" "
-Creating a model configuration file (\"${MODEL_CONFIG_FN}\") in the specified
-run directory (run_dir):
+Creating the aqm.rc file in the specified run directory (run_dir):
   run_dir = \"${run_dir}\""
+
+#
+# Set input file path
+# 
+  aqm_rc_fp="${run_dir}/aqm.rc"
 #
 # Extract from cdate the starting year, month, and day of the forecast.
 #
@@ -112,7 +115,7 @@ run directory (run_dir):
   'aqm_rc_fire_frequency': ${AQM_RC_FIRE_FREQUENCY}"
 
   print_info_msg $VERBOSE "
-The variable \"settings\" specifying values to be used in the \"${MODEL_CONFIG_FN}\"
+The variable \"settings\" specifying values to be used in the aqm.rc
 file has been set as follows:
 settings =
 $settings"
@@ -127,14 +130,14 @@ $settings"
   $USHDIR/fill_jinja_template.py -q \
                                  -u "${settings}" \
                                  -t ${AQM_RC_FP} \
-                                 -o ${aqm_rc_in_fp} || \
+                                 -o ${aqm_rc_fp} || \
   print_err_msg_exit "\
-Call to python script fill_jinja_template.py to create a \"${aqm_rc_in_fn}\"
-file from a jinja2 template failed.  Parameters passed to this script are:
+Call to python script fill_jinja_template.py to create the aqm.rc file
+from a jinja2 template failed.  Parameters passed to this script are:
   Full path to user-owned template aqm.rc file:
     AQM_RC_FP = \"${AQM_RC_FP}\"
   Full path to actual input aqm.rc file:
-    aqm_rc_in_fp = \"${aqm_rc_in_fp}\"
+    aqm_rc_fp = \"${aqm_rc_fp}\"
   Namelist settings specified on command line:
     settings =
 $settings"

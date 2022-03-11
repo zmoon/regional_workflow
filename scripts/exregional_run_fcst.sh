@@ -424,15 +424,15 @@ else
 fi
 
 create_symlink_to_file target="${DATA_TABLE_FP}" \
-                       symlink="${run_dir}/${DATA_TABLE_FN}" \
+                       symlink="${run_dir}/data_table" \
                        relative="${relative_link_flag}"
 
 create_symlink_to_file target="${FIELD_TABLE_FP}" \
-                       symlink="${run_dir}/${FIELD_TABLE_FN}" \
+                       symlink="${run_dir}/field_table" \
                        relative="${relative_link_flag}"
 
 create_symlink_to_file target="${FIELD_DICT_FP}" \
-                       symlink="${run_dir}/${FIELD_DICT_FN}" \
+                       symlink="${run_dir}/fd_nems.yaml" \
                        relative="${relative_link_flag}"
 
 if [ ${WRITE_DOPOST} = "TRUE" ]; then
@@ -456,9 +456,6 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
 fi
 
 if [ "${CPL_AQM}" = "TRUE" ]; then
-  # aqm_rc_in_fn: input file name of cmaq
-  aqm_rc_in_fn="aqm.rc"
-  aqm_rc_in_fp="${run_dir}/${aqm_rc_in_fn}"
 #
 #-----------------------------------------------------------------------
 #
@@ -482,8 +479,6 @@ if [ "${CPL_AQM}" = "TRUE" ]; then
   cdate="${cdate}" \
   run_dir="${run_dir}" \
   init_concentrations="${init_concentrations}" \
-  aqm_rc_in_fn="${aqm_rc_in_fn}" \
-  aqm_rc_in_fp="${aqm_rc_in_fp}" \
   || print_err_msg_exit "\
 Call to function to create an aqm.rc file for the current
 cycle's (cdate) run directory (run_dir) failed:
@@ -502,7 +497,7 @@ cycle's (cdate) run directory (run_dir) failed:
   run_dir = \"${run_dir}\""
 else
   create_symlink_to_file target="${FV3_NML_FP}" \
-                         symlink="${run_dir}/${FV3_NML_FN}" \
+                         symlink="${run_dir}/input.nml" \
                          relative="${relative_link_flag}"
 fi
 #
@@ -545,11 +540,9 @@ Call to function to create a diag table file for the current cycle's
 #-----------------------------------------------------------------------
 #
 create_nems_configure_file \
-  run_dir="${run_dir}" \
-  dt_atmos="${DT_ATMOS}" || print_err_msg_exit "\
+  run_dir="${run_dir}" || print_err_msg_exit "\
 Call to function to create a NEMS configuration file for the current
-cycle's (cdate) run directory (run_dir) failed:
-  cdate = \"${cdate}\"
+run directory (run_dir) failed:
   run_dir = \"${run_dir}\""
 #
 #-----------------------------------------------------------------------

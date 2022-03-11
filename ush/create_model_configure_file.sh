@@ -86,8 +86,7 @@ dt_atmos \
 #-----------------------------------------------------------------------
 #
   print_info_msg "$VERBOSE" "
-Creating a model configuration file (\"${MODEL_CONFIG_FN}\") in the specified
-run directory (run_dir):
+Creating the model_configuration file in the specified run directory (run_dir):
   run_dir = \"${run_dir}\""
 #
 # Extract from cdate the starting year, month, day, and hour of the forecast.
@@ -216,7 +215,7 @@ run directory (run_dir):
   'nsout': ${nsout}"
 
   print_info_msg $VERBOSE "
-The variable \"settings\" specifying values to be used in the \"${MODEL_CONFIG_FN}\"
+The variable \"settings\" specifying values to be used in the model_configuration
 file has been set as follows:
 #-----------------------------------------------------------------------
 settings =
@@ -224,12 +223,12 @@ $settings"
 #
 #-----------------------------------------------------------------------
 #
-# Call a python script to generate the experiment's actual MODEL_CONFIG_FN
+# Call a python script to generate the experiment's actual model_configuration
 # file from the template file.
 #
 #-----------------------------------------------------------------------
 #
-  model_config_fp="${run_dir}/${MODEL_CONFIG_FN}"
+  model_config_fp="${run_dir}/model_configure"
   $USHDIR/fill_jinja_template.py -q \
                                  -u "${settings}" \
                                  -t ${MODEL_CONFIG_TMPL_FP} \

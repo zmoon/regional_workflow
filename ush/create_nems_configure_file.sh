@@ -1,7 +1,7 @@
 #
 #-----------------------------------------------------------------------
 #
-# This file defines a function that creates a NEMS configuration file
+# This file defines a function that creates an aqm.rc file
 # in the specified run directory.
 #
 #-----------------------------------------------------------------------
@@ -15,7 +15,7 @@ function create_nems_configure_file() {
 #
 #-----------------------------------------------------------------------
 #
-  { save_shell_opts; set -u -x; } > /dev/null 2>&1
+  { save_shell_opts; set -u +x; } > /dev/null 2>&1
 #
 #-----------------------------------------------------------------------
 #
@@ -25,7 +25,7 @@ function create_nems_configure_file() {
 #
 #-----------------------------------------------------------------------
 #
-  local scrfunc_fp=$( readlink -f "${BASH_SOURCE[0]}" )
+  local scrfunc_fp=$( $READLINK -f "${BASH_SOURCE[0]}" )
   local scrfunc_fn=$( basename "${scrfunc_fp}" )
   local scrfunc_dir=$( dirname "${scrfunc_fp}" )
 #
@@ -47,7 +47,6 @@ function create_nems_configure_file() {
 #
   local valid_args=(
 run_dir \
-dt_atmos \
   )
   process_args valid_args "$@"
 #
@@ -67,58 +66,59 @@ dt_atmos \
 #
 #-----------------------------------------------------------------------
 #
-  local settings \
-        model_config_fp
-#
+  local nems_config_fp \
+        settings
+
 #-----------------------------------------------------------------------
 #
-# Create a NEMS configuration file in the specified run directory.
+# Create the NEMS configuration file in the specified run directory.
 #
 #-----------------------------------------------------------------------
 #
   print_info_msg "$VERBOSE" "
-Creating a NEMS configuration file (\"${NEMS_CONFIG_FN}\") in the specified
-run directory (run_dir):
+Creating the nems.configure file in the specified run directory (run_dir):
   run_dir = \"${run_dir}\""
+#
+# Set input file path
+# 
+  nems_config_fp="${run_dir}/nems.configure"
 #
 #-----------------------------------------------------------------------
 #
 # Create a multiline variable that consists of a yaml-compliant string
 # specifying the values that the jinja variables in the template 
-# nems_configure file should be set to.
+# file should be set to.
 #
 #-----------------------------------------------------------------------
 #
   settings="\
-  'dt_atmos': ${DT_ATMOS}"
+  'dt_atmos': ${DT_ATMOS}
   'cpl_aqm': ${CPL_AQM}"
 
   print_info_msg $VERBOSE "
-The variable \"settings\" specifying values to be used in the \"${NEMS_CONFIG_FN}\"
+The variable \"settings\" specifying values to be used in the nems.configure
 file has been set as follows:
-#-----------------------------------------------------------------------
 settings =
 $settings"
 #
 #-----------------------------------------------------------------------
 #
-# Call a python script to generate the experiment's actual MODEL_CONFIG_FN
-# file from the template file.
+# Call a python script to generate the experiment's actual aqm.rc file
+# from the template file.
 #
 #-----------------------------------------------------------------------
 #
-  nems_config_fp="${run_dir}/${NEMS_CONFIG_FN}"
   $USHDIR/fill_jinja_template.py -q \
                                  -u "${settings}" \
                                  -t ${NEMS_CONFIG_TMPL_FP} \
                                  -o ${nems_config_fp} || \
   print_err_msg_exit "\
-Call to python script fill_jinja_template.py to create a \"${NEMS_CONFIG_FN}\"
+Call to python script fill_jinja_template.py to create the nems.configure
 file from a jinja2 template failed.  Parameters passed to this script are:
   Full path to template file:
     NEMS_CONFIG_TMPL_FP = \"${NEMS_CONFIG_TMPL_FP}\"
   Full path to output file:
-    nems_config_fp = \"${nems_config_fp}\"
+   nems_config_fp = \"${nems_config_fp}\"
   Namelist settings specified on command line:
     settings =
 $settings"

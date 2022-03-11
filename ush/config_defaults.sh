@@ -484,8 +484,6 @@ FCST_LEN_HRS="24"
 # frequency with which the physics is called."
 #
 # CPL: parameter for coupling
-# (set automatically based on CPL_AQM in ush/setup.sh)
-# (CPL_AQM=TRUE => CPL:TRUE, CPL_AQM=FALSE => CPL:FALSE)
 #
 # RESTART_INTERVAL:
 # frequency of the output restart files (unit:hour). 
@@ -500,6 +498,7 @@ FCST_LEN_HRS="24"
 #-----------------------------------------------------------------------
 #
 DT_ATMOS=""
+CPL="FALSE"
 RESTART_INTERVAL="0"
 WRITE_DOPOST="FALSE"
 #
