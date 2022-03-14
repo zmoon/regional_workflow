@@ -86,7 +86,7 @@ dt_atmos \
 #-----------------------------------------------------------------------
 #
   print_info_msg "$VERBOSE" "
-Creating the model_configuration file in the specified run directory (run_dir):
+Creating the model_configure file in the specified run directory (run_dir):
   run_dir = \"${run_dir}\""
 #
 # Extract from cdate the starting year, month, day, and hour of the forecast.
@@ -215,7 +215,7 @@ Creating the model_configuration file in the specified run directory (run_dir):
   'nsout': ${nsout}"
 
   print_info_msg $VERBOSE "
-The variable \"settings\" specifying values to be used in the model_configuration
+The variable \"settings\" specifying values to be used in the model_configure
 file has been set as follows:
 #-----------------------------------------------------------------------
 settings =
@@ -223,7 +223,7 @@ $settings"
 #
 #-----------------------------------------------------------------------
 #
-# Call a python script to generate the experiment's actual model_configuration
+# Call a python script to generate the experiment's actual model_configure
 # file from the template file.
 #
 #-----------------------------------------------------------------------
@@ -234,7 +234,7 @@ $settings"
                                  -t ${MODEL_CONFIG_TMPL_FP} \
                                  -o ${model_config_fp} || \
   print_err_msg_exit "\
-Call to python script fill_jinja_template.py to create a \"${MODEL_CONFIG_FN}\"
+Call to python script fill_jinja_template.py to create the model_configure
 file from a jinja2 template failed.  Parameters passed to this script are:
   Full path to template rocoto XML file:
     MODEL_CONFIG_TMPL_FP = \"${MODEL_CONFIG_TMPL_FP}\"
