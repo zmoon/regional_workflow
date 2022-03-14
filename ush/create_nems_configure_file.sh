@@ -1,7 +1,7 @@
 #
 #-----------------------------------------------------------------------
 #
-# This file defines a function that creates an aqm.rc file
+# This file defines a function that creates a NEMS configuration file
 # in the specified run directory.
 #
 #-----------------------------------------------------------------------
@@ -15,7 +15,7 @@ function create_nems_configure_file() {
 #
 #-----------------------------------------------------------------------
 #
-  { save_shell_opts; set -u +x; } > /dev/null 2>&1
+  { save_shell_opts; set -u -x; } > /dev/null 2>&1
 #
 #-----------------------------------------------------------------------
 #
@@ -103,7 +103,7 @@ $settings"
 #
 #-----------------------------------------------------------------------
 #
-# Call a python script to generate the experiment's actual aqm.rc file
+# Call a python script to generate the experiment's actual nems.configure file
 # from the template file.
 #
 #-----------------------------------------------------------------------
