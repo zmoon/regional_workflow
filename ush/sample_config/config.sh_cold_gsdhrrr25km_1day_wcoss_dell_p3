@@ -1,7 +1,7 @@
 MACHINE="wcoss_dell_p3"
 ACCOUNT="CMAQ-T2O"
 EXPT_BASEDIR="/gpfs/dell1/ptmp/$USER/expt_dirs"
-EXPT_SUBDIR="test_cmaq_hrrr25"
+EXPT_SUBDIR="uwm_aqm_hrrr25"
 
 #QUEUE_DEFAULT="dev2"
 #QUEUE_HPSS="dev2_transfer"
@@ -21,7 +21,7 @@ PREDEF_GRID_NAME="GSD_HRRR_25km"
 GRID_GEN_METHOD="ESGgrid"
 HALO_BLEND="0"
 
-CCPP_PHYS_SUITE="FV3_GFS_2017_gfdlmp"
+CCPP_PHYS_SUITE="FV3_GFS_v15p2"
 FCST_LEN_HRS="6"
 LBC_SPEC_INTVL_HRS="6"
 
