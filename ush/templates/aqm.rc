@@ -21,6 +21,7 @@ init_concentrations: {{ init_concentrations | lower }}
 run_aerosol: true
 
 mp_tracer_map: gfdl
+dy_tracer_map_start: 9
 
 ctm_aod: true
 ctm_pmdiag: true
