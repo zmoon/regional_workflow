@@ -34,11 +34,14 @@ runSeq::
     ATM phase2
   @
 ::
+
 {% else %}
+
 EARTH_component_list: ATM
  ATM_model:            fv3
  runSeq::
    ATM
  ::
 logKindFlag:            ESMF_LOGKIND_MULTI_ON_ERROR
+
 {% endif %}
