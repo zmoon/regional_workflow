@@ -205,13 +205,8 @@ DO_SKEB=$(boolify $DO_SKEB)
 check_var_valid_value "DO_SPP" "valid_vals_DO_SPP"
 DO_SPP=$(boolify $DO_SPP)
 
-check_var_valid_value "SUB_HOURLY_POST" "valid_vals_SUB_HOURLY_POST"
-SUB_HOURLY_POST=$(boolify $SUB_HOURLY_POST)
-
-check_var_valid_value "DOT_OR_USCORE" "valid_vals_DOT_OR_USCORE"
-
-check_var_valid_value "USE_FVCOM" "valid_vals_USE_FVCOM"
-USE_FVCOM=$(boolify $USE_FVCOM)
+check_var_valid_value "DO_LSM_SPP" "valid_vals_DO_LSM_SPP"
+DO_LSM_SPP=$(boolify $DO_LSM_SPP)
 
 check_var_valid_value "CPL_AQM" "valid_vals_CPL_AQM"
 CPL_AQM=$(boolify $CPL_AQM)
