@@ -52,7 +52,6 @@ RESTART_INTERVAL="12"
 
 DIAG_TABLE_FN="diag_table_aqm"
 FIELD_TABLE_FN="field_table_aqm"
-FV3_NML_YAML_CONFIG_FN="AQM.input.yml"
 
 #USER_AQM_RC_DIR="/gpfs/dell2/emc/modeling/save/Chan-Hoo.Jeon/rrfs_cmaq_pr/regional_workflow/ush/template"
 AQM_RC_FN="aqm.rc"

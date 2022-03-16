@@ -799,6 +799,21 @@ settings="\
     'target_lon': ${LON_CTR},
     'target_lat': ${LAT_CTR},
     'nrows_blend': ${HALO_BLEND},
+"
+if [ "${CCPP_PHYS_SUITE}" = "FV3_GFS_2017_gfdl_mp" ] || \ 
+   [ "${CCPP_PHYS_SUITE}" = "FV3_GFS_2017_gfdlmp_regional" ] || \
+   [ "${CCPP_PHYS_SUITE}" = "FV3_GFS_v15p2" ] || \
+   [ "${CCPP_PHYS_SUITE}" = "FV3_GFS_v16" ]; then
+  if [ "${CPL_AQM}" = "TRUE" ]; then
+    settings="$settings
+      'dnats': 4,"
+  else
+    settings="$settings
+      'dnats': 1,"
+  fi
+fi
+settings="$settings
+
 #
 # Question:
 # For a ESGgrid type grid, what should stretch_fac be set to?  This depends
