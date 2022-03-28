@@ -92,12 +92,7 @@ jjob_fp="$2"
 #-----------------------------------------------------------------------
 #
 machine=$(echo_lowercase $MACHINE)
-if [[ "${CPL_AQM}" = "TRUE" && ( "${task_name}" = "${RUN_NEXUS_TN}" || \
-      "${task_name}" = "${ADD_AQM_LBCS_TN}" ) ]]; then
-  env_fp="${SR_WX_APP_TOP_DIR}/env/build_aqm_${machine}_intel"
-else
-  env_fp="${SR_WX_APP_TOP_DIR}/env/${BUILD_ENV_FN}"
-fi
+env_fp="${SR_WX_APP_TOP_DIR}/env/${BUILD_ENV_FN}"
 module use "${SR_WX_APP_TOP_DIR}/env"
 source "${env_fp}" || print_err_msg_exit "\
 Sourcing platform- and compiler-specific environment file (env_fp) for the
