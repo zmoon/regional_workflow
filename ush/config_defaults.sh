@@ -2040,6 +2040,9 @@ OMP_STACKSIZE_RUN_POST="1024m"
 # AQM_BIO_FILE:
 # File name of AQM BIO file
 #
+# AQM_CANOPY_FILE:
+# File name of AQM CANOPY file
+#
 # AQM_FIRE_DIR:
 # Path to the directory containing AQM fire files
 #
@@ -2084,6 +2087,7 @@ AQM_RC_FN="aqm.rc"
 AQM_CONFIG_DIR=""
 AQM_BIO_DIR=""
 AQM_BIO_FILE="BEIS_SARC401.ncf"
+AQM_CANOPY_FILE=""
 AQM_FIRE_DIR=""
 AQM_FIRE_FILE="GBBEPx_C401GRID.emissions_v003"
 AQM_FIRE_FILE_SUFFIX=".nc"
