@@ -29,7 +29,7 @@ ctm_pmdiag: true
 #
 #  Input emissions
 #
-emission_sources: anthro bio fire
+emission_sources: anthro bio fire canopy
 
 #
 #  Anthropogenic
@@ -235,6 +235,31 @@ bio_species::
     LAI_MBOW             1.00000  LAI_MBOW          1
     LAI_METHS            1.00000  LAI_METHS         1
     LAI_METHW            1.00000  LAI_METHW         1
+::
+
+#
+# Inline Canopy Effects
+#
+canopy_yn: true
+
+canopy_type: canopy
+
+canopy_format: netcdf
+
+canopy_file: {{ aqm_canopy_file }}
+
+canopy_frequency: static
+
+canopy_species::
+    FCH        1.00000   FCH      m
+    FRT        1.00000   FRT      1
+    CLU        1.00000   CLU      1
+    POPU       1.00000   POPU     10000_people/10km2
+    LAIE       1.00000   LAIE     1
+    C1R        1.00000   C1R      1
+    C2R        1.00000   C2R      1
+    C3R        1.00000   C3R      1
+    C4R        1.00000   C4R      1
 ::
 
 #
