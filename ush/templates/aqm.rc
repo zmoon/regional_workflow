@@ -246,7 +246,7 @@ canopy_type: canopy
 
 canopy_format: netcdf
 
-canopy_file: {{ aqm_canopy_file }}
+canopy_file: {{ aqm_rc_canopy_file_fp }}
 
 canopy_frequency: static
 

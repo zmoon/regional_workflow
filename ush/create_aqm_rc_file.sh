@@ -96,6 +96,7 @@ Creating the aqm.rc file in the specified run directory (run_dir):
 # Set parameters in the aqm.rc file.
 #
   aqm_rc_bio_file_fp="${AQM_BIO_DIR}/${AQM_BIO_FILE}"
+  aqm_rc_canopy_file_fp="${AQM_CANOPY_FILE}"
   aqm_rc_fire_file_fp="${AQM_FIRE_DIR}/${yyyymmdd}/${AQM_FIRE_FILE}_${yyyymmdd}${AQM_FIRE_FILE_SUFFIX}"
 #
 #-----------------------------------------------------------------------
@@ -110,6 +111,7 @@ Creating the aqm.rc file in the specified run directory (run_dir):
   'aqm_config_dir': ${AQM_CONFIG_DIR}
   'init_concentrations': ${init_concentrations}
   'aqm_rc_bio_file_fp': ${aqm_rc_bio_file_fp}
+  'aqm_rc_canopy_file_fp': ${AQM_CANOPY_FILE}
   'aqm_bio_dir': ${AQM_BIO_DIR}
   'aqm_rc_fire_file_fp': ${aqm_rc_fire_file_fp}
   'aqm_rc_fire_frequency': ${AQM_RC_FIRE_FREQUENCY}"
