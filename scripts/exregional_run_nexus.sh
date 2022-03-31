@@ -42,9 +42,7 @@ print_info_msg "
 Entering script:  \"${scrfunc_fn}\"
 In directory:     \"${scrfunc_dir}\"
 
-This is the ex-script for the task that generates initial condition 
-(IC), surface, and zeroth hour lateral boundary condition (LBC0) files 
-for FV3 (in NetCDF format).
+This is the ex-script for the task that runs NEXUS.
 ========================================================================"
 #
 #-----------------------------------------------------------------------
@@ -83,28 +81,21 @@ export OMP_NUM_THREADS=1
 #
 #-----------------------------------------------------------------------
 #
-case "$MACHINE" in
+source $USHDIR/source_machine_file.sh
+eval ${PRE_TASK_CMDS}
 
-  "WCOSS_DELL_P3")
-    ulimit -s unlimited
-    ulimit -a
-    APRUN="mpirun -n ${PPN_RUN_NEXUS}"
-    ;;
+nprocs=$(( NNODES_RUN_NEXUS*PPN_RUN_NEXUS ))
 
-  "HERA")
-    ulimit -s unlimited
-    ulimit -a
-    APRUN="srun -l"
-    ;;
+if [ -z "${RUN_CMD_NEXUS:-}" ] ; then
+  print_err_msg_exit "\
+  Run command was not set in machine file. \
+  Please set RUN_CMD_NEXUS for your platform"
+else
+  RUN_CMD_NEXUS=$(eval echo ${RUN_CMD_NEXUS})
+  print_info_msg "$VERBOSE" "
+  All executables will be submitted with command \'${RUN_CMD_NEXUS}\'."
+fi
 
-  *)
-    print_err_msg_exit "\
-Run command has not been specified for this machine:
-  MACHINE = \"$MACHINE\"
-  APRUN = \"$APRUN\""
-    ;;
-
-esac
 #
 #-----------------------------------------------------------------------
 #
@@ -199,10 +190,9 @@ fi
 #
 # Execute NEXUS
 #
-${APRUN} ${EXECDIR}/nexus -c NEXUS_Config.rc -r grid_spec.nc || \
+${RUN_CMD_NEXUS} ${EXECDIR}/nexus -c NEXUS_Config.rc -r grid_spec.nc || \
 print_err_msg_exit "\
-Call to execute nexus standalone for the FV3LAM failed
-"
+Call to execute nexus standalone for the FV3LAM failed."
 
 #
 # Print message indicating successful completion of script.

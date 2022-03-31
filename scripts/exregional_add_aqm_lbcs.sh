@@ -82,19 +82,21 @@ export OMP_STACKSIZE=${OMP_STACKSIZE_MAKE_LBCS}
 #
 #-----------------------------------------------------------------------
 #
-case "$MACHINE" in
+source $USHDIR/source_machine_file.sh
+eval ${PRE_TASK_CMDS}
 
-  "WCOSS_DELL_P3")
-    ulimit -s unlimited
-    ulimit -a
-    RUN_CMD_UTILS="mpirun"
-    ;;
+nprocs=$(( NNODES_ADD_AQM_LBCS*PPN_ADD_AQM_LBCS ))
 
-  *)
-    source ${MACHINE_FILE}
-    ;;
+if [ -z "${RUN_CMD_UTILS:-}" ] ; then
+  print_err_msg_exit "\
+  Run command was not set in machine file. \
+  Please set RUN_CMD_UTILS for your platform"
+else
+  RUN_CMD_UTILS=$(eval echo ${RUN_CMD_UTILS})
+  print_info_msg "$VERBOSE" "
+  All executables will be submitted with command \'${RUN_CMD_UTILS}\'."
+fi
 
-esac
 #
 #-----------------------------------------------------------------------
 #
