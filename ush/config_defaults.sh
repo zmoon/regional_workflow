@@ -2040,8 +2040,14 @@ OMP_STACKSIZE_RUN_POST="1024m"
 # AQM_BIO_FILE:
 # File name of AQM BIO file
 #
+# AQM_CANOPY_DIR:
+# Path to the directory containing AQM canopy files
+#
 # AQM_CANOPY_FILE:
 # File name of AQM CANOPY file
+#
+# AQM_CANOPY_FILE_SUFFIX:
+# Suffix and extension of AQM CANOPY file
 #
 # AQM_FIRE_DIR:
 # Path to the directory containing AQM fire files
