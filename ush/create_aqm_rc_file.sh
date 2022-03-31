@@ -94,10 +94,14 @@ Creating the aqm.rc file in the specified run directory (run_dir):
 #
   yyyymmdd=${cdate:0:8}
 #
+# Extract from cdate the starting month of the forecast.
+#
+  mm=${cdate:5:6}
+#
 # Set parameters in the aqm.rc file.
 #
   aqm_rc_bio_file_fp="${AQM_BIO_DIR}/${AQM_BIO_FILE}"
-  aqm_rc_canopy_file_fp="${AQM_CANOPY_FILE}"
+  aqm_rc_canopy_file_fp="${AQM_CANOPY_DIR}/${AQM_CANOPY_FILE}${mm}${AQM_CANOPY_FILE_SUFFIX}"
   aqm_rc_fire_file_fp="${AQM_FIRE_DIR}/${yyyymmdd}/${AQM_FIRE_FILE}_${yyyymmdd}${AQM_FIRE_FILE_SUFFIX}"
 #
 #-----------------------------------------------------------------------
