@@ -69,6 +69,7 @@ init_concentrations \
 #-----------------------------------------------------------------------
 #
   local yyyymmdd \
+        mm \
         aqm_rc_bio_file_fp \
         aqm_rc_canopy_file_fp \
         aqm_rc_fire_file_fp \
