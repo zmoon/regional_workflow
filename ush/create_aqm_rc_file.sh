@@ -97,7 +97,7 @@ Creating the aqm.rc file in the specified run directory (run_dir):
 #
 # Extract from cdate the starting month of the forecast.
 #
-  mm=${cdate:5:6}
+  mm=${cdate:4:2}
 #
 # Set parameters in the aqm.rc file.
 #
