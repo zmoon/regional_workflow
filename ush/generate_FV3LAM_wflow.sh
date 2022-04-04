@@ -863,6 +863,7 @@ if [ "${CPL_AQM}" = "TRUE" ]; then
 "vsvoo1:0.0", "vsvoo2:0.0", "vsvoo3:0.0", "vsvpo1:0.0", "vsvpo2:0.0", 
 "vsvpo3:0.0", "xopn:0.0", "xylmn:0.0", '"*:0.2"' ],"
 fi
+settings="$settings
   }"
 #
 # Add to "settings" the values of those namelist variables that specify
