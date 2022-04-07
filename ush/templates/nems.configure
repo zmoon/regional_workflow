@@ -2,6 +2,9 @@
 ####  NEMS Run-Time Configuration File  #####
 #############################################
 
+# ESMF #
+logKindFlag:            ESMF_LOGKIND_MULTI_ON_ERROR
+
 {% if cpl_aqm  %}
 # EARTH #
 EARTH_component_list: ATM AQM
@@ -42,6 +45,5 @@ EARTH_component_list: ATM
  runSeq::
    ATM
  ::
-logKindFlag:            ESMF_LOGKIND_MULTI_ON_ERROR
 
 {% endif %}
