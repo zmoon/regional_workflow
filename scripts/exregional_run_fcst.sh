@@ -424,15 +424,15 @@ else
 fi
 
 create_symlink_to_file target="${DATA_TABLE_FP}" \
-                       symlink="${run_dir}/data_table" \
+                       symlink="${run_dir}/${DATA_TABLE_FN}" \
                        relative="${relative_link_flag}"
 
 create_symlink_to_file target="${FIELD_TABLE_FP}" \
-                       symlink="${run_dir}/field_table" \
+                       symlink="${run_dir}/${FIELD_TABLE_FN}" \
                        relative="${relative_link_flag}"
 
 create_symlink_to_file target="${FIELD_DICT_FP}" \
-                       symlink="${run_dir}/fd_nems.yaml" \
+                       symlink="${run_dir}/${FIELD_DICT_FN}" \
                        relative="${relative_link_flag}"
 
 if [ ${WRITE_DOPOST} = "TRUE" ]; then
@@ -498,7 +498,7 @@ cycle's (cdate) run directory (run_dir) failed:
   run_dir = \"${run_dir}\""
 else
   create_symlink_to_file target="${FV3_NML_FP}" \
-                         symlink="${run_dir}/input.nml" \
+                         symlink="${run_dir}/${FV3_NML_FN}" \
                          relative="${relative_link_flag}"
 fi
 #
