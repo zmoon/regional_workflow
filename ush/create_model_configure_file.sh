@@ -75,7 +75,6 @@ dt_atmos \
         dd \
         hh \
         dot_quilting_dot \
-        dot_print_esmf_dot \
         settings \
         model_config_fp
 #
@@ -99,8 +98,6 @@ Creating the model_configure file in the specified run directory (run_dir):
 # Set parameters in the model configure file.
 #
   dot_quilting_dot="."$(echo_lowercase $QUILTING)"."
-  dot_print_esmf_dot="."$(echo_lowercase $PRINT_ESMF)"."
-  dot_cpl_dot="."$(echo_lowercase $CPL)"."
   dot_write_dopost="."$(echo_lowercase $WRITE_DOPOST)"."
 #
 #-----------------------------------------------------------------------
@@ -113,14 +110,12 @@ Creating the model_configure file in the specified run directory (run_dir):
 #
   settings="\
   'PE_MEMBER01': ${PE_MEMBER01}
-  'print_esmf': ${dot_print_esmf_dot}
   'start_year': $yyyy
   'start_month': $mm
   'start_day': $dd
   'start_hour': $hh
   'nhours_fcst': ${FCST_LEN_HRS}
   'dt_atmos': ${DT_ATMOS}
-  'cpl': ${dot_cpl_dot}
   'atmos_nthreads': ${OMP_NUM_THREADS_RUN_FCST}
   'restart_interval': ${RESTART_INTERVAL}
   'write_dopost': ${dot_write_dopost}

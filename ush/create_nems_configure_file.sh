@@ -93,6 +93,7 @@ Creating the nems.configure file in the specified run directory (run_dir):
 #
   settings="\
   'dt_atmos': ${DT_ATMOS}
+  'print_esmf': ${PRINT_ESMF}
   'cpl_aqm': ${CPL_AQM}"
 
   print_info_msg $VERBOSE "

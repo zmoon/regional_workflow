@@ -483,8 +483,6 @@ FCST_LEN_HRS="24"
 # which the top level routine in the dynamics is called as well as the 
 # frequency with which the physics is called."
 #
-# CPL: parameter for coupling
-#
 # RESTART_INTERVAL:
 # frequency of the output restart files (unit:hour). 
 # Default=0: restart files are produced at the end of a forecast run
@@ -498,7 +496,6 @@ FCST_LEN_HRS="24"
 #-----------------------------------------------------------------------
 #
 DT_ATMOS=""
-CPL="FALSE"
 RESTART_INTERVAL="0"
 WRITE_DOPOST="FALSE"
 #

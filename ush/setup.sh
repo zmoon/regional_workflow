@@ -2625,15 +2625,6 @@ var_defns_file_contents=${var_defns_file_contents}"\
 #
 #-----------------------------------------------------------------------
 #
-# Flag in the \"${MODEL_CONFIG_FN}\" file for coupling the ocean model to 
-# the weather model.
-#
-#-----------------------------------------------------------------------
-#
-CPL='${CPL}'
-#
-#-----------------------------------------------------------------------
-#
 # Name of the ozone parameterization.  The value this gets set to depends 
 # on the CCPP physics suite being used.
 #
