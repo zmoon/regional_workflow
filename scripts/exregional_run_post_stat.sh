@@ -139,7 +139,7 @@ source ${MACHINE_FILE}
 #
 #-----------------------------------------------------------------------
 #
-cp_vrfy "${SR_WX_APP_TOP_DIR}/src/AQM-utils/upp_post_stat/PM25-O3-stat" "${EXECDIR}/"
+cp_vrfy "${SR_WX_APP_TOP_DIR}/src/AQM-utils/src/upp_post_stat/PM25-O3-stat" "${EXECDIR}/"
 chmod +x ${EXECDIR}/PM25-O3-stat
 
 ${RUN_CMD_UTILS} ${EXECDIR}/PM25-O3-stat || \
