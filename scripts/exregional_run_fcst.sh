@@ -444,7 +444,11 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
   CUSTOM_POST_CONFIG_FP = \"${CUSTOM_POST_CONFIG_FP}\"
 ===================================================================="
   else
-    post_config_fp="${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt"
+    if [ ${CPL_AQM} = "TRUE" ]; then
+      post_config_fp="${UPP_DIR}/parm/postxconfig-NT-fv3lam_cmaq.txt"
+    else
+      post_config_fp="${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt"
+    fi
     print_info_msg "
 ====================================================================
   post_config_fp = \"${post_config_fp}\"
