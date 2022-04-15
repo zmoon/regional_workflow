@@ -12,6 +12,9 @@ valid_vals_PREDEF_GRID_NAME=( \
 "RRFS_CONUS_25km" \
 "RRFS_CONUS_13km" \
 "RRFS_CONUS_3km" \
+"RRFS_CONUScompact_25km" \
+"RRFS_CONUScompact_13km" \
+"RRFS_CONUScompact_3km" \
 "RRFS_SUBCONUS_3km" \
 "RRFS_AK_13km" \
 "RRFS_AK_3km" \
@@ -28,13 +31,11 @@ valid_vals_PREDEF_GRID_NAME=( \
 "GSD_HRRR_25km" \
 "RRFS_NA_13km" \
 "RRFS_NA_3km" \
+"SUBCONUS_Ind_3km" \
 )
 valid_vals_CCPP_PHYS_SUITE=( \
-"FV3_CPT_v0" \
 "FV3_GFS_2017_gfdlmp" \
 "FV3_GFS_2017_gfdlmp_regional" \
-"FV3_GSD_SAR" \
-"FV3_GSD_v0" \
 "FV3_GFS_v15p2" \
 "FV3_GFS_v15_thompson_mynn_lam3km" \
 "FV3_GFS_v16" \
@@ -73,6 +74,7 @@ valid_vals_USE_CRTM=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_SHUM=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_SPPT=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_SPP=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
+valid_vals_DO_LSM_SPP=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_SKEB=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_USE_ZMTNBLCK=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_USE_FVCOM=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")

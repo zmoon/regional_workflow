@@ -40,6 +40,11 @@ RUN_ADD_AQM_CHEM_LBCS="TRUE"
 RUN_ADD_AQM_GEFS_LBCS="TRUE"
 AQM_GEFS_CYC="00"
 
+DIAG_TABLE_TMPL_FN="diag_table_fv3gfs_aqm"
+FIELD_TABLE_TMPL_FN="field_table_fv3gfs_aqm"
+MODEL_CONFIG_TMPL_FN="model_configure.fv3gfs_aqm"
+NEMS_CONFIG_TMPL_FN="nems.configure.fv3gfs_aqm"
+
 FV3_NML_BASE_SUITE_FN="input.nml.fv3gfs_aqm"
 FV3_NML_YAML_CONFIG_FN="fv3gfs_aqm.input.yml"
 

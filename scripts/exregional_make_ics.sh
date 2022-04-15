@@ -111,7 +111,7 @@ fi
 #-----------------------------------------------------------------------
 #
 extrn_mdl_staging_dir="${CYCLE_DIR}/${EXTRN_MDL_NAME_ICS}/for_ICS"
-extrn_mdl_var_defns_fp="${extrn_mdl_staging_dir}/${EXTRN_MDL_ICS_VAR_DEFNS_FN}"
+extrn_mdl_var_defns_fp="${extrn_mdl_staging_dir}/${EXTRN_MDL_VAR_DEFNS_FN}"
 . ${extrn_mdl_var_defns_fp}
 #
 #-----------------------------------------------------------------------
@@ -138,12 +138,10 @@ case "${CCPP_PHYS_SUITE}" in
   "FV3_GFS_2017_gfdlmp" | \
   "FV3_GFS_2017_gfdlmp_regional" | \
   "FV3_GFS_v16" | \
-  "FV3_GFS_v15p2" | "FV3_CPT_v0" )
+  "FV3_GFS_v15p2" )
     varmap_file="GFSphys_var_map.txt"
     ;;
 #
-  "FV3_GSD_v0" | \
-  "FV3_GSD_SAR" | \
   "FV3_RRFS_v1alpha" | \
   "FV3_RRFS_v1beta" | \
   "FV3_GFS_v15_thompson_mynn_lam3km" | \
@@ -439,7 +437,7 @@ case "${EXTRN_MDL_NAME_ICS}" in
 #
   geogrid_file_input_grid="${FIXgsm}/geo_em.d01.nc_RAPX"
   vgtyp_from_climo=True
-  sotyp_from_climo=False
+  sotyp_from_climo=True
   vgfrc_from_climo=True
   minmax_vgfrc_from_climo=True
   lai_from_climo=True

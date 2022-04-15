@@ -9,7 +9,7 @@
 #
 . ${GLOBAL_VAR_DEFNS_FP}
 . $USHDIR/source_util_funcs.sh
-. $USHDIR/set_FV3nml_stoch_params.sh
+. $USHDIR/set_FV3nml_ens_stoch_seeds.sh
 #
 #-----------------------------------------------------------------------
 #
@@ -450,7 +450,20 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
   CUSTOM_POST_CONFIG_FP = \"${CUSTOM_POST_CONFIG_FP}\"
 ===================================================================="
   else
-    post_config_fp="${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt"
+    if [ ${FCST_MODEL} = "fv3gfs_aqm" ]; then
+# Combine two post flat files of LAM and CMAQ
+      cp_vrfy "${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt" .
+      cp_vrfy "${UPP_DIR}/parm/postxconfig-NT-fv3lam_cmaq.txt" .
+      cat "postxconfig-NT-fv3lam_cmaq.txt" | sed -e '1,/lossless/d' >> "postxconfig-NT-fv3lam.txt"
+# Update number of variables (lam+cmaq)
+      nvar_lam=$( sed -n '2p' postxconfig-NT-fv3lam.txt )
+      nvar_cmaq=$( sed -n '2p' postxconfig-NT-fv3lam_cmaq.txt )
+      nvar_new=$(( nvar_lam + nvar_cmaq ))
+      sed -i -e '2d' -e "3i$nvar_new" postxconfig-NT-fv3lam.txt
+      post_config_fp="postxconfig-NT-fv3lam.txt"
+    else
+      post_config_fp="${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt"
+    fi
     print_info_msg "
 ====================================================================
   post_config_fp = \"${post_config_fp}\"
@@ -500,8 +513,9 @@ fi
 #
 #-----------------------------------------------------------------------
 #
-if [ "${DO_ENSEMBLE}" = TRUE ]; then
-  set_FV3nml_stoch_params cdate="$cdate" || print_err_msg_exit "\
+if [ "${DO_ENSEMBLE}" = TRUE ] && ([ "${DO_SPP}" = TRUE ] || [ "${DO_SPPT}" = TRUE ] || [ "${DO_SHUM}" = TRUE ] \
+   [ "${DO_SKEB}" = TRUE ] || [ "${DO_LSM_SPP}" =  TRUE ]); then
+  set_FV3nml_ens_stoch_seeds cdate="$cdate" || print_err_msg_exit "\
 Call to function to create the ensemble-based namelist for the current
 cycle's (cdate) run directory (run_dir) failed:
   cdate = \"${cdate}\"

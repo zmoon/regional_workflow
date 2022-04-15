@@ -205,13 +205,8 @@ DO_SKEB=$(boolify $DO_SKEB)
 check_var_valid_value "DO_SPP" "valid_vals_DO_SPP"
 DO_SPP=$(boolify $DO_SPP)
 
-check_var_valid_value "SUB_HOURLY_POST" "valid_vals_SUB_HOURLY_POST"
-SUB_HOURLY_POST=$(boolify $SUB_HOURLY_POST)
-
-check_var_valid_value "DOT_OR_USCORE" "valid_vals_DOT_OR_USCORE"
-
-check_var_valid_value "USE_FVCOM" "valid_vals_USE_FVCOM"
-USE_FVCOM=$(boolify $USE_FVCOM)
+check_var_valid_value "DO_LSM_SPP" "valid_vals_DO_LSM_SPP"
+DO_LSM_SPP=$(boolify $DO_LSM_SPP)
 
 #
 #-----------------------------------------------------------------------
@@ -236,8 +231,9 @@ fi
 #
 #-----------------------------------------------------------------------
 #
-# If running with SPP, count the number of entries in SPP_VAR_LIST to
-# correctly set N_VAR_SPP, otherwise set it to zero. 
+# If running with SPP in MYNN PBL, MYNN SFC, GSL GWD, Thompson MP, or 
+# RRTMG, count the number of entries in SPP_VAR_LIST to correctly set 
+# N_VAR_SPP, otherwise set it to zero. 
 #
 #-----------------------------------------------------------------------
 #
@@ -248,7 +244,75 @@ fi
 #
 #-----------------------------------------------------------------------
 #
-# Make sure that FVCOM_WCSTART is set to lowercase "warm" or "cold"
+# If running with Noah or RUC-LSM SPP, count the number of entries in 
+# LSM_SPP_VAR_LIST to correctly set N_VAR_LNDP, otherwise set it to zero.
+# Also set LNDP_TYPE to 2 for LSM SPP, otherwise set it to zero.  Finally,
+# initialize an "FHCYC_LSM_SPP" variable to 0 and set it to 999 if LSM SPP
+# is turned on.  This requirement is necessary since LSM SPP cannot run with 
+# FHCYC=0 at the moment, but FHCYC cannot be set to anything less than the
+# length of the forecast either.  A bug fix will be submitted to 
+# ufs-weather-model soon, at which point, this requirement can be removed
+# from regional_workflow. 
+#
+#-----------------------------------------------------------------------
+#
+N_VAR_LNDP=0
+LNDP_TYPE=0
+FHCYC_LSM_SPP_OR_NOT=0
+if [ "${DO_LSM_SPP}" = "TRUE" ]; then
+  N_VAR_LNDP=${#LSM_SPP_VAR_LIST[@]}
+  LNDP_TYPE=2
+  FHCYC_LSM_SPP_OR_NOT=999
+fi
+#
+#-----------------------------------------------------------------------
+#
+# If running with SPP, confirm that each SPP-related namelist value 
+# contains the same number of entries as N_VAR_SPP (set above to be equal
+# to the number of entries in SPP_VAR_LIST).
+#
+#-----------------------------------------------------------------------
+#
+if [ "${DO_SPP}" = "TRUE" ]; then
+  if [ "${#SPP_MAG_LIST[@]}" != "${N_VAR_SPP}" ] || \
+     [ "${#SPP_LSCALE[@]}" != "${N_VAR_SPP}" ] || \
+     [ "${#SPP_TSCALE[@]}" != "${N_VAR_SPP}" ] || \
+     [ "${#SPP_SIGTOP1[@]}" != "${N_VAR_SPP}" ] || \
+     [ "${#SPP_SIGTOP2[@]}" != "${N_VAR_SPP}" ] || \
+     [ "${#SPP_STDDEV_CUTOFF[@]}" != "${N_VAR_SPP}" ] || \
+     [ "${#ISEED_SPP[@]}" != "${N_VAR_SPP}" ]; then
+  print_err_msg_exit "\
+All MYNN PBL, MYNN SFC, GSL GWD, Thompson MP, or RRTMG SPP-related namelist 
+variables set in ${CONFIG_FN} must be equal in number of entries to what is 
+found in SPP_VAR_LIST:
+  Number of entries in SPP_VAR_LIST = \"${#SPP_VAR_LIST[@]}\""
+  fi
+fi
+#
+#-----------------------------------------------------------------------
+#
+# If running with LSM SPP, confirm that each LSM SPP-related namelist
+# value contains the same number of entries as N_VAR_LNDP (set above to
+# be equal to the number of entries in LSM_SPP_VAR_LIST).
+#
+#-----------------------------------------------------------------------
+#
+if [ "${DO_LSM_SPP}" = "TRUE" ]; then
+  if [ "${#LSM_SPP_MAG_LIST[@]}" != "${N_VAR_LNDP}" ] || \
+     [ "${#LSM_SPP_LSCALE[@]}" != "${N_VAR_LNDP}" ] || \
+     [ "${#LSM_SPP_TSCALE[@]}" != "${N_VAR_LNDP}" ]; then
+  print_err_msg_exit "\
+All Noah or RUC-LSM SPP-related namelist variables (except ISEED_LSM_SPP) 
+set in ${CONFIG_FN} must be equal in number of entries to what is found in 
+SPP_VAR_LIST:
+  Number of entries in SPP_VAR_LIST = \"${#LSM_SPP_VAR_LIST[@]}\""
+  fi
+fi
+#
+#-----------------------------------------------------------------------
+#
+check_var_valid_value "SUB_HOURLY_POST" "valid_vals_SUB_HOURLY_POST"
+SUB_HOURLY_POST=$(boolify $SUB_HOURLY_POST)
 #
 #-----------------------------------------------------------------------
 #
@@ -1196,18 +1260,23 @@ fi
 #
 dot_ccpp_phys_suite_or_null=".${CCPP_PHYS_SUITE}"
 
-DATA_TABLE_TMPL_FN="${DATA_TABLE_FN}"
-if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
-  DIAG_TABLE_TMPL_FN="${DIAG_TABLE_FN}.${FCST_MODEL}_${CCPP_PHYS_SUITE}"
-  FIELD_TABLE_TMPL_FN="${FIELD_TABLE_FN}.${FCST_MODEL}_${CCPP_PHYS_SUITE}"
-  MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_FN}.${FCST_MODEL}"
-  NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_FN}.${FCST_MODEL}"
-else
-  DIAG_TABLE_TMPL_FN="${DIAG_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
-  FIELD_TABLE_TMPL_FN="${FIELD_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
-  MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_FN}"
-  NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_FN}"
-fi
+# Names of input files that the forecast model (ufs-weather-model) expects 
+# to read in.  These should only be changed if the input file names in the 
+# forecast model code are changed.
+#----------------------------------
+DATA_TABLE_FN="data_table"
+DIAG_TABLE_FN="diag_table"
+FIELD_TABLE_FN="field_table"
+MODEL_CONFIG_FN="model_configure"
+NEMS_CONFIG_FN="nems.configure"
+#----------------------------------
+
+DATA_TABLE_TMPL_FN="${DATA_TABLE_TMPL_FN:-${DATA_TABLE_FN}}"
+DIAG_TABLE_TMPL_FN="${DIAG_TABLE_TMPL_FN:-${DIAG_TABLE_FN}}${dot_ccpp_phys_suite_or_null}"
+FIELD_TABLE_TMPL_FN="${FIELD_TABLE_TMPL_FN:-${FIELD_TABLE_FN}}${dot_ccpp_phys_suite_or_null}"
+MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_TMPL_FN:-${MODEL_CONFIG_FN}}"
+NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_TMPL_FN:-${NEMS_CONFIG_FN}}"
+
 DATA_TABLE_TMPL_FP="${TEMPLATE_DIR}/${DATA_TABLE_TMPL_FN}"
 DIAG_TABLE_TMPL_FP="${TEMPLATE_DIR}/${DIAG_TABLE_TMPL_FN}"
 FIELD_TABLE_TMPL_FP="${TEMPLATE_DIR}/${FIELD_TABLE_TMPL_FN}"
@@ -1383,6 +1452,21 @@ if [ "${DO_ENSEMBLE}" = "TRUE" ]; then
     ENSMEM_NAMES[$i]="mem${ip1}"
     FV3_NML_ENSMEM_FPS[$i]="$EXPTDIR/${FV3_NML_FN}_${ENSMEM_NAMES[$i]}"
   done
+fi
+#
+#-----------------------------------------------------------------------
+#
+# Make sure that DO_ENSEMBLE is set to TRUE when running ensemble vx.
+#
+#-----------------------------------------------------------------------
+#
+if [ "${DO_ENSEMBLE}" = "FALSE" ] && [ "${RUN_TASK_VX_ENSGRID}" = "TRUE" -o \
+   "${RUN_TASK_VX_ENSPOINT}" = "TRUE" ]; then
+  print_err_msg_exit "\
+Ensemble verification can not be run unless running in ensemble mode:
+   DO_ENSEMBLE = \"${DO_ENSEMBLE}\"
+   RUN_TASK_VX_ENSGRID = \"${RUN_TASK_VX_ENSGRID}\"
+   RUN_TASK_VX_ENSPOINT = \"${RUN_TASK_VX_ENSPOINT}\""
 fi
 #
 #-----------------------------------------------------------------------
@@ -1570,8 +1654,7 @@ one above.  Reset values are:
 
   fi
 
-  if [ "${RUN_TASK_VX_GRIDSTAT}" = "TRUE" ] || \
-     [ "${RUN_TASK_VX_GRIDSTAT}" = "FALSE" ]; then
+  if [ "${RUN_TASK_VX_GRIDSTAT}" = "TRUE" ]; then
 
     msg="
 When RUN_ENVIR is set to \"nco\", it is assumed that the verification
@@ -1590,8 +1673,7 @@ Reset value is:"
 
   fi
 
-  if [ "${RUN_TASK_VX_POINTSTAT}" = "TRUE" ] || \
-     [ "${RUN_TASK_VX_POINTSTAT}" = "FALSE" ]; then
+  if [ "${RUN_TASK_VX_POINTSTAT}" = "TRUE" ]; then
 
     msg="
 When RUN_ENVIR is set to \"nco\", it is assumed that the verification
@@ -1610,8 +1692,7 @@ Reset value is:"
 
   fi
 
-  if [ "${RUN_TASK_VX_ENSGRID}" = "TRUE" ] || \
-     [ "${RUN_TASK_VX_ENSGRID}" = "FALSE" ]; then
+  if [ "${RUN_TASK_VX_ENSGRID}" = "TRUE" ]; then
 
     msg="
 When RUN_ENVIR is set to \"nco\", it is assumed that the verification
@@ -2004,7 +2085,6 @@ if [ "$WRITE_DOPOST" = "TRUE" ] ; then
 SUB_HOURLY_POST is NOT available with Inline Post yet."
   fi
 fi
-
 
 check_var_valid_value "QUILTING" "valid_vals_QUILTING"
 QUILTING=$(boolify $QUILTING)
@@ -2426,6 +2506,12 @@ AQM_RC_FP="${AQM_RC_FP}"
 #
 GLOBAL_VAR_DEFNS_FP='${GLOBAL_VAR_DEFNS_FP}'
 
+DATA_TABLE_FN='${DATA_TABLE_FN}'
+DIAG_TABLE_FN='${DIAG_TABLE_FN}'
+FIELD_TABLE_FN='${FIELD_TABLE_FN}'
+MODEL_CONFIG_FN='${MODEL_CONFIG_FN}'
+NEMS_CONFIG_FN='${NEMS_CONFIG_FN}'
+
 DATA_TABLE_TMPL_FN='${DATA_TABLE_TMPL_FN}'
 DIAG_TABLE_TMPL_FN='${DIAG_TABLE_TMPL_FN}'
 FIELD_TABLE_TMPL_FN='${FIELD_TABLE_TMPL_FN}'
@@ -2674,13 +2760,19 @@ PE_MEMBER01='${PE_MEMBER01}'
 #
 #-----------------------------------------------------------------------
 #
-# IF DO_SPP is set to \"TRUE\", N_VAR_SPP specifies the number of physics 
-# parameterizations that are perturbed with SPP.  Otherwise, N_VAR_SPP 
-# is set 0.
+# IF DO_SPP is set to "TRUE", N_VAR_SPP specifies the number of physics 
+# parameterizations that are perturbed with SPP.  If DO_LSM_SPP is set to
+# "TRUE", N_VAR_LNDP specifies the number of LSM parameters that are 
+# perturbed.  LNDP_TYPE determines the way LSM perturbations are employed
+# and FHCYC_LSM_SPP_OR_NOT sets FHCYC based on whether LSM perturbations
+# are turned on or not.
 #
 #-----------------------------------------------------------------------
 #
 N_VAR_SPP='${N_VAR_SPP}'
+N_VAR_LNDP='${N_VAR_LNDP}'
+LNDP_TYPE='${LNDP_TYPE}'
+FHCYC_LSM_SPP_OR_NOT='${FHCYC_LSM_SPP_OR_NOT}'
 "
 #
 # Done with constructing the contents of the variable definitions file,
