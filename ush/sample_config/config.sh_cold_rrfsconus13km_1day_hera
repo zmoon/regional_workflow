@@ -13,7 +13,7 @@ CRON_RELAUNCH_INTVL_MNTS="3"
 
 CPL_AQM="TRUE"
 
-PREDEF_GRID_NAME="RRFS_CONUS_13km"
+PREDEF_GRID_NAME="RRFS_CONUScompact_13km"
 GRID_GEN_METHOD="ESGgrid"
 HALO_BLEND="0"
 
@@ -41,11 +41,11 @@ LAYOUT_X="16"
 LAYOUT_Y="10"
 BLOCKSIZE="32"
 
-DIAG_TABLE_FN="diag_table_aqm"
-FIELD_TABLE_FN="field_table_aqm"
+DIAG_TABLE_TMPL_FN="diag_table_aqm"
+FIELD_TABLE_TMPL_FN="field_table_aqm"
 
 #USER_AQM_RC_DIR="/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/sample_config"
-AQM_RC_FN="aqm.rc"
+AQM_RC_TMPL_FN="aqm.rc"
 
 AQM_CONFIG_DIR="/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/aqm/epa/data"
 AQM_BIO_DIR="/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/aqm/bio"
@@ -59,4 +59,4 @@ AQM_LBCS_FILES="gfs_bndy_chem_<MM>.tile7.000.nc"
 AQM_GEFS_DIR="/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/GEFS_aerosol"
 NEXUS_INPUT_DIR="/scratch1/NCEPDEV/rstprod/nexus_emissions"
 NEXUS_FIX_DIR="/scratch2/NCEPDEV/naqfc/RRFS_CMAQ/nexus/fix"
-NEXUS_GRID_FN="grid_spec_RRFS_CONUS_13km.nc"
+NEXUS_GRID_FN="grid_spec_RRFS_CONUScompact_13km.nc"

@@ -78,18 +78,15 @@ init_concentrations \
 
 #-----------------------------------------------------------------------
 #
-# Create the aqm.rc file in the specified run directory.
+# Create an aqm.rc file in the specified run directory.
 #
 #-----------------------------------------------------------------------
 #
   print_info_msg "$VERBOSE" "
-Creating the aqm.rc file in the specified run directory (run_dir):
+Creating an aqm.rc file (\"${AQM_RC_FN}\") in the specified run directory (run_dir):
   run_dir = \"${run_dir}\""
 
-#
-# Set input file path
-# 
-  aqm_rc_fp="${run_dir}/aqm.rc"
+  aqm_rc_fp="${run_dir}/${AQM_RC_FN}"
 #
 # Extract from cdate the starting year, month, and day of the forecast.
 #
@@ -130,20 +127,20 @@ $settings"
 #
 #-----------------------------------------------------------------------
 #
-# Call a python script to generate the experiment's actual aqm.rc file
+# Call a python script to generate the experiment's actual AQM_RC_FN file
 # from the template file.
 #
 #-----------------------------------------------------------------------
 #
   $USHDIR/fill_jinja_template.py -q \
                                  -u "${settings}" \
-                                 -t ${AQM_RC_FP} \
+                                 -t ${AQM_RC_TMPL_FP} \
                                  -o ${aqm_rc_fp} || \
   print_err_msg_exit "\
-Call to python script fill_jinja_template.py to create the aqm.rc file
+Call to python script fill_jinja_template.py to create \"${AQM_RC_FN}\" file
 from a jinja2 template failed.  Parameters passed to this script are:
   Full path to user-owned template aqm.rc file:
-    AQM_RC_FP = \"${AQM_RC_FP}\"
+    AQM_RC_TMPL_FP = \"${AQM_RC_TMPL_FP}\"
   Full path to actual input aqm.rc file:
     aqm_rc_fp = \"${aqm_rc_fp}\"
   Namelist settings specified on command line:

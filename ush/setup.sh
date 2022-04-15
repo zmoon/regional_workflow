@@ -1257,11 +1257,25 @@ fi
 #
 dot_ccpp_phys_suite_or_null=".${CCPP_PHYS_SUITE}"
 
-DATA_TABLE_TMPL_FN="${DATA_TABLE_FN}"
-DIAG_TABLE_TMPL_FN="${DIAG_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
-FIELD_TABLE_TMPL_FN="${FIELD_TABLE_FN}${dot_ccpp_phys_suite_or_null}"
-MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_FN}"
-NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_FN}"
+# Names of input files that the forecast model (ufs-weather-model) expects 
+# to read in.  These should only be changed if the input file names in the 
+# forecast model code are changed.
+#----------------------------------
+DATA_TABLE_FN="data_table"
+DIAG_TABLE_FN="diag_table"
+FIELD_TABLE_FN="field_table"
+MODEL_CONFIG_FN="model_configure"
+NEMS_CONFIG_FN="nems.configure"
+AQM_RC_FN="aqm.rc"
+#----------------------------------
+
+DATA_TABLE_TMPL_FN="${DATA_TABLE_TMPL_FN:-${DATA_TABLE_FN}}"
+DIAG_TABLE_TMPL_FN="${DIAG_TABLE_TMPL_FN:-${DIAG_TABLE_FN}}${dot_ccpp_phys_suite_or_null}"
+FIELD_TABLE_TMPL_FN="${FIELD_TABLE_TMPL_FN:-${FIELD_TABLE_FN}}${dot_ccpp_phys_suite_or_null}"
+MODEL_CONFIG_TMPL_FN="${MODEL_CONFIG_TMPL_FN:-${MODEL_CONFIG_FN}}"
+NEMS_CONFIG_TMPL_FN="${NEMS_CONFIG_TMPL_FN:-${NEMS_CONFIG_FN}}"
+AQM_RC_TMPL_FN="${AQM_RC_TMPL_FN:-${AQM_RC_FN}}"
+
 DATA_TABLE_TMPL_FP="${TEMPLATE_DIR}/${DATA_TABLE_TMPL_FN}"
 DIAG_TABLE_TMPL_FP="${TEMPLATE_DIR}/${DIAG_TABLE_TMPL_FN}"
 FIELD_TABLE_TMPL_FP="${TEMPLATE_DIR}/${FIELD_TABLE_TMPL_FN}"
@@ -1272,7 +1286,7 @@ MODEL_CONFIG_TMPL_FP="${TEMPLATE_DIR}/${MODEL_CONFIG_TMPL_FN}"
 NEMS_CONFIG_TMPL_FP="${TEMPLATE_DIR}/${NEMS_CONFIG_TMPL_FN}"
 
 USER_AQM_RC_DIR=${USER_AQM_RC_DIR:-"${TEMPLATE_DIR}"}
-AQM_RC_FP="${USER_AQM_RC_DIR}/${AQM_RC_FN}"
+AQM_RC_TMPL_FP="${USER_AQM_RC_DIR}/${AQM_RC_TMPL_FN}"
 #
 #-----------------------------------------------------------------------
 #
@@ -1368,10 +1382,11 @@ set_ozone_param \
 #
 #-----------------------------------------------------------------------
 #
-DATA_TABLE_FP="${EXPTDIR}/data_table"
-FIELD_TABLE_FP="${EXPTDIR}/field_table"
-FV3_NML_FP="${EXPTDIR}/input.nml"
-NEMS_CONFIG_FP="${EXPTDIR}/nems.configure"
+DATA_TABLE_FP="${EXPTDIR}/${DATA_TABLE_FN}"
+FIELD_TABLE_FP="${EXPTDIR}/${FIELD_TABLE_FN}"
+FV3_NML_FN="${FV3_NML_BASE_SUITE_FN%.*}"
+FV3_NML_FP="${EXPTDIR}/${FV3_NML_FN}"
+NEMS_CONFIG_FP="${EXPTDIR}/${NEMS_CONFIG_FN}"
 
 check_var_valid_value "USE_USER_STAGED_EXTRN_FILES" "valid_vals_USE_USER_STAGED_EXTRN_FILES"
 USE_USER_STAGED_EXTRN_FILES=$(boolify $USE_USER_STAGED_EXTRN_FILES)
@@ -1428,8 +1443,23 @@ if [ "${DO_ENSEMBLE}" = "TRUE" ]; then
   for (( i=0; i<${NUM_ENS_MEMBERS}; i++ )); do
     ip1=$( printf "$fmt" $((i+1)) )
     ENSMEM_NAMES[$i]="mem${ip1}"
-    FV3_NML_ENSMEM_FPS[$i]="$EXPTDIR/input.nml_${ENSMEM_NAMES[$i]}"
+    FV3_NML_ENSMEM_FPS[$i]="$EXPTDIR/${FV3_NML_FN}_${ENSMEM_NAMES[$i]}"
   done
+fi
+#
+#-----------------------------------------------------------------------
+#
+# Make sure that DO_ENSEMBLE is set to TRUE when running ensemble vx.
+#
+#-----------------------------------------------------------------------
+#
+if [ "${DO_ENSEMBLE}" = "FALSE" ] && [ "${RUN_TASK_VX_ENSGRID}" = "TRUE" -o \
+   "${RUN_TASK_VX_ENSPOINT}" = "TRUE" ]; then
+  print_err_msg_exit "\
+Ensemble verification can not be run unless running in ensemble mode:
+   DO_ENSEMBLE = \"${DO_ENSEMBLE}\"
+   RUN_TASK_VX_ENSGRID = \"${RUN_TASK_VX_ENSGRID}\"
+   RUN_TASK_VX_ENSPOINT = \"${RUN_TASK_VX_ENSPOINT}\""
 fi
 #
 #-----------------------------------------------------------------------
@@ -1617,8 +1647,7 @@ one above.  Reset values are:
 
   fi
 
-  if [ "${RUN_TASK_VX_GRIDSTAT}" = "TRUE" ] || \
-     [ "${RUN_TASK_VX_GRIDSTAT}" = "FALSE" ]; then
+  if [ "${RUN_TASK_VX_GRIDSTAT}" = "TRUE" ]; then
 
     msg="
 When RUN_ENVIR is set to \"nco\", it is assumed that the verification
@@ -1637,8 +1666,7 @@ Reset value is:"
 
   fi
 
-  if [ "${RUN_TASK_VX_POINTSTAT}" = "TRUE" ] || \
-     [ "${RUN_TASK_VX_POINTSTAT}" = "FALSE" ]; then
+  if [ "${RUN_TASK_VX_POINTSTAT}" = "TRUE" ]; then
 
     msg="
 When RUN_ENVIR is set to \"nco\", it is assumed that the verification
@@ -1657,8 +1685,7 @@ Reset value is:"
 
   fi
 
-  if [ "${RUN_TASK_VX_ENSGRID}" = "TRUE" ] || \
-     [ "${RUN_TASK_VX_ENSGRID}" = "FALSE" ]; then
+  if [ "${RUN_TASK_VX_ENSGRID}" = "TRUE" ]; then
 
     msg="
 When RUN_ENVIR is set to \"nco\", it is assumed that the verification
@@ -2051,7 +2078,6 @@ if [ "$WRITE_DOPOST" = "TRUE" ] ; then
 SUB_HOURLY_POST is NOT available with Inline Post yet."
   fi
 fi
-
 
 check_var_valid_value "QUILTING" "valid_vals_QUILTING"
 QUILTING=$(boolify $QUILTING)
@@ -2463,7 +2489,6 @@ ENSMEM_NAMES=${ensmem_names_str}
 FV3_NML_ENSMEM_FPS=${fv3_nml_ensmem_fps_str}
 
 ARL_NEXUS_DIR="${ARL_NEXUS_DIR}"
-AQM_RC_FP="${AQM_RC_FP}"
 #
 #-----------------------------------------------------------------------
 #
@@ -2473,11 +2498,19 @@ AQM_RC_FP="${AQM_RC_FP}"
 #
 GLOBAL_VAR_DEFNS_FP='${GLOBAL_VAR_DEFNS_FP}'
 
+DATA_TABLE_FN='${DATA_TABLE_FN}'
+DIAG_TABLE_FN='${DIAG_TABLE_FN}'
+FIELD_TABLE_FN='${FIELD_TABLE_FN}'
+MODEL_CONFIG_FN='${MODEL_CONFIG_FN}'
+NEMS_CONFIG_FN='${NEMS_CONFIG_FN}'
+AQM_RC_FN='${AQM_RC_FN}'
+
 DATA_TABLE_TMPL_FN='${DATA_TABLE_TMPL_FN}'
 DIAG_TABLE_TMPL_FN='${DIAG_TABLE_TMPL_FN}'
 FIELD_TABLE_TMPL_FN='${FIELD_TABLE_TMPL_FN}'
 MODEL_CONFIG_TMPL_FN='${MODEL_CONFIG_TMPL_FN}'
 NEMS_CONFIG_TMPL_FN='${NEMS_CONFIG_TMPL_FN}'
+AQM_RC_TMPL_FN='${AQM_RC_TMPL_FN}'
 
 DATA_TABLE_TMPL_FP='${DATA_TABLE_TMPL_FP}'
 DIAG_TABLE_TMPL_FP='${DIAG_TABLE_TMPL_FP}'
@@ -2487,6 +2520,7 @@ FV3_NML_YAML_CONFIG_FP='${FV3_NML_YAML_CONFIG_FP}'
 FV3_NML_BASE_ENS_FP='${FV3_NML_BASE_ENS_FP}'
 MODEL_CONFIG_TMPL_FP='${MODEL_CONFIG_TMPL_FP}'
 NEMS_CONFIG_TMPL_FP='${NEMS_CONFIG_TMPL_FP}'
+AQM_RC_TMPL_FP='${AQM_RC_TMPL_FP}'
 
 CCPP_PHYS_SUITE_FN='${CCPP_PHYS_SUITE_FN}'
 CCPP_PHYS_SUITE_IN_CCPP_FP='${CCPP_PHYS_SUITE_IN_CCPP_FP}'
@@ -2498,6 +2532,7 @@ FIELD_DICT_FP='${FIELD_DICT_FP}'
 
 DATA_TABLE_FP='${DATA_TABLE_FP}'
 FIELD_TABLE_FP='${FIELD_TABLE_FP}'
+FV3_NML_FN='${FV3_NML_FN}'
 FV3_NML_FP='${FV3_NML_FP}'
 NEMS_CONFIG_FP='${NEMS_CONFIG_FP}'
 
@@ -2622,15 +2657,6 @@ all_cdates_str=$(printf "${escbksl_nl_or_null}\"%s\" " "${ALL_CDATES[@]}")
 all_cdates_str=$(printf "( %s${escbksl_nl_or_null})" "${all_cdates_str}")
 
 var_defns_file_contents=${var_defns_file_contents}"\
-#
-#-----------------------------------------------------------------------
-#
-# Flag in the \"${MODEL_CONFIG_FN}\" file for coupling the ocean model to 
-# the weather model.
-#
-#-----------------------------------------------------------------------
-#
-CPL='${CPL}'
 #
 #-----------------------------------------------------------------------
 #

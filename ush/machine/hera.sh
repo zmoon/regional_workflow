@@ -70,6 +70,7 @@ RUN_CMD_SERIAL="time"
 RUN_CMD_UTILS="srun"
 RUN_CMD_FCST="srun"
 RUN_CMD_POST="srun"
+RUN_CMD_NEXUS="srun -l"
 
 # MET/METplus-Related Paths
 MET_INSTALL_DIR=${MET_INSTALL_DIR:-"/contrib/met/10.0.0"}
@@ -80,8 +81,8 @@ NDAS_OBS_DIR=${NDAS_OBS_DIR:-"/scratch2/BMC/det/UFS_SRW_app/develop/obs_data/nda
 MET_BIN_EXEC=${MET_BIN_EXEC:-"bin"}
 
 # Test Data Locations
-TEST_PREGEN_BASEDIR="/scratch2/BMC/det/FV3LAM_pregen"
+TEST_PREGEN_BASEDIR="/scratch2/BMC/det/UFS_SRW_app/FV3LAM_pregen"
 TEST_COMINgfs="/scratch2/NCEPDEV/fv3-cam/noscrub/UFS_SRW_App/COMGFS"
-TEST_EXTRN_MDL_SOURCE_BASEDIR="/scratch2/BMC/det/Gerard.Ketefian/UFS_CAM/staged_extrn_mdl_files"
+TEST_EXTRN_MDL_SOURCE_BASEDIR="/scratch2/BMC/det/UFS_SRW_app/develop/model_data"
 TEST_ALT_EXTRN_MDL_SYSBASEDIR_ICS="/scratch2/BMC/det/UFS_SRW_app/dummy_FV3GFS_sys_dir"
 TEST_ALT_EXTRN_MDL_SYSBASEDIR_LBCS="/scratch2/BMC/det/UFS_SRW_app/dummy_FV3GFS_sys_dir"

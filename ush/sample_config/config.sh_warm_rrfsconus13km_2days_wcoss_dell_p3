@@ -17,7 +17,7 @@ CRON_RELAUNCH_INTVL_MNTS="3"
 
 CPL_AQM="TRUE"
 
-PREDEF_GRID_NAME="RRFS_CONUS_13km"
+PREDEF_GRID_NAME="RRFS_CONUScompact_13km"
 GRID_GEN_METHOD="ESGgrid"
 HALO_BLEND="0"
 
@@ -50,11 +50,11 @@ BLOCKSIZE="32"
 RESTART_WORKFLOW="TRUE"
 RESTART_INTERVAL="12"
 
-DIAG_TABLE_FN="diag_table_aqm"
-FIELD_TABLE_FN="field_table_aqm"
+DIAG_TABLE_TMPL_FN="diag_table_aqm"
+FIELD_TABLE_TMPL_FN="field_table_aqm"
 
 #USER_AQM_RC_DIR="/gpfs/dell2/emc/modeling/save/Chan-Hoo.Jeon/rrfs_cmaq_pr/regional_workflow/ush/template"
-AQM_RC_FN="aqm.rc"
+AQM_RC_TMPL_FN="aqm.rc"
 
 AQM_CONFIG_DIR="/gpfs/dell2/emc/modeling/noscrub/RRFS_CMAQ/aqm/epa/data"
 AQM_BIO_DIR="/gpfs/dell2/emc/modeling/noscrub/RRFS_CMAQ/aqm/bio"
