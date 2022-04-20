@@ -1107,6 +1107,24 @@ if [ "${CPL_AQM}" = "TRUE" ]; then
   check_var_valid_value "RESTART_WORKFLOW" "valid_vals_RESTART_WORKFLOW"
   RESTART_WORKFLOW=$(boolify $RESTART_WORKFLOW)
 
+  check_var_valid_value "OPT_AQM_DA" "valid_vals_OPT_AQM_DA"
+  OPT_AQM_DA=$(boolify $OPT_AQM_DA)
+
+  check_var_valid_value "RUN_TASK_CHEM_ANL" "valid_vals_RUN_TASK_CHEM_ANL"
+  RUN_TASK_CHEM_ANL=$(boolify $RUN_TASK_CHEM_ANL)
+
+  check_var_valid_value "USE_CHEM_ANL" "valid_vals_USE_CHEM_ANL"
+  USE_CHEM_ANL=$(boolify $USE_CHEM_ANL)
+
+  check_var_valid_value "RUN_TASK_DACYC" "valid_vals_RUN_TASK_DACYC"
+  RUN_TASK_DACYC=$(boolify $RUN_TASK_DACYC)
+
+  if [ "${OPT_AQM_DA}" = "FALSE" ]; then
+    RUN_TASK_CHEM_ANL="FALSE"
+    USE_CHEM_ANL="FALSE"
+    RUN_TASK_DACYC="FALSE"
+  fi
+
 fi
 #
 #-----------------------------------------------------------------------
@@ -2145,6 +2163,12 @@ NNODES_RUN_FCST=$(( (PE_MEMBER01 + PPN_RUN_FCST - 1)/PPN_RUN_FCST ))
 #
 #-----------------------------------------------------------------------
 #
+# Calculate the number of nodes needed for JEDI analysis for this we are 
+# going to use the same input.nml so the number should be layout_x * layout_y
+PE_JEDI=$(( LAYOUT_X*LAYOUT_Y ))
+#
+#-----------------------------------------------------------------------
+#
 # Call the function that checks whether the RUC land surface model (LSM)
 # is being called by the physics suite and sets the workflow variable 
 # SDF_USES_RUC_LSM to "TRUE" or "FALSE" accordingly.
@@ -2743,6 +2767,7 @@ FVCOM_FILE='${FVCOM_FILE}'
 #
 NCORES_PER_NODE='${NCORES_PER_NODE}'
 PE_MEMBER01='${PE_MEMBER01}'
+PE_JEDI='${PE_JEDI}'
 #
 #-----------------------------------------------------------------------
 #
