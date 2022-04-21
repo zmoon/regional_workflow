@@ -2100,6 +2100,20 @@ OMP_STACKSIZE_RUN_POST="1024m"
 # NEXUS_GRID_FN:
 # File name of the input grid_spec file of nexus
 #
+# OPT_AQM_DA:
+# Flag to turn on/off DA runs of RRFS-CMAQ
+# Set to "TRUE" for DA or "FALSE" for non-DA
+#
+# USE_CHEM_ANL:
+# Set to "TRUE" or "FALSE" to enable using updated chem analysis restart file
+#
+# DA_OBS_DIR:
+# Path to IODA formatted observation data for assimilation
+# This would be BUFR for GSI or IODA-formatted files for JEDI
+#
+# ENKF_FCST:
+# Path to ensemble members for hybrid GSI
+#
 #-----------------------------------------------------------------------
 #
 USER_AQM_RC_DIR=""

@@ -396,7 +396,11 @@ SR_WX_APP_TOP_DIR=${scrfunc_dir%/*/*}
 #-----------------------------------------------------------------------
 #
 if [ "${CPL_AQM}" = "TRUE" ]; then
-  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/AQM/Externals.cfg" )
+  if [ "${OPT_AQM_DA}" = "TRUE" ]; then
+    mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/AQM/Externals_DA.cfg" )
+  else
+    mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/AQM/Externals.cfg" )
+  fi
 else
   mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/Externals.cfg" )
 fi
@@ -493,6 +497,44 @@ Please clone the external repository containing the code in this directory,
 build the executable, and then rerun the workflow."
 fi
 
+if [ "${OPT_AQM_DA}" = "TRUE" ]; then
+  external_name="jedi-fv3-bundle"
+  JEDI_DIR=$( \
+get_manage_externals_config_property \
+"${mng_extrns_cfg_fn}" "${external_name}" "${property_name}" ) || \
+print_err_msg_exit "\
+Call to function get_manage_externals_config_property failed."
+
+  JEDI_DIR="${SR_WX_APP_TOP_DIR}/${JEDI_DIR}"
+  if [ ! -d "${JEDI_DIR}" ]; then
+    print_err_msg_exit "\
+The base directory in which the JEDI source code should be located
+(JEDI_DIR) does not exist:
+  JEDI_DIR = \"${JEDI_DIR}\"
+Please clone the external repository containing the code in this directory,
+build the executable, and then rerun the workflow."
+  fi
+#
+# Get the base directory of the GSI code if required
+#
+  external_name="GSI"
+  GSI_DIR=$( \
+get_manage_externals_config_property \
+"${mng_extrns_cfg_fn}" "${external_name}" "${property_name}" ) || \
+print_err_msg_exit "\
+Call to function get_manage_externals_config_property failed."
+
+  GSI_DIR="${SR_WX_APP_TOP_DIR}/${GSI_DIR}"
+  if [ ! -d "${GSI_DIR}" ]; then
+    print_err_msg_exit "\
+The base directory in which the GSI source code should be located
+(GSI_DIR) does not exist:
+  GSI_DIR = \"${GSI_DIR}\"
+Please clone the external repository containing the code in this directory,
+build the executable, and then rerun the workflow."
+  fi
+fi
+
 #
 # Define some other useful paths
 #
@@ -509,6 +551,7 @@ VX_CONFIG_DIR="$TEMPLATE_DIR/parm"
 METPLUS_CONF="$TEMPLATE_DIR/parm/metplus"
 MET_CONFIG="$TEMPLATE_DIR/parm/met"
 ARL_NEXUS_DIR="${SR_WX_APP_TOP_DIR}/src/arl_nexus"
+JEDI_DIR="${SR_WX_APP_TOP_DIR}/build/JEDI"
 #
 #-----------------------------------------------------------------------
 #
@@ -2513,6 +2556,7 @@ ENSMEM_NAMES=${ensmem_names_str}
 FV3_NML_ENSMEM_FPS=${fv3_nml_ensmem_fps_str}
 
 ARL_NEXUS_DIR="${ARL_NEXUS_DIR}"
+JEDI_DIR="${JEDI_DIR}"
 #
 #-----------------------------------------------------------------------
 #
