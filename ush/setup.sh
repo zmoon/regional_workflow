@@ -801,7 +801,7 @@ set_cycle_dates \
 
 NUM_CYCLES="${#ALL_CDATES[@]}"
 
-if [ $NUM_CYCLES -gt 90 ] ; then
+if [ $NUM_CYCLES -gt 150 ] ; then
   unset ALL_CDATES
   print_info_msg "$VERBOSE" "
 Too many cycles in ALL_CDATES to list, redefining in abbreviated form."
