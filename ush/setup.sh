@@ -2753,7 +2753,7 @@ FVCOM_FILE='${FVCOM_FILE}'
 NCORES_PER_NODE='${NCORES_PER_NODE}'
 PE_MEMBER01='${PE_MEMBER01}'
 
-PE_JEDI="${PE_JEDI}"
+PE_JEDI='${PE_JEDI}'
 #
 #-----------------------------------------------------------------------
 #
