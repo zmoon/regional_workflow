@@ -71,6 +71,7 @@ RUN_CMD_UTILS="srun"
 RUN_CMD_FCST="srun"
 RUN_CMD_POST="srun"
 RUN_CMD_NEXUS="srun -l"
+RUN_CMD_JEDI='srun -n ${PE_JEDI}'
 
 # MET/METplus-Related Paths
 MET_INSTALL_DIR=${MET_INSTALL_DIR:-"/contrib/met/10.0.0"}

@@ -171,11 +171,14 @@ QUEUE_FCST=""
 # The run command for post-processing (UPP). Can be left blank for smaller 
 # domains, in which case UPP will run without MPI.
 #
+# RUN_CMD_JEDI:
+# The run command for JEDI.
 #-----------------------------------------------------------------------
 #
 RUN_CMD_UTILS="mpirun -np 1"
 RUN_CMD_FCST='mpirun -np \${PE_MEMBER01}'
 RUN_CMD_POST="mpirun -np 1"
+RUN_CMD_JEDI='mpirun -np \${PE_JEDI}'
 #
 #-----------------------------------------------------------------------
 #
