@@ -261,7 +261,7 @@ cd_vrfy ${JEDI_WORKDIR}
 #
 #-----------------------------------------------------------------------
 #
-${RUN_CMD_JEDI} ./fv3jedi_error_covariance_training.x jedi_no2_bump.yaml || print_err_msg_exit "\
+${RUN_CMD_UTILS} -n ${PE_JEDI} ./fv3jedi_error_covariance_training.x jedi_no2_bump.yaml || print_err_msg_exit "\
 Call to executable to run fv3jedi_error_covariance_training.x returned with nonzero exit
 code."
 #
@@ -271,7 +271,7 @@ code."
 #
 #-----------------------------------------------------------------------
 #
-${RUN_CMD_JEDI} ./fv3jedi_var.x jedi_no2_3dvar.yaml || print_err_msg_exit "\
+${RUN_CMD_UTILS} -n ${PE_JEDI} ./fv3jedi_var.x jedi_no2_3dvar.yaml || print_err_msg_exit "\
 Call to executable to run fv3jedi_var.x returned with nonzero exit
 code."
 #
