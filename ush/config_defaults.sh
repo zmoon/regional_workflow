@@ -422,6 +422,18 @@ CPL_AQM="FALSE"
 #
 #-----------------------------------------------------------------------
 #
+# Set output file name. Definitions:
+#
+# POST_OUTPUT_DOMAIN_NAME:
+# Domain name used in naming the output files of run_post by UPP or inline post.
+# Output file name: $NET.tHHz.[var_name].f###.$POST_OUTPUT_DOMAIN_NAME.grib2
+#
+#-----------------------------------------------------------------------
+#
+POST_OUTPUT_DOMAIN_NAME=""
+#
+#-----------------------------------------------------------------------
+#
 # Set forecast parameters.  Definitions:
 #
 # DATE_FIRST_CYCL:
@@ -1907,7 +1919,7 @@ SPP_TSCALE=( "21600.0" "21600.0" "21600.0" "21600.0" "21600.0" ) #Variable "spp_
 SPP_SIGTOP1=( "0.1" "0.1" "0.1" "0.1" "0.1")
 SPP_SIGTOP2=( "0.025" "0.025" "0.025" "0.025" "0.025" )
 SPP_STDDEV_CUTOFF=( "1.5" "1.5" "2.5" "1.5" "1.5" )
-ISEED_SPP=( "4" "4" "4" "4" "4" )
+ISEED_SPP=( "4" "5" "6" "7" "8" )
 #
 #-----------------------------------------------------------------------
 #
