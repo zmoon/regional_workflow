@@ -145,7 +145,8 @@ if [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
     fi
   elif [[ "${task_name}" = "${RUN_FCST_TN}" ]]; then
     module use ${SR_WX_APP_TOP_DIR}/components/env
-    module load modulefile.fv3gfs_aqm
+#    module load modulefile.fv3gfs_aqm
+    module load modulefile.run_fcst
   elif [[ "${task_name}" = "${RUN_POST_TN}" ]]; then
     module use ${SR_WX_APP_TOP_DIR}/components/env
     mod_fp="${SR_WX_APP_TOP_DIR}/compoments/env/modulefile.UPP.lua"
