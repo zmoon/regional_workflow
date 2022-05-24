@@ -395,11 +395,7 @@ SR_WX_APP_TOP_DIR=${scrfunc_dir%/*/*}
 #
 #-----------------------------------------------------------------------
 #
-if [ "${CPL_AQM}" = "TRUE" ]; then
-  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/AQM/Externals.cfg" )
-else
-  mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/Externals.cfg" )
-fi
+mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/Externals.cfg" )
 
 property_name="local_path"
 #
@@ -476,6 +472,8 @@ fi
 #
 # Get the base directory of the NEXUS code if required
 #
+mng_extrns_cfg_fn=$( $READLINK -f "${SR_WX_APP_TOP_DIR}/externals/Externals_AQM.cfg" )
+
 external_name="arl_nexus"
 ARL_NEXUS_DIR=$( \
 get_manage_externals_config_property \
