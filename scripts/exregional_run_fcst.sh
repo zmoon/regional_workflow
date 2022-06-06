@@ -583,7 +583,6 @@ code."
 if [ ${WRITE_DOPOST} = "TRUE" ]; then
 
   cyc=$hh
-  tmmark="tm00"
   fmn="00"
 
   if [ "${RUN_ENVIR}" = "nco" ]; then
@@ -608,7 +607,7 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
     post_mn=${post_time:10:2}
     post_mn_or_null=""
     post_fn_suffix="GrbF${fhr_d}"
-    post_renamed_fn_suffix="f${fhr}${post_mn_or_null}.${tmmark}.grib2"
+    post_renamed_fn_suffix="f${fhr}${post_mn_or_null}.${POST_OUTPUT_DOMAIN_NAME}.grib2"
 
     basetime=$( $DATE_UTIL --date "$yyyymmdd $hh" +%y%j%H%M )
     symlink_suffix="_${basetime}f${fhr}${post_mn}"
@@ -616,7 +615,7 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
     for fid in "${fids[@]}"; do
       FID=$(echo_uppercase $fid)
       post_orig_fn="${FID}.${post_fn_suffix}"
-      post_renamed_fn="${NET}.t${cyc}z.${fid}${post_renamed_fn_suffix}"
+      post_renamed_fn="${NET}.t${cyc}z.${fid}.${post_renamed_fn_suffix}"
       mv_vrfy ${run_dir}/${post_orig_fn} ${post_renamed_fn}
       ln_vrfy -fs ${post_renamed_fn} ${FID}${symlink_suffix}
     done

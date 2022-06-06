@@ -86,23 +86,19 @@ jjob_fp="$2"
 #
 #-----------------------------------------------------------------------
 #
-# Load the task-specific build modules for RRFS-CMAQ or
-# Sourcing ufs-srweather-app build env file
+# Loading ufs-srweather-app build module files
 #
 #-----------------------------------------------------------------------
 #
 machine=$(echo_lowercase $MACHINE)
-if [ "${task_name}" = "${ADD_AQM_LBCS_TN}" ]; then
-  env_fp="${SR_WX_APP_TOP_DIR}/env/build_aqm_${machine}_intel"
-else
-  env_fp="${SR_WX_APP_TOP_DIR}/env/${BUILD_ENV_FN}"
-fi
-module use "${SR_WX_APP_TOP_DIR}/env"
-source "${env_fp}" || print_err_msg_exit "\
-Sourcing platform- and compiler-specific environment file (env_fp) for the
+
+source "${SR_WX_APP_TOP_DIR}/etc/lmod-setup.sh"
+module use "${SR_WX_APP_TOP_DIR}/modulefiles"
+module load "${BUILD_MOD_FN}" || print_err_msg_exit "\
+Sourcing platform- and compiler-specific module file (BUILD_MOD_FN) for the 
 workflow task specified by task_name failed:
   task_name = \"${task_name}\"
-  env_fp = \"${env_fp}\""
+  BUILD_MOD_FN = \"${BUILD_MOD_FN}\""
 #
 #-----------------------------------------------------------------------
 #
@@ -117,7 +113,7 @@ workflow task specified by task_name failed:
 #
 # The regional_workflow repository contains module files for the
 # workflow tasks in the template rocoto XML file for the FV3-LAM work-
-# flow that need modules not loaded in the env_fn above.
+# flow that need modules not loaded in the BUILD_MOD_FN above.
 #
 # The full path to a module file for a given task is
 #
