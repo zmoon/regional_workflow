@@ -1502,43 +1502,43 @@ function set_predef_grid_params() {
 #
 "GSD_HRRR_25km")
 
-  GRID_GEN_METHOD="ESGgrid"
+    __grid_gen_method__="ESGgrid"
 
-  ESGgrid_LON_CTR="-97.5"
-  ESGgrid_LAT_CTR="38.5"
+    __esggrid_lon_ctr__="-97.5"
+    __esggrid_lat_ctr__="38.5"
 
-  ESGgrid_DELX="25000.0"
-  ESGgrid_DELY="25000.0"
+    __esggrid_delx__="25000.0"
+    __esggrid_dely__="25000.0"
 
-  ESGgrid_NX="200"
-  ESGgrid_NY="110"
+    __esggrid_nx__="200"
+    __esggrid_ny__="110"
 
-  ESGgrid_PAZI="180.0"
+    __esggrid_pazi__="180.0"
 
-  ESGgrid_WIDE_HALO_WIDTH="6"
+    __esggrid_wide_halo_width__="6"
 
-  DT_ATMOS="${DT_ATMOS:-300}"
+    __dt_atmos__="${dt_atmos:-300}"
 
-  LAYOUT_X="${LAYOUT_X:-10}"
-  LAYOUT_Y="${LAYOUT_Y:-11}"
-  BLOCKSIZE="${BLOCKSIZE:-2}"
+    __layout_x__="${layout_x:-10}"
+    __layout_y__="${layout_y:-11}"
+    __blocksize__="${blocksize:-2}"
 
-  if [ "$QUILTING" = "TRUE" ]; then
-    WRTCMP_write_groups="1"
-    WRTCMP_write_tasks_per_group="10"
-    WRTCMP_output_grid="lambert_conformal"
-    WRTCMP_cen_lon="${ESGgrid_LON_CTR}"
-    WRTCMP_cen_lat="${ESGgrid_LAT_CTR}"
-    WRTCMP_stdlat1="${ESGgrid_LAT_CTR}"
-    WRTCMP_stdlat2="${ESGgrid_LAT_CTR}"
-    WRTCMP_nx="191"
-    WRTCMP_ny="97"
-    WRTCMP_lon_lwr_left="-120.72962370"
-    WRTCMP_lat_lwr_left="25.11648583"
-    WRTCMP_dx="${ESGgrid_DELX}"
-    WRTCMP_dy="${ESGgrid_DELY}"
-  fi
-  ;;
+    if [ "$quilting" = "TRUE" ]; then
+      __wrtcmp_write_groups__="1"
+      __wrtcmp_write_tasks_per_group__="10"
+      __wrtcmp_output_grid__="lambert_conformal"
+      __wrtcmp_cen_lon__="${__esggrid_lon_ctr__}"
+      __wrtcmp_cen_lat__="${__esggrid_lat_ctr__}"
+      __wrtcmp_stdlat1__="${__esggrid_lat_ctr__}"
+      __wrtcmp_stdlat2__="${__esggrid_lat_ctr__}"
+      __wrtcmp_nx__="191"
+      __wrtcmp_ny__="97"
+      __wrtcmp_lon_lwr_left__="-120.72962370"
+      __wrtcmp_lat_lwr_left__="25.11648583"
+      __wrtcmp_dx__="${__esggrid_delx__}"
+      __wrtcmp_dy__="${__esggrid_dely__}"
+    fi
+    ;;
 #
 #-----------------------------------------------------------------------
 #

@@ -1159,40 +1159,39 @@ fi
 #-----------------------------------------------------------------------
 #
 if [ "${CPL_AQM}" = "TRUE" ]; then
-  check_var_valid_value "RUN_TASK_ADD_AQM_ICS" "valid_vals_RUN_TASK_ADD_AQM_ICS"
-  RUN_TASK_ADD_AQM_ICS=$(boolify $RUN_TASK_ADD_AQM_ICS)
+  check_var_valid_value "RUN_TASK_ADD_AQM_ICS" "valid_vals_BOOLEAN"
+  RUN_TASK_ADD_AQM_ICS=$(boolify ${RUN_TASK_ADD_AQM_ICS})
   if [ ${#ALL_CDATES[@]} -gt 1 ]; then
     RUN_TASK_ADD_AQM_ICS="${RUN_TASK_ADD_AQM_ICS:-TRUE}"
   else
     RUN_TASK_ADD_AQM_ICS="${RUN_TASK_ADD_AQM_ICS:-FALSE}"
   fi
 
-  check_var_valid_value "RUN_ADD_AQM_CHEM_LBCS" "valid_vals_RUN_ADD_AQM_CHEM_LBCS"
-  RUN_ADD_AQM_CHEM_LBCS=$(boolify $RUN_ADD_AQM_CHEM_LBCS)
+  check_var_valid_value "RUN_ADD_AQM_CHEM_LBCS" "valid_vals_BOOLEAN"
+  RUN_ADD_AQM_CHEM_LBCS=$(boolify ${RUN_ADD_AQM_CHEM_LBCS})
 
-  check_var_valid_value "RUN_ADD_AQM_GEFS_LBCS" "valid_vals_RUN_ADD_AQM_GEFS_LBCS"
-  RUN_ADD_AQM_GEFS_LBCS=$(boolify $RUN_ADD_AQM_GEFS_LBCS)
+  check_var_valid_value "RUN_ADD_AQM_GEFS_LBCS" "valid_vals_BOOLEAN"
+  RUN_ADD_AQM_GEFS_LBCS=$(boolify ${RUN_ADD_AQM_GEFS_LBCS})
 
-  check_var_valid_value "RUN_TASK_ADD_AQM_LBCS" "valid_vals_RUN_TASK_ADD_AQM_LBCS"
-  RUN_TASK_ADD_AQM_LBCS=$(boolify $RUN_TASK_ADD_AQM_LBCS)
+  check_var_valid_value "RUN_TASK_ADD_AQM_LBCS" "valid_vals_BOOLEAN"
+  RUN_TASK_ADD_AQM_LBCS=$(boolify ${RUN_TASK_ADD_AQM_LBCS})
   if [ "${RUN_ADD_AQM_CHEM_LBCS}" = "FALSE" ] && \
      [ "${RUN_ADD_AQM_GEFS_LBCS}" = "FALSE" ]; then
     RUN_TASK_ADD_AQM_LBCS="FALSE"
   fi
 
-  check_var_valid_value "RUN_TASK_RUN_NEXUS" "valid_vals_RUN_TASK_RUN_NEXUS"
-  RUN_TASK_RUN_NEXUS=$(boolify $RUN_TASK_RUN_NEXUS)
+  check_var_valid_value "RUN_TASK_RUN_NEXUS" "valid_vals_BOOLEAN"
+  RUN_TASK_RUN_NEXUS=$(boolify ${RUN_TASK_RUN_NEXUS})
 
-  check_var_valid_value "RUN_TASK_RUN_POST_STAT" "valid_vals_RUN_TASK_RUN_POST_STAT"
-  RUN_TASK_RUN_POST_STAT=$(boolify $RUN_TASK_RUN_POST_STAT)
+  check_var_valid_value "RUN_TASK_RUN_POST_STAT" "valid_vals_BOOLEAN"
+  RUN_TASK_RUN_POST_STAT=$(boolify ${RUN_TASK_RUN_POST_STAT})
   if [ "${RUN_TASK_RUN_POST_STAT}" = "TRUE" ] && \
      [ "${FCST_LEN_HRS}" -lt "40" ]; then
     RUN_TASK_RUN_POST_STAT="FALSE"
   fi
 
-  check_var_valid_value "RESTART_WORKFLOW" "valid_vals_RESTART_WORKFLOW"
-  RESTART_WORKFLOW=$(boolify $RESTART_WORKFLOW)
-
+  check_var_valid_value "RESTART_WORKFLOW" "valid_vals_BOOLEAN"
+  RESTART_WORKFLOW=$(boolify ${RESTART_WORKFLOW})
 fi
 #
 #-----------------------------------------------------------------------
