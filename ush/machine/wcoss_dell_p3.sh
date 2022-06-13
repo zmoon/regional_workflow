@@ -79,7 +79,6 @@ RUN_CMD_SERIAL="mpirun"
 RUN_CMD_UTILS="mpirun"
 RUN_CMD_FCST='mpirun -l -np ${PE_MEMBER01}'
 RUN_CMD_POST="mpirun"
-RUN_CMD_NEXUS='mpirun -n ${PPN_RUN_NEXUS}'
 
 # MET/METplus-Related Paths
 MET_INSTALL_DIR=${MET_INSTALL_DIR:-"/gpfs/dell2/emc/verification/noscrub/emc.metplus/met/10.0.0"}
