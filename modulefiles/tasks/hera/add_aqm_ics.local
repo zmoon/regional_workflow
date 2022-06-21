@@ -3,4 +3,4 @@
 #############################################################
 
 module purge
-module load nco
+module load nco/4.9.3
