@@ -30,6 +30,7 @@ FV3_RRFS_v1alpha:
     iopt_snf: 4
     iopt_stc: 1
     iopt_tbot: 2
+    iopt_trs: 2
     lsm: 2
     lsoil_lsm: 4
 
@@ -64,6 +65,7 @@ FV3_HRRR:
     iovr: 3
     lsm: 3
     lsoil_lsm: 9
+    sfclay_compute_flux: True
 
 FV3_GFS_2017_gfdlmp:
   atmos_model_nml:
@@ -181,6 +183,7 @@ FV3_GFS_2017_gfdlmp_regional:
     iopt_snf: 4
     iopt_stc: 1
     iopt_tbot: 2
+    iopt_trs: 2
     lgfdlmprad: True
     lheatstrg: False
     lndp_type: 0
@@ -254,6 +257,7 @@ FV3_GFS_v15p2:
     iopt_snf: 4
     iopt_stc: 1
     iopt_tbot: 2
+    iopt_trs: 2
     ldiag_ugwp: False
     lgfdlmprad: True
     lradar: !!python/none
@@ -308,6 +312,7 @@ FV3_GFS_v15_thompson_mynn_lam3km:
     iopt_snf: 4
     iopt_stc: 1
     iopt_tbot: 2
+    iopt_trs: 2
     iovr: 3
     ldiag_ugwp: false
     lgfdlmprad: false
