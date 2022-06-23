@@ -185,6 +185,7 @@
     random_clds = .false.
     redrag = .true.
     satmedmf = .false.
+    sfclay_compute_flux = .false.
     shal_cnv = .false.
     swhtr = .true.
     trans_trac = .true.

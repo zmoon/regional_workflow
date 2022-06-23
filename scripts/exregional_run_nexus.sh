@@ -86,14 +86,14 @@ eval ${PRE_TASK_CMDS}
 
 nprocs=$(( NNODES_RUN_NEXUS*PPN_RUN_NEXUS ))
 
-if [ -z "${RUN_CMD_NEXUS:-}" ] ; then
+if [ -z "${RUN_CMD_UTILS:-}" ] ; then
   print_err_msg_exit "\
   Run command was not set in machine file. \
-  Please set RUN_CMD_NEXUS for your platform"
+  Please set RUN_CMD_UTILS for your platform"
 else
-  RUN_CMD_NEXUS=$(eval echo ${RUN_CMD_NEXUS})
+  RUN_CMD_UTILS=$(eval echo ${RUN_CMD_UTILS})
   print_info_msg "$VERBOSE" "
-  All executables will be submitted with command \'${RUN_CMD_NEXUS}\'."
+  All executables will be submitted with command \'${RUN_CMD_UTILS}\'."
 fi
 
 #
@@ -190,7 +190,7 @@ fi
 #
 # Execute NEXUS
 #
-${RUN_CMD_NEXUS} ${EXECDIR}/nexus -c NEXUS_Config.rc -r grid_spec.nc || \
+${RUN_CMD_UTILS} ${EXECDIR}/nexus -c NEXUS_Config.rc -r grid_spec.nc || \
 print_err_msg_exit "\
 Call to execute nexus standalone for the FV3LAM failed."
 
