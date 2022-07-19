@@ -138,10 +138,19 @@ end_date=$( date --utc --date @$(( $( date --utc --date "${yyyymmdd} ${hh}" +%s 
 # script
 NEI2016="TRUE"
 TIMEZONES="TRUE"
-CEDS2014="FALSE"
-CEDS2017="FALSE"
-HTAP2010="FALSE"
+CEDS="TRUE"
+HTAP2010="TRUE"
+OMIHTAP="TRUE"
 MASKS="TRUE"
+NOAAGMD="TRUE"
+SOA="TRUE"
+EDGAR="TRUE"
+MEGAN="TRUE"
+MODIS_XLAI="TRUE"
+OLSON_MAP="TRUE"
+Yuan_XLAI="TRUE"
+GEOS="TRUE"
+AnnualScalar="TRUE"
 
 NEXUS_INPUT_BASE_DIR=${NEXUS_INPUT_DIR}
 ########################################################################
@@ -173,26 +182,94 @@ if [ "${NEI2016}" = "TRUE" ]; then #NEI2016
     mkdir_vrfy -p ${NEXUS_WORKDIR_INPUT}/NEI2016v1
     mkdir_vrfy -p ${NEXUS_WORKDIR_INPUT}/NEI2016v1/v2020-07
     mkdir_vrfy -p ${NEXUS_WORKDIR_INPUT}/NEI2016v1/v2020-07/${mm}
-    ./nexus_nei2016_linker.py --src_dir ${NEXUS_INPUT_BASE_DIR} --date ${yyyymmdd} --work_dir ${NEXUS_WORKDIR_INPUT}
+    mkdir_vrfy -p ${NEXUS_WORKDIR_INPUT}/NEI2016v1/v2022-07
+    mkdir_vrfy -p ${NEXUS_WORKDIR_INPUT}/NEI2016v1/v2022-07/${mm}
+    ./nexus_nei2016_linker.py --src_dir ${NEXUS_INPUT_BASE_DIR} --date ${yyyymmdd} --work_dir ${NEXUS_WORKDIR_INPUT} -v "v2020-07"
+    ./nexus_nei2016_linker.py --src_dir ${NEXUS_INPUT_BASE_DIR} --date ${yyyymmdd} --work_dir ${NEXUS_WORKDIR_INPUT} -v "v2022-07"
     ./nexus_nei2016_control_tilefix.py -f NEXUS_Config.rc -d ${yyyymmdd}
 fi
 
 if [ "${TIMEZONES}" = "TRUE" ]; then # TIME ZONES
-    cp_vrfy -r ${NEXUS_INPUT_BASE_DIR}/TIMEZONES ${NEXUS_WORKDIR_INPUT}
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/TIMEZONES ${NEXUS_WORKDIR_INPUT}/
 fi
 
 if [ "${MASKS}" = "TRUE" ]; then # MASKS
-    cp_vrfy -r ${NEXUS_INPUT_BASE_DIR}/MASKS ${NEXUS_WORKDIR_INPUT}
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/MASKS ${NEXUS_WORKDIR_INPUT}/
 fi
+
+if [ "${CEDS}" = "TRUE" ]; then #CEDS
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/CEDS ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${HTAP2010}" = "TRUE" ]; then #CEDS2014
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/HTAP ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${OMIHTAP}" = "TRUE" ]; then #CEDS2014
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/OMI-HTAP_2019 ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${NOAAGMD}" = "TRUE" ]; then #NOAA_GMD
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/NOAA_GMD ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${SOA}" = "TRUE" ]; then #SOA
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/SOA ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${EDGAR}" = "TRUE" ]; then #EDGARv42
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/EDGARv42 ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${MEGAN}" = "TRUE" ]; then #MEGAN
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/MEGAN ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${OLSON_MAP}" = "TRUE" ]; then #OLSON_MAP
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/OLSON_MAP ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${Yuan_XLAI}" = "TRUE" ]; then #Yuan_XLAI
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/Yuan_XLAI ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${GEOS}" = "TRUE" ]; then #GEOS
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/GEOS_0.5x0.625 ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${AnnualScalar}" = "TRUE" ]; then #ANNUAL_SCALAR
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/AnnualScalar ${NEXUS_WORKDIR_INPUT}/
+fi
+
+if [ "${MODIS_XLAI}" = "TRUE" ]; then #MODIS_XLAI
+    ln_vrfy -sf ${NEXUS_INPUT_BASE_DIR}/MODIS_XLAI ${NEXUS_WORKDIR_INPUT}/
+fi
+
 
 #
 #----------------------------------------------------------------------
 #
 # Execute NEXUS
 #
-${RUN_CMD_UTILS} ${EXECDIR}/nexus -c NEXUS_Config.rc -r grid_spec.nc || \
+${RUN_CMD_UTILS} ${EXECDIR}/nexus -c NEXUS_Config.rc -r grid_spec.nc -o NEXUS_Expt_ugly.nc || \
 print_err_msg_exit "\
 Call to execute nexus standalone for the FV3LAM failed."
+
+#
+#-----------------------------------------------------------------------
+#
+# make nexus output pretty
+#
+cp_vrfy ${ARL_NEXUS_DIR}/utils/python/make_nexus_output_pretty.py .
+./make_nexus_output_pretty.py --src ${NEXUS_WORKDIR}/NEXUS_Expt_ugly.nc --grid ${NEXUS_WORKDIR}/grid_spec.nc -o ${NEXUS_WORKDIR}/NEXUS_Expt_pretty.nc -t ${NEXUS_WORKDIR}/HEMCO_sa_Time.rc
+
+#
+#-----------------------------------------------------------------------
+#
+# run MEGAN NCO script
+#
+cp_vrfy ${ARL_NEXUS_DIR}/utils/run_nco_combine_ant_bio.sh .
+./run_nco_combine_ant_bio.sh NEXUS_Expt_pretty.nc NEXUS_Expt.nc
 
 #
 # Print message indicating successful completion of script.
