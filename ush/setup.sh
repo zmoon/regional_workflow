@@ -783,12 +783,11 @@ done
 #
 #-----------------------------------------------------------------------
 # Check cycle increment for cycle frequency (cycl_freq).
-# only if INCR_CYCL_FREQ < 24.
 #-----------------------------------------------------------------------
 #
+cycl_intv=( $( printf "%02d " "$(( 24/$i ))" ) )
+
 if [ "${INCR_CYCL_FREQ}" -lt "24" ] && [ "$i" -gt "1" ]; then
-  cycl_intv="$(( 24/$i ))"
-  cycl_intv=( $( printf "%02d " "${cycl_intv}" ) )
   INCR_CYCL_FREQ=( $( printf "%02d " "${INCR_CYCL_FREQ}" ) )
   if [ "${cycl_intv}" -ne "${INCR_CYCL_FREQ}" ]; then
     print_err_msg_exit "\

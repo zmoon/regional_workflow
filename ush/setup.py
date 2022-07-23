@@ -503,11 +503,11 @@ def setup():
     #
     #-----------------------------------------------------------------------
     # Check cycle increment for cycle frequency (cycl_freq).
-    # only if INCR_CYCL_FREQ < 24.
     #-----------------------------------------------------------------------
     #
+    global cycl_intv
+    cycl_intv=(24//i)
     if INCR_CYCL_FREQ < 24 and i > 1:
-      cycl_intv=(24//i)
       if cycl_intv != INCR_CYCL_FREQ:
         print_err_msg_exit(f'''
             The number of CYCL_HRS does not match with that expected by INCR_CYCL_FREQ:

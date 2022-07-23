@@ -167,7 +167,7 @@ tasks; and the "FCST" type is used for the RUN_FCST_TN task.
   </cycledef>
 {%- endfor %}
 {%- if cycl_next != cycl_first %}
-  <cycledef group="cycled"  >{{ cycl_next ~ " " ~ cycl_last ~ " " ~ cycl_freq }}</cycledef>
+  <cycledef group="cycled">{{ cycl_next ~ " " ~ cycl_last ~ " " ~ cycl_delt }}</cycledef>
 {%- endif %}
 
   <log>

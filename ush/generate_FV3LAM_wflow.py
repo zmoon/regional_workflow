@@ -391,6 +391,7 @@ def generate_FV3LAM_wflow():
               'cycl_first': ALL_CDATES[0]+"00",
               'cycl_next': (ALL_CDATES[1] - ALL_CDATES[0])+"00",
               'cycl_last': ALL_CDATES[-1]+"00",
+              'cycl_delt': cycl_intv+":00:00",
               'run_task_add_aqm_ics': RUN_TASK_ADD_AQM_ICS,
               'run_task_add_aqm_lbcs': RUN_TASK_ADD_AQM_LBCS,
               'run_task_run_nexus': RUN_TASK_RUN_NEXUS,
