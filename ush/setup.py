@@ -328,7 +328,7 @@ def setup():
     VX_CONFIG_DIR = os.path.join(TEMPLATE_DIR,"parm")
     METPLUS_CONF = os.path.join(TEMPLATE_DIR,"parm","metplus")
     MET_CONFIG = os.path.join(TEMPLATE_DIR,"parm","met")
-    
+    ARL_NEXUS_DIR = os.path.join(SR_WX_APP_TOP_DIR,"src/arl_nexus")
     #
     #-----------------------------------------------------------------------
     #
@@ -910,6 +910,7 @@ def setup():
     global DATA_TABLE_TMPL_FP, DIAG_TABLE_TMPL_FP, FIELD_TABLE_TMPL_FP, \
            MODEL_CONFIG_TMPL_FP, NEMS_CONFIG_TMPL_FP
     global FV3_NML_BASE_SUITE_FP, FV3_NML_YAML_CONFIG_FP,FV3_NML_BASE_ENS_FP
+    global AQM_RC_FN, AQM_RC_TMPL_FN, USER_AQM_RC_DIR, AQM_RC_TMPL_FP, ARL_NEXUS_DIR
 
     dot_ccpp_phys_suite_or_null=f".{CCPP_PHYS_SUITE}"
     
@@ -922,6 +923,7 @@ def setup():
     FIELD_TABLE_FN = "field_table"
     MODEL_CONFIG_FN = "model_configure"
     NEMS_CONFIG_FN = "nems.configure"
+    AQM_RC_FN = "aqm.rc"
     #----------------------------------
 
     if DATA_TABLE_TMPL_FN is None:
