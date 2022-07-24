@@ -489,7 +489,6 @@ def setup():
     # Check cycle increment for cycle frequency (cycl_freq).
     #-----------------------------------------------------------------------
     #
-    global cycl_intv
     cycl_intv=(24//i)
     if INCR_CYCL_FREQ < 24 and i > 1:
       if cycl_intv != INCR_CYCL_FREQ:
@@ -528,12 +527,6 @@ def setup():
       incr_cycl_freq=INCR_CYCL_FREQ)
     
     NUM_CYCLES=len(ALL_CDATES)
-    
-    if NUM_CYCLES > 90:
-      ALL_CDATES=None
-      print_info_msg(f'''
-        Too many cycles in ALL_CDATES to list, redefining in abbreviated form."
-        ALL_CDATES="{DATE_FIRST_CYCL}{CYCL_HRS[0]}...{DATE_LAST_CYCL}{CYCL_HRS[-1]}''')
 
     global CYCL_NEXT, CYCL_FIRST, CYCL_LAST, CYCL_DELT
     if NUM_CYCLES == 1:
@@ -544,6 +537,13 @@ def setup():
     CYCL_FIRST = ALL_CDATES[0]+"00"
     CYCL_LAST = ALL_CDATES[-1]+"00"
     CYCL_DELT = f"{cycl_intv:02d}:00:00"
+    
+    if NUM_CYCLES > 90:
+      ALL_CDATES=None
+      print_info_msg(f'''
+        Too many cycles in ALL_CDATES to list, redefining in abbreviated form."
+        ALL_CDATES="{DATE_FIRST_CYCL}{CYCL_HRS[0]}...{DATE_LAST_CYCL}{CYCL_HRS[-1]}''')
+
     #
     #-----------------------------------------------------------------------
     #
