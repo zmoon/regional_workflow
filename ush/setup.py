@@ -435,22 +435,6 @@ def setup():
     #
     #-----------------------------------------------------------------------
     #
-    # Set CPL to TRUE/FALSE based on FCST_MODEL.
-    #
-    #-----------------------------------------------------------------------
-    #
-    global CPL
-    if FCST_MODEL == "ufs-weather-model":
-      CPL=False
-    elif FCST_MODEL == "fv3gfs_aqm":
-      CPL=True
-    else:
-      print_err_msg_exit(f'''
-        The coupling flag CPL has not been specified for this value of FCST_MODEL:
-          FCST_MODEL = \"{FCST_MODEL}\"''')
-    #
-    #-----------------------------------------------------------------------
-    #
     # Make sure RESTART_INTERVAL is set to an integer value if present
     #
     #-----------------------------------------------------------------------
@@ -910,7 +894,7 @@ def setup():
     global DATA_TABLE_TMPL_FP, DIAG_TABLE_TMPL_FP, FIELD_TABLE_TMPL_FP, \
            MODEL_CONFIG_TMPL_FP, NEMS_CONFIG_TMPL_FP
     global FV3_NML_BASE_SUITE_FP, FV3_NML_YAML_CONFIG_FP,FV3_NML_BASE_ENS_FP
-    global AQM_RC_FN, AQM_RC_TMPL_FN, USER_AQM_RC_DIR, AQM_RC_TMPL_FP, ARL_NEXUS_DIR
+    global AQM_RC_FN, AQM_RC_TMPL_FN, USER_AQM_RC_DIR, AQM_RC_TMPL_FP
 
     dot_ccpp_phys_suite_or_null=f".{CCPP_PHYS_SUITE}"
     
@@ -936,6 +920,10 @@ def setup():
        MODEL_CONFIG_TMPL_FN = MODEL_CONFIG_FN
     if NEMS_CONFIG_TMPL_FN is None:
        NEMS_CONFIG_TMPL_FN = NEMS_CONFIG_FN
+    if AQM_RC_TMPL_FN is None:
+       AQM_RC_TMPL_FN = AQM_RC_FN
+    if USER_AQM_RC_DIR is None:
+       USER_AQM_RC_DIR = TEMPLATE_DIR
     
     DATA_TABLE_TMPL_FP = os.path.join(TEMPLATE_DIR,DATA_TABLE_TMPL_FN)
     DIAG_TABLE_TMPL_FP = os.path.join(TEMPLATE_DIR,DIAG_TABLE_TMPL_FN)
@@ -945,6 +933,7 @@ def setup():
     FV3_NML_BASE_ENS_FP = os.path.join(EXPTDIR,FV3_NML_BASE_ENS_FN)
     MODEL_CONFIG_TMPL_FP = os.path.join(TEMPLATE_DIR,MODEL_CONFIG_TMPL_FN)
     NEMS_CONFIG_TMPL_FP = os.path.join(TEMPLATE_DIR,NEMS_CONFIG_TMPL_FN)
+    AQM_RC_TMPL_FP = os.path.join(USER_AQM_RC_DIR,AQM_RC_TMPL_FN)
     #
     #-----------------------------------------------------------------------
     #

@@ -464,10 +464,6 @@ FCST_LEN_HRS: "24"
 # which the top level routine in the dynamics is called as well as the 
 # frequency with which the physics is called."
 #
-# CPL: parameter for coupling
-# (set automatically based on FCST_MODEL in ush/setup.sh)
-# (ufs-weather-model:FALSE, fv3gfs_aqm:TRUE)
-#
 # RESTART_INTERVAL:
 # frequency of the output restart files (unit:hour). 
 # Default=0: restart files are produced at the end of a forecast run
@@ -2015,7 +2011,20 @@ OMP_STACKSIZE_RUN_POST: "1024m"
 #
 #-----------------------------------------------------------------------
 #
-# Parameters for RRFS-CMAQ
+# Parameters for Air Quality Modeling
+#
+# CPL_AQM:
+# Coupling flag for air quality modeling
+#
+# RUN_TASK_ADD_AQM_LBCS:
+# Flag that determines whether the air quality LBCs generation
+# task is to be run. If this is set to "TRUE", air quality lateral
+# boundary conditions are retrieved and added to meteorological LBCs.
+# If it is set to "FALSE", air quality LBCs are not included.
+#
+# RUN_TASK_RUN_NEXUS:
+# Same as RUN_TASK_MAKE_GRID but for the air quality emission generation
+# task.
 #
 # AQM_RC_TMPL_FN:
 # Template file name of resource file for NOAA Air Quality Model (AQM)
@@ -2072,6 +2081,38 @@ OMP_STACKSIZE_RUN_POST: "1024m"
 #
 #-----------------------------------------------------------------------
 #
+CPL_AQM: "FALSE"
+
+ADD_AQM_ICS_TN: "add_aqm_ics"
+ADD_AQM_LBCS_TN: "add_aqm_lbcs"
+RUN_NEXUS_TN: "run_nexus"
+RUN_POST_STAT_TN: "run_post_stat"
+
+RUN_TASK_ADD_AQM_ICS: "FALSE"
+RUN_TASK_ADD_AQM_LBCS: "FALSE"
+RUN_TASK_RUN_NEXUS: "FALSE"
+RUN_TASK_RUN_POST_STAT: "FALSE"
+
+NNODES_ADD_AQM_ICS: "1"
+NNODES_ADD_AQM_LBCS: "1"
+NNODES_RUN_NEXUS: "1"
+NNODES_RUN_POST_STAT: "1"
+
+PPN_ADD_AQM_ICS: "1"
+PPN_ADD_AQM_LBCS: "24"
+PPN_RUN_NEXUS: "24"
+PPN_RUN_POST_STAT: "1"
+
+WTIME_ADD_AQM_ICS: "00:30:00"
+WTIME_ADD_AQM_LBCS: "00:30:00"
+WTIME_RUN_NEXUS: "00:30:00"
+WTIME_RUN_POST_STAT: "00:10:00"
+
+MAXTRIES_ADD_AQM_ICS: "2"
+MAXTRIES_ADD_AQM_LBCS: "2"
+MAXTRIES_RUN_NEXUS: "2"
+MAXTRIES_RUN_POST_STAT: "2"
+
 USER_AQM_RC_DIR: ""
 AQM_RC_TMPL_FN: "aqm.rc"
 AQM_CONFIG_DIR: ""
@@ -2094,7 +2135,7 @@ NEXUS_FIX_DIR: ""
 NEXUS_GRID_FN: "grid_spec_GSD_HRRR_25km.nc"
 
 RESTART_WORKFLOW: "FALSE"
-RESTART_CYCLE_DIR: "/path/to/restart/cycle/dir"
+RESTART_CYCLE_DIR: "/paTh/to/restart/cycle/dir"
 #
 #-----------------------------------------------------------------------
 #

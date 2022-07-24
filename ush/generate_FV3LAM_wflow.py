@@ -135,6 +135,11 @@ def generate_FV3LAM_wflow():
         cycl_hrs_str = [ f"{c:02d}" for c in CYCL_HRS ]
         cdate_first_cycl = DATE_FIRST_CYCL + timedelta(hours=CYCL_HRS[0])
 
+        if len(ALL_CDATES) == 1:
+            cycl_next = ALL_CDATES[0]+"00"
+        else:
+            cycl_next = ALL_CDATES[1]+"00"
+
         # Dictionary of settings
         settings = {
             #
@@ -389,7 +394,7 @@ def generate_FV3LAM_wflow():
               'restart_workflow': RESTART_WORKFLOW,
               'restart_cycle_dir': RESTART_CYCLE_DIR,
               'cycl_first': ALL_CDATES[0]+"00",
-              'cycl_next': (ALL_CDATES[1] - ALL_CDATES[0])+"00",
+              'cycl_next': cycl_next,
               'cycl_last': ALL_CDATES[-1]+"00",
               'cycl_delt': cycl_intv+":00:00",
               'run_task_add_aqm_ics': RUN_TASK_ADD_AQM_ICS,
