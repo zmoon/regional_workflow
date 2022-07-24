@@ -534,6 +534,16 @@ def setup():
       print_info_msg(f'''
         Too many cycles in ALL_CDATES to list, redefining in abbreviated form."
         ALL_CDATES="{DATE_FIRST_CYCL}{CYCL_HRS[0]}...{DATE_LAST_CYCL}{CYCL_HRS[-1]}''')
+
+    global CYCL_NEXT, CYCL_FIRST, CYCL_LAST, CYCL_DELT
+    if NUM_CYCLES == 1:
+      CYCL_NEXT = ALL_CDATES[0]+"00"
+    else:
+      CYCL_NEXT = ALL_CDATES[1]+"00"
+
+    CYCL_FIRST = ALL_CDATES[0]+"00"
+    CYCL_LAST = ALL_CDATES[-1]+"00"
+    CYCL_DELT = f"{cycl_intv:02d}:00:00"
     #
     #-----------------------------------------------------------------------
     #
@@ -913,9 +923,11 @@ def setup():
     if DATA_TABLE_TMPL_FN is None:
        DATA_TABLE_TMPL_FN = DATA_TABLE_FN
     if DIAG_TABLE_TMPL_FN is None:
-       DIAG_TABLE_TMPL_FN = f"{DIAG_TABLE_FN}{dot_ccpp_phys_suite_or_null}"
+       DIAG_TABLE_TMPL_FN = DIAG_TABLE_FN   
+    DIAG_TABLE_TMPL_FN = f"{DIAG_TABLE_TMPL_FN}{dot_ccpp_phys_suite_or_null}"
     if FIELD_TABLE_TMPL_FN is None:
-       FIELD_TABLE_TMPL_FN = f"{FIELD_TABLE_FN}{dot_ccpp_phys_suite_or_null}"
+       FIELD_TABLE_TMPL_FN = FIELD_TABLE_FN
+    FIELD_TABLE_TMPL_FN = f"{FIELD_TABLE_TMPL_FN}{dot_ccpp_phys_suite_or_null}"
     if MODEL_CONFIG_TMPL_FN is None:
        MODEL_CONFIG_TMPL_FN = MODEL_CONFIG_FN
     if NEMS_CONFIG_TMPL_FN is None:
@@ -2046,15 +2058,6 @@ def setup():
     #-----------------------------------------------------------------------
     #
     msg = f"""
-        #
-        #-----------------------------------------------------------------------
-        #
-        # Flag in the \"{MODEL_CONFIG_FN}\" file for coupling the ocean model to 
-        # the weather model.
-        #
-        #-----------------------------------------------------------------------
-        #
-        CPL='{type_to_str(CPL)}'
         #
         #-----------------------------------------------------------------------
         #

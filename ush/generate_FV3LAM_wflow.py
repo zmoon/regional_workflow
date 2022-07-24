@@ -135,11 +135,6 @@ def generate_FV3LAM_wflow():
         cycl_hrs_str = [ f"{c:02d}" for c in CYCL_HRS ]
         cdate_first_cycl = DATE_FIRST_CYCL + timedelta(hours=CYCL_HRS[0])
 
-        if len(ALL_CDATES) == 1:
-            cycl_next = ALL_CDATES[0]+"00"
-        else:
-            cycl_next = ALL_CDATES[1]+"00"
-
         # Dictionary of settings
         settings = {
             #
@@ -393,10 +388,10 @@ def generate_FV3LAM_wflow():
               'run_post_stat_tn': RUN_POST_STAT_TN,
               'restart_workflow': RESTART_WORKFLOW,
               'restart_cycle_dir': RESTART_CYCLE_DIR,
-              'cycl_first': ALL_CDATES[0]+"00",
-              'cycl_next': cycl_next,
-              'cycl_last': ALL_CDATES[-1]+"00",
-              'cycl_delt': cycl_intv+":00:00",
+              'cycl_first': CYCL_FIRST,
+              'cycl_next': CYCL_NEXT,
+              'cycl_last': CYCL_LAST,
+              'cycl_delt': CYCL_DELT,
               'run_task_add_aqm_ics': RUN_TASK_ADD_AQM_ICS,
               'run_task_add_aqm_lbcs': RUN_TASK_ADD_AQM_LBCS,
               'run_task_run_nexus': RUN_TASK_RUN_NEXUS,
@@ -766,10 +761,10 @@ def generate_FV3LAM_wflow():
         'bc_update_interval': LBC_SPEC_INTVL_HRS
     }
  
-    if (CCPP_PHYS_SUITE == "FV3_GFS_2017_gfdl_mp") or \ 
-       (CCPP_PHYS_SUITE == "FV3_GFS_2017_gfdlmp_regional") or \
-       (CCPP_PHYS_SUITE == "FV3_GFS_v15p2") or \ 
-       (CCPP_PHYS_SUITE == "FV3_GFS_v16" ):
+    if ( CCPP_PHYS_SUITE == "FV3_GFS_2017_gfdl_mp" or
+         CCPP_PHYS_SUITE == "FV3_GFS_2017_gfdlmp_regional" or
+         CCPP_PHYS_SUITE == "FV3_GFS_v15p2" or
+         CCPP_PHYS_SUITE == "FV3_GFS_v16" ):
         if CPL_AQM:
             settings['fv_core_nml'].append = {
                 'dnats': 4
