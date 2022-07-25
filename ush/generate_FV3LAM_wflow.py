@@ -742,7 +742,9 @@ def generate_FV3LAM_wflow():
         'blocksize': BLOCKSIZE,
         'ccpp_suite': CCPP_PHYS_SUITE
     }
-    settings['fv_core_nml'] = {
+
+    fv_core_nml_dict = {}
+    fv_core_nml_dict.update({
         'target_lon': LON_CTR,
         'target_lat': LAT_CTR,
         'nrows_blend': HALO_BLEND,
@@ -759,22 +761,23 @@ def generate_FV3LAM_wflow():
         'npy': npy,
         'layout': [LAYOUT_X, LAYOUT_Y],
         'bc_update_interval': LBC_SPEC_INTVL_HRS
-    }
- 
+    })
     if ( CCPP_PHYS_SUITE == "FV3_GFS_2017_gfdl_mp" or
          CCPP_PHYS_SUITE == "FV3_GFS_2017_gfdlmp_regional" or
          CCPP_PHYS_SUITE == "FV3_GFS_v15p2" or
          CCPP_PHYS_SUITE == "FV3_GFS_v16" ):
         if CPL_AQM:
-            settings['fv_core_nml'].append = {
+            fv_core_nml_dict.update({
                 'dnats': 4
-            }
+            })
         else:
-            settings['fv_core_nml'].append = {
+            fv_core_nml_dict.update({
                 'dnats': 1
-            }
+            })
+    settings['fv_core_nml'] = fv_core_nml_dict
 
-    settings['gfs_physics_nml'] = {
+    gfs_physics_nml_dict = {}
+    gfs_physics_nml_dict.update({
         'kice': kice or None,
         'lsoil': lsoil or None,
         'do_shum': DO_SHUM,
@@ -785,10 +788,9 @@ def generate_FV3LAM_wflow():
         'n_var_lndp': N_VAR_LNDP,
         'lndp_type': LNDP_TYPE,
         'fhcyc': FHCYC_LSM_SPP_OR_NOT
-    }
-
+    })
     if CPL_AQM:
-        settings['gfs_physics_nml'].append = {
+        gfs_physics_nml_dict.upate({
             'cplaqm': "TRUE",    
             'cplocn2atm': "FALSE",
             'fscav_aero': ["aacd:0.0", "acet:0.0", "acrolein:0.0", "acro_primary:0.0", "ald2:0.0", 
@@ -808,7 +810,8 @@ def generate_FV3LAM_wflow():
                            "tolu:0.0", "vivpo1:0.0", "vlvoo1:0.0", "vlvoo2:0.0", "vlvpo1:0.0", 
                            "vsvoo1:0.0", "vsvoo2:0.0", "vsvoo3:0.0", "vsvpo1:0.0", "vsvpo2:0.0", 
                            "vsvpo3:0.0", "xopn:0.0", "xylmn:0.0", "*:0.2" ]
-        }
+        })
+    settings['gfs_physics_nml'] = gfs_physics_nml_dict
 
     #
     # Add to "settings" the values of those namelist variables that specify
