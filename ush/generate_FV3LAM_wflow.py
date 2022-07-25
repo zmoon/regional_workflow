@@ -801,8 +801,8 @@ def generate_FV3LAM_wflow():
     })
     if CPL_AQM:
         gfs_physics_nml_dict.update({
-            'cplaqm': "TRUE",    
-            'cplocn2atm': "FALSE",
+            'cplaqm': True,    
+            'cplocn2atm': False,
             'fscav_aero': ["aacd:0.0", "acet:0.0", "acrolein:0.0", "acro_primary:0.0", "ald2:0.0", 
                            "ald2_primary:0.0", "aldx:0.0", "benzene:0.0", "butadiene13:0.0", "cat1:0.0", 
                            "cl2:0.0", "clno2:0.0", "co:0.0", "cres:0.0", "cron:0.0", 

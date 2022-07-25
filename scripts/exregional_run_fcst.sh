@@ -20,7 +20,7 @@
 . $USHDIR/create_model_configure_file.sh
 . $USHDIR/create_diag_table_file.sh
 . $USHDIR/create_nems_configure_file.sh
-if [ "${CPL_AQM}" = "TRUE" ]; then
+if [ ${CPL_AQM} = "TRUE" ]; then
   . $USHDIR/create_aqm_rc_file.sh
 fi
 #
@@ -468,7 +468,7 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
   cp_vrfy ${UPP_DIR}/parm/params_grib2_tbl_new .
 fi
 
-if [ "${CPL_AQM}" = "TRUE" ]; then
+if [ ${CPL_AQM} = "TRUE" ]; then
 #
 #-----------------------------------------------------------------------
 #
@@ -477,7 +477,8 @@ if [ "${CPL_AQM}" = "TRUE" ]; then
 #-----------------------------------------------------------------------
 #
   init_concentrations="false"
-  if [ "${RESTART_WORKFLOW}" = "FALSE" ] && [ "${CDATE}" = "${DATE_FIRST_CYCL}${CYCL_HRS[0]}" ]; then
+  cdate_first_hr=( $( printf "%02d " "${CYCL_HRS[0]}" ) )
+  if [ "${RESTART_WORKFLOW}" = "FALSE" ] && [ "${CDATE}" = "${DATE_FIRST_CYCL}${cdate_first_hr}" ]; then
     init_concentrations="true"
   fi
 #
