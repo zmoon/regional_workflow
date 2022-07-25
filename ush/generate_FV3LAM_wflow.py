@@ -135,6 +135,16 @@ def generate_FV3LAM_wflow():
         cycl_hrs_str = [ f"{c:02d}" for c in CYCL_HRS ]
         cdate_first_cycl = DATE_FIRST_CYCL + timedelta(hours=CYCL_HRS[0])
 
+        CYCL_FIRST = date_to_str(DATE_FIRST_CYCL,True) + cycl_hrs_str[0] + "00"
+        if NUM_CYCLES == 1:
+            CYCL_NEXT = CYCL_FIRST
+        else:
+            if len(CYCL_HRS) == 1:
+                CYCL_NEXT = date_to_str(DATE_FIRST_CYCL + timedelta(hours=INCR_CYCL_FREQ), False)+cycl_hrs_str[0]+"00"
+            else:
+                CYCL_NEXT = date_to_str(DATE_FIRST_CYCL,True) + cycl_hrs_str[1] + "00"
+        CYCL_LAST = date_to_str(DATE_LAST_CYCL,True) + cycl_hrs_str[-1] + "00"
+
         # Dictionary of settings
         settings = {
             #
@@ -790,7 +800,7 @@ def generate_FV3LAM_wflow():
         'fhcyc': FHCYC_LSM_SPP_OR_NOT
     })
     if CPL_AQM:
-        gfs_physics_nml_dict.upate({
+        gfs_physics_nml_dict.update({
             'cplaqm': "TRUE",    
             'cplocn2atm': "FALSE",
             'fscav_aero': ["aacd:0.0", "acet:0.0", "acrolein:0.0", "acro_primary:0.0", "ald2:0.0", 

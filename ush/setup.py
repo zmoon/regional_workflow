@@ -314,7 +314,7 @@ def setup():
     # Define some other useful paths
     #
     global USHDIR, SCRIPTSDIR, JOBSDIR,SORCDIR, SRC_DIR, PARMDIR, MODULES_DIR, EXECDIR, TEMPLATE_DIR, \
-           VX_CONFIG_DIR, METPLUS_CONF, MET_CONFIG
+           VX_CONFIG_DIR, METPLUS_CONF, MET_CONFIG, ARL_NEXUS_DIR
 
     USHDIR = os.path.join(HOMErrfs,"ush")
     SCRIPTSDIR = os.path.join(HOMErrfs,"scripts")
@@ -519,23 +519,15 @@ def setup():
     #
     #-----------------------------------------------------------------------
     #
+    global NUM_CYCLES, CYCL_DELT
 
     ALL_CDATES = set_cycle_dates( \
       date_start=DATE_FIRST_CYCL,
       date_end=DATE_LAST_CYCL,
       cycle_hrs=CYCL_HRS,
-      incr_cycl_freq=INCR_CYCL_FREQ)
+      incr_cycl_freq=cycl_intv)
     
     NUM_CYCLES=len(ALL_CDATES)
-
-    global CYCL_NEXT, CYCL_FIRST, CYCL_LAST, CYCL_DELT
-    if NUM_CYCLES == 1:
-      CYCL_NEXT = ALL_CDATES[0]+"00"
-    else:
-      CYCL_NEXT = ALL_CDATES[1]+"00"
-
-    CYCL_FIRST = ALL_CDATES[0]+"00"
-    CYCL_LAST = ALL_CDATES[-1]+"00"
     CYCL_DELT = f"{cycl_intv:02d}:00:00"
     
     if NUM_CYCLES > 90:
@@ -1875,6 +1867,7 @@ def setup():
         VX_CONFIG_DIR='{VX_CONFIG_DIR}'
         METPLUS_CONF='{METPLUS_CONF}'
         MET_CONFIG='{MET_CONFIG}'
+        ARL_NEXUS_DIR='{ARL_NEXUS_DIR}'
         UFS_WTHR_MDL_DIR='{UFS_WTHR_MDL_DIR}'
         UFS_UTILS_DIR='{UFS_UTILS_DIR}'
         SFC_CLIMO_INPUT_DIR='{SFC_CLIMO_INPUT_DIR}'
@@ -1905,12 +1898,14 @@ def setup():
         FIELD_TABLE_FN='{FIELD_TABLE_FN}'
         MODEL_CONFIG_FN='{MODEL_CONFIG_FN}'
         NEMS_CONFIG_FN='{NEMS_CONFIG_FN}'
+        AQM_RC_FN='{AQM_RC_FN}'
 
         DATA_TABLE_TMPL_FN='{DATA_TABLE_TMPL_FN}'
         DIAG_TABLE_TMPL_FN='{DIAG_TABLE_TMPL_FN}'
         FIELD_TABLE_TMPL_FN='{FIELD_TABLE_TMPL_FN}'
         MODEL_CONFIG_TMPL_FN='{MODEL_CONFIG_TMPL_FN}'
         NEMS_CONFIG_TMPL_FN='{NEMS_CONFIG_TMPL_FN}'
+        AQM_RC_TMPL_FN='{AQM_RC_TMPL_FN}'
         
         DATA_TABLE_TMPL_FP='{DATA_TABLE_TMPL_FP}'
         DIAG_TABLE_TMPL_FP='{DIAG_TABLE_TMPL_FP}'
@@ -1920,7 +1915,8 @@ def setup():
         FV3_NML_BASE_ENS_FP='{FV3_NML_BASE_ENS_FP}'
         MODEL_CONFIG_TMPL_FP='{MODEL_CONFIG_TMPL_FP}'
         NEMS_CONFIG_TMPL_FP='{NEMS_CONFIG_TMPL_FP}'
-        
+        AQM_RC_TMPL_FP='{AQM_RC_TMPL_FP}'        
+
         CCPP_PHYS_SUITE_FN='{CCPP_PHYS_SUITE_FN}'
         CCPP_PHYS_SUITE_IN_CCPP_FP='{CCPP_PHYS_SUITE_IN_CCPP_FP}'
         CCPP_PHYS_SUITE_FP='{CCPP_PHYS_SUITE_FP}'
