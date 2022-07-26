@@ -161,6 +161,8 @@ if [ ${RUN_ADD_AQM_GEFS_LBCS} = "TRUE" ]; then
 
   NUMTS="$(( ${FCST_LEN_HRS} / ${LBC_SPEC_INTVL_HRS} + 1 ))"
 
+  AQM_GEFS_CYC=$( printf "%02d" "${AQM_GEFS_CYC}" )
+
 cat > gefs2lbc-nemsio.ini <<EOF
 &control
  tstepdiff=${GEFS_CYC_DIFF}
