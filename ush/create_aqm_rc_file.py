@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 
 import os
+import sys
+import argparse
 import unittest
 from datetime import datetime
 from textwrap import dedent
 
-from python_utils import import_vars, set_env_var, print_input_args, \
-                         print_info_msg, print_err_msg_exit, lowercase, cfg_to_yaml_str
+from python_utils import import_vars, set_env_var, print_input_args, str_to_type, \
+                         print_info_msg, print_err_msg_exit, lowercase, cfg_to_yaml_str, \
+                         load_shell_config
 
 from fill_jinja_template import fill_jinja_template
 
 def create_aqm_rc_file(cdate,run_dir,init_concentrations):
-    """ Creates the aqm.rc file in the specified run directory
+    """ Creates an aqm.rc file in the specified run directory
 
     Args:
         cdate: cycle date
@@ -44,10 +47,7 @@ def create_aqm_rc_file(cdate,run_dir,init_concentrations):
     #
     # Extract from cdate the starting year, month, and day of the forecast.
     #
-    yyyy=cdate.year
-    mm=cdate.month
-    dd=cdate.day
-    yyyymmdd=yyyy+mm+dd
+    yyyymmdd=cdate.strftime('%Y%m%d')
     #
     # Set parameters in the aqm.rc file.
     #
@@ -103,8 +103,45 @@ def create_aqm_rc_file(cdate,run_dir,init_concentrations):
 
     return True
 
+def parse_args(argv):
+    """ Parse command line arguments"""
+    parser = argparse.ArgumentParser(
+        description='Creates aqm.rc file.'
+    )
+
+    parser.add_argument('-r', '--run-dir',
+                        dest='run_dir',
+                        required=True,
+                        help='Run directory.')
+
+    parser.add_argument('-c', '--cdate',
+                        dest='cdate',
+                        required=True,
+                        help='Date string in YYYYMMDD format.')
+
+    parser.add_argument('-i', '--init-concentrations',
+                        dest='init_concentrations',
+                        required=True,
+                        help='Flag for initial concentrations.')
+
+    parser.add_argument('-p', '--path-to-defns',
+                        dest='path_to_defns',
+                        required=True,
+                        help='Path to var_defns file.')
+
+    return parser.parse_args(argv)
+
+if __name__ == '__main__':
+    args = parse_args(sys.argv[1:])
+    cfg = load_shell_config(args.path_to_defns)
+    import_vars(dictionary=cfg)
+    create_aqm_rc_file( \
+        run_dir = args.run_dir, \
+        cdate = str_to_type(args.cdate), \
+        init_concentrations = str_to_type(args.init_concentrations) )
+
 class Testing(unittest.TestCase):
-    def test_create_model_configure_file(self):
+    def test_create_aqm_rc_file(self):
         path = os.path.join(os.getenv('USHDIR'), "test_data")
         self.assertTrue(\
                 create_aqm_rc_file( \

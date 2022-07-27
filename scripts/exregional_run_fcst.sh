@@ -430,7 +430,7 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
   CUSTOM_POST_CONFIG_FP = \"${CUSTOM_POST_CONFIG_FP}\"
 ===================================================================="
   else
-    if [ ${CPL_AQM} = "TRUE" ]; then
+    if [ "${CPL_AQM}" = "TRUE" ]; then
 # Combine two post flat files of LAM and CMAQ
       cp_vrfy "${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt" .
       cp_vrfy "${UPP_DIR}/parm/postxconfig-NT-fv3lam_cmaq.txt" .
@@ -454,7 +454,7 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
   cp_vrfy ${UPP_DIR}/parm/params_grib2_tbl_new .
 fi
 
-if [ ${CPL_AQM} = "TRUE" ]; then
+if [ "${CPL_AQM}" = "TRUE" ]; then
 #
 #-----------------------------------------------------------------------
 #
@@ -475,16 +475,16 @@ if [ ${CPL_AQM} = "TRUE" ]; then
 #
 #-----------------------------------------------------------------------
 #
-  create_aqm_rc_file \
-  cdate="${cdate}" \
-  run_dir="${run_dir}" \
-  init_concentrations="${init_concentrations}" \
-  || print_err_msg_exit "\
+  python3 $USHDIR/create_aqm_rc_file.py \
+    --path-to-defns ${GLOBAL_VAR_DEFNS_FP} \
+    --cdate "$cdate" \
+    --run-dir "${run_dir}" \
+    --init-concentration "${init_concentrations}" \
+    || print_err_msg_exit "\
 Call to function to create an aqm.rc file for the current
 cycle's (cdate) run directory (run_dir) failed:
   cdate = \"${cdate}\"
   run_dir = \"${run_dir}\""
-
 fi
 #
 #-----------------------------------------------------------------------
@@ -544,10 +544,12 @@ Call to function to create a diag table file for the current cycle's
 #
 #-----------------------------------------------------------------------
 #
-create_nems_configure_file \
-  run_dir="${run_dir}" || print_err_msg_exit "\
+python3 $USHDIR/create_nems_configure_file.py \
+  --path-to-defns ${GLOBAL_VAR_DEFNS_FP} \
+  --run-dir "${run_dir}" \
+  || print_err_msg_exit "\
 Call to function to create a NEMS configuration file for the current
-run directory (run_dir) failed:
+cycle's (cdate) run directory (run_dir) failed:
   run_dir = \"${run_dir}\""
 #
 #-----------------------------------------------------------------------

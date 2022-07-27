@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 
 import os
+import sys
+import argparse
 import unittest
 from datetime import datetime
 from textwrap import dedent
 
-from python_utils import import_vars, set_env_var, print_input_args, \
-                         print_info_msg, print_err_msg_exit, lowercase, cfg_to_yaml_str
+from python_utils import import_vars, set_env_var, print_input_args, str_to_type, \
+                         print_info_msg, print_err_msg_exit, lowercase, cfg_to_yaml_str, \
+                         load_shell_config
 
 from fill_jinja_template import fill_jinja_template
 
@@ -28,17 +31,18 @@ def create_nems_configure_file(run_dir):
     #
     #-----------------------------------------------------------------------
     #
-    # Create the NEMS configuration file in the specified run directory.
+    # Create a NEMS configuration file in the specified run directory.
     #
     #-----------------------------------------------------------------------
     #
     print_info_msg(f'''
-        Creating the nems.configure file in the specified run directory (run_dir):
+        Creating a nems.configure file (\"{NEMS_CONFIG_FN}\") in the specified 
+        run directory (run_dir):
           run_dir = \"{run_dir}\"''', verbose=VERBOSE)
     #
     # Set output file path
     #
-    nems_config_fp=os.path.join(run_dir,"nems.configure")
+    nems_config_fp=os.path.join(run_dir,NEMS_CONFIG_FN)
     #
     #-----------------------------------------------------------------------
     #
@@ -85,6 +89,31 @@ def create_nems_configure_file(run_dir):
 
     return True
 
+def parse_args(argv):
+    """ Parse command line arguments"""
+    parser = argparse.ArgumentParser(
+        description='Creates NEMS configuration file.'
+    )
+
+    parser.add_argument('-r', '--run-dir',
+                        dest='run_dir',
+                        required=True,
+                        help='Run directory.')
+
+    parser.add_argument('-p', '--path-to-defns',
+                        dest='path_to_defns',
+                        required=True,
+                        help='Path to var_defns file.')
+
+    return parser.parse_args(argv)
+
+if __name__ == '__main__':
+    args = parse_args(sys.argv[1:])
+    cfg = load_shell_config(args.path_to_defns)
+    import_vars(dictionary=cfg)
+    create_nems_configure_file( \
+        run_dir = args.run_dir )
+
 class Testing(unittest.TestCase):
     def test_create_nems_configure_file(self):
         path = os.path.join(os.getenv('USHDIR'), "test_data")
@@ -99,5 +128,5 @@ class Testing(unittest.TestCase):
         set_env_var('NEMS_CONFIG_FN',NEMS_CONFIG_FN)
         set_env_var("NEMS_CONFIG_TMPL_FP",NEMS_CONFIG_TMPL_FP)
         set_env_var('DT_ATMOS',1)
-        set_env_var('PRINT_ESMF',True)
-        set_env_var('CPL_AQM',True)
+        set_env_var('PRINT_ESMF',False)
+        set_env_var('CPL_AQM',False)
