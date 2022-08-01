@@ -2083,6 +2083,15 @@ OMP_STACKSIZE_RUN_POST="1024m"
 # AQM_BIO_FILE:
 # File name of AQM BIO file
 #
+# AQM_CANOPY_DIR:
+# Path to the directory containing AQM canopy files
+#
+# AQM_CANOPY_FILE:
+# File name of AQM CANOPY file
+#
+# AQM_CANOPY_FILE_SUFFIX:
+# Suffix and extension of AQM CANOPY file
+#
 # AQM_FIRE_DIR:
 # Path to the directory containing AQM fire files
 #
@@ -2127,6 +2136,9 @@ AQM_RC_TMPL_FN="aqm.rc"
 AQM_CONFIG_DIR=""
 AQM_BIO_DIR=""
 AQM_BIO_FILE="BEIS_SARC401.ncf"
+AQM_CANOPY_DIR=""
+AQM_CANOPY_FILE="gfs.t12z.geo."
+AQM_CANOPY_FILE_SUFFIX=".canopy_regrid.nc"
 AQM_FIRE_DIR=""
 AQM_FIRE_FILE="GBBEPx_C401GRID.emissions_v003"
 AQM_FIRE_FILE_SUFFIX=".nc"
