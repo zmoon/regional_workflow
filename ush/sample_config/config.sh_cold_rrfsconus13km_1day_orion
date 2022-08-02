@@ -1,7 +1,7 @@
 MACHINE="orion"
 ACCOUNT="fv3-cam"
 #EXPT_BASEDIR="/work/noaa/fv3-cam/$LOGNAME/expt_dirs"
-EXPT_SUBDIR="uwm_aqm_conus13_1day"
+EXPT_SUBDIR="aqm_conus13_1day"
 
 PRINT_ESMF="FALSE"
 
