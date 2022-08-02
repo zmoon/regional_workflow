@@ -56,6 +56,7 @@ DOMAIN_PREGEN_BASEDIR=${DOMAIN_PREGEN_BASEDIR:-"${staged_data_dir}/FV3LAM_pregen
 # RRFS-CMAQ specific paths
 AQM_CONFIG_DIR=${AQM_CONFIG_DIR:-"/work/noaa/fv3-cam/RRFS_CMAQ/aqm/epa/data"}
 AQM_BIO_DIR=${AQM_BIO_DIR:-"/work/noaa/fv3-cam/RRFS_CMAQ/aqm/bio"}
+AQM_CANOPY_DIR=${AQM_CANOPY_DIR:-"/work/noaa/fv3-cam/RRFS_CMAQ/canopy"}
 AQM_FIRE_DIR=${AQM_FIRE_DIR:-"/work/noaa/fv3-cam/RRFS_CMAQ/emissions/GSCE/GBBEPx.in.C401/Reprocessed"}
 AQM_LBCS_DIR=${AQM_LBCS_DIR:-"/work/noaa/fv3-cam/RRFS_CMAQ/LBCS/boundary_conditions_v4"}
 AQM_GEFS_DIR=${AQM_GEFS_DIR:-"/work/noaa/fv3-cam/RRFS_CMAQ/GEFS_aerosol"}
