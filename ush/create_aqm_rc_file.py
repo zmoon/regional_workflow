@@ -49,13 +49,14 @@ def create_aqm_rc_file(cdate,run_dir,init_concentrations):
     #
     yyyymmdd=cdate.strftime('%Y%m%d')
     mm=f"{cdate.month:02d}"
+    hh=f"{cdate.hour:02d}"
     #
     # Set parameters in the aqm.rc file.
     #
     aqm_rc_bio_file_fp=os.path.join(AQM_BIO_DIR, AQM_BIO_FILE)
     aqm_canopy_file_fn=AQM_CANOPY_FILE+"."+mm+AQM_CANOPY_FILE_SUFFIX
     aqm_rc_canopy_file_fp=os.path.join(AQM_CANOPY_DIR,aqm_canopy_file_fn)
-    aqm_fire_file_fn=AQM_FIRE_FILE+"_"+yyyymmdd+AQM_FIRE_FILE_SUFFIX
+    aqm_fire_file_fn=AQM_FIRE_FILE+"_"+yyyymmdd+"_t"+hh+"z"+AQM_FIRE_FILE_SUFFIX
     aqm_rc_fire_file_fp=os.path.join(AQM_FIRE_DIR,yyyymmdd,aqm_fire_file_fn)
     #
     #-----------------------------------------------------------------------
