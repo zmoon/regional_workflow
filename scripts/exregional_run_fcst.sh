@@ -454,8 +454,7 @@ if [ "${CPL_AQM}" = "TRUE" ]; then
 #-----------------------------------------------------------------------
 #
   init_concentrations="false"
-  cdate_first_hr=( $( printf "%02d " "${CYCL_HRS[0]}" ) )
-  if [ "${RESTART_WORKFLOW}" = "FALSE" ] && [ "${DATE_FIRST_CYCL}" = "${cdate}${cdate_first_hr}" ]; then
+  if [ "${RESTART_WORKFLOW}" = "FALSE" ] && [ "${cdate}" = "${DATE_FIRST_CYCL:0:10}" ]; then
     init_concentrations="true"
   fi
 #
