@@ -431,16 +431,7 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
 ===================================================================="
   else
     if [ "${CPL_AQM}" = "TRUE" ]; then
-# Combine two post flat files of LAM and CMAQ
-      cp_vrfy "${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt" .
-      cp_vrfy "${UPP_DIR}/parm/postxconfig-NT-fv3lam_cmaq.txt" .
-      cat "postxconfig-NT-fv3lam_cmaq.txt" | sed -e '1,/lossless/d' >> "postxconfig-NT-fv3lam.txt"
-# Update number of variables (lam+cmaq)
-      nvar_lam=$( sed -n '2p' postxconfig-NT-fv3lam.txt )
-      nvar_cmaq=$( sed -n '2p' postxconfig-NT-fv3lam_cmaq.txt )
-      nvar_new=$(( nvar_lam + nvar_cmaq ))
-      sed -i -e '2d' -e "3i$nvar_new" postxconfig-NT-fv3lam.txt
-      post_config_fp="postxconfig-NT-fv3lam.txt"
+      post_config_fp="${SR_WX_APP_TOP_DIR}/src/AQM-utils/parm/postxconfig-NT-fv3lam_cmaq.txt"
     else
       post_config_fp="${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt"
     fi
