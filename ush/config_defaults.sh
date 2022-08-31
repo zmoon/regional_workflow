@@ -1283,7 +1283,6 @@ VX_ENSPOINT_PROB_TN="run_enspointvx_prob"
 ADD_AQM_ICS_TN="add_aqm_ics"
 ADD_AQM_LBCS_TN="add_aqm_lbcs"
 RUN_NEXUS_TN="run_nexus"
-RUN_POST_STAT_TN="run_post_stat"
 #
 #-----------------------------------------------------------------------
 #
@@ -1408,7 +1407,6 @@ RUN_TASK_VX_ENSPOINT="FALSE"
 RUN_TASK_ADD_AQM_ICS="FALSE"
 RUN_TASK_ADD_AQM_LBCS="FALSE"
 RUN_TASK_RUN_NEXUS="FALSE"
-RUN_TASK_RUN_POST_STAT="FALSE"
 #
 #-----------------------------------------------------------------------
 #
@@ -1647,7 +1645,6 @@ NNODES_VX_ENSPOINT_PROB="1"
 NNODES_ADD_AQM_ICS="1"
 NNODES_ADD_AQM_LBCS="1"
 NNODES_RUN_NEXUS="1"
-NNODES_RUN_POST_STAT="1"
 #
 # Number of MPI processes per node.
 #
@@ -1674,7 +1671,6 @@ PPN_VX_ENSPOINT_PROB="1"
 PPN_ADD_AQM_ICS="1"
 PPN_ADD_AQM_LBCS="24"
 PPN_RUN_NEXUS="24"
-PPN_RUN_POST_STAT="1"
 #
 # Walltimes.
 #
@@ -1701,7 +1697,6 @@ WTIME_VX_ENSPOINT_PROB="01:00:00"
 WTIME_ADD_AQM_ICS="00:30:00"
 WTIME_ADD_AQM_LBCS="00:30:00"
 WTIME_RUN_NEXUS="00:30:00"
-WTIME_RUN_POST_STAT="00:10:00"
 #
 # Maximum number of attempts.
 #
@@ -1746,7 +1741,6 @@ MAXTRIES_VX_ENSPOINT_PROB="1"
 MAXTRIES_ADD_AQM_ICS="2"
 MAXTRIES_ADD_AQM_LBCS="2"
 MAXTRIES_RUN_NEXUS="2"
-MAXTRIES_RUN_POST_STAT="2"
 #
 #-----------------------------------------------------------------------
 #
