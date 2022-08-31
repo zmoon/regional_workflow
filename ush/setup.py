@@ -334,7 +334,7 @@ def setup():
     VX_CONFIG_DIR = os.path.join(TEMPLATE_DIR,"parm")
     METPLUS_CONF = os.path.join(TEMPLATE_DIR,"parm","metplus")
     MET_CONFIG = os.path.join(TEMPLATE_DIR,"parm","met")
-    ARL_NEXUS_DIR = os.path.join(SR_WX_APP_TOP_DIR,"src/arl_nexus")
+    ARL_NEXUS_DIR = os.path.join(SR_WX_APP_TOP_DIR,"sorc/arl_nexus")
     #
     #-----------------------------------------------------------------------
     #

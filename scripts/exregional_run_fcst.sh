@@ -431,7 +431,7 @@ if [ ${WRITE_DOPOST} = "TRUE" ]; then
 ===================================================================="
   else
     if [ "${CPL_AQM}" = "TRUE" ]; then
-      post_config_fp="${SR_WX_APP_TOP_DIR}/src/AQM-utils/parm/postxconfig-NT-fv3lam_cmaq.txt"
+      post_config_fp="${SR_WX_APP_TOP_DIR}/sorc/AQM-utils/parm/postxconfig-NT-fv3lam_cmaq.txt"
     else
       post_config_fp="${UPP_DIR}/parm/postxconfig-NT-fv3lam.txt"
     fi
