@@ -326,7 +326,7 @@ def setup():
     SCRIPTSDIR = os.path.join(HOMErrfs,"scripts")
     JOBSDIR = os.path.join(HOMErrfs,"jobs")
     SORCDIR = os.path.join(HOMErrfs,"sorc")
-    SRC_DIR = os.path.join(SR_WX_APP_TOP_DIR,"src")
+    SRC_DIR = os.path.join(SR_WX_APP_TOP_DIR,"sorc")
     PARMDIR = os.path.join(HOMErrfs,"parm")
     MODULES_DIR = os.path.join(HOMErrfs,"modulefiles")
     EXECDIR = os.path.join(SR_WX_APP_TOP_DIR,EXEC_SUBDIR)
