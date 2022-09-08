@@ -73,7 +73,9 @@ print_input_args valid_args
 #
 #-----------------------------------------------------------------------
 #
-export OMP_NUM_THREADS=1
+export KMP_AFFINITY=${KMP_AFFINITY_RUN_NEXUS}
+export OMP_NUM_THREADS=${OMP_NUM_THREADS_RUN_NEXUS}
+export OMP_STACKSIZE=${OMP_STACKSIZE_RUN_NEXUS}
 #
 #-----------------------------------------------------------------------
 #

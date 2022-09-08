@@ -77,7 +77,7 @@ mkdir_vrfy -p "${NEXUS_WORKDIR_INPUT}"
 #
 #EXTRN_MDL_FNS_str="( "$( printf "\"%s\" " "${EXTRN_MDL_FNS[@]}" )")"
 
-$SCRIPTSDIR/exregional_run_nexus.sh \
+time $SCRIPTSDIR/exregional_run_nexus.sh \
   CYCLE_DATE="${CDATE}" \
   NEXUS_WORKDIR="${NEXUS_WORKDIR}" \
   NEXUS_WORKDIR_INPUT="${NEXUS_WORKDIR_INPUT}" || \

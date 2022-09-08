@@ -234,6 +234,7 @@ def generate_FV3LAM_wflow():
             #
               'ncores_run_fcst': PE_MEMBER01,
               'native_run_fcst': f"--cpus-per-task {OMP_NUM_THREADS_RUN_FCST} --exclusive",
+              'native_run_nexus': f"--cpus-per-task {OMP_NUM_THREADS_RUN_NEXUS}",
             #
             # Number of logical processes per node for each task.  If running without
             # threading, this is equal to the number of MPI processes per node.

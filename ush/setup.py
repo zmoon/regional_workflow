@@ -396,9 +396,12 @@ def setup():
     #
     #-----------------------------------------------------------------------
     #
-    global PPN_RUN_FCST
+    global PPN_RUN_FCST, PPN_RUN_NEXUS
     ppn_run_fcst_default = NCORES_PER_NODE // OMP_NUM_THREADS_RUN_FCST
     PPN_RUN_FCST=PPN_RUN_FCST or ppn_run_fcst_default
+
+    ppn_run_nexus_default = NCORES_PER_NODE // OMP_NUM_THREADS_RUN_NEXUS
+    PPN_RUN_NEXUS=PPN_RUN_NEXUS or ppn_run_nexus_default
     #
     #-----------------------------------------------------------------------
     #
