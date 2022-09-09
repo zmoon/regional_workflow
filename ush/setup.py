@@ -929,9 +929,6 @@ def setup():
         COMROOT = ""
         COMOUT_BASEDIR = ""
 
-    if type(POST_OUTPUT_DOMAIN_NAME) != int:
-      POST_OUTPUT_DOMAIN_NAME = lowercase(POST_OUTPUT_DOMAIN_NAME)
-
     #
     # -----------------------------------------------------------------------
     #
@@ -957,6 +954,10 @@ def setup():
                 PREDEF_GRID_NAME is set to a null string), POST_OUTPUT_DOMAIN_NAME
                 must be set in the configuration file (\"{EXPT_CONFIG_FN}\"). """
             )
+
+    if type(POST_OUTPUT_DOMAIN_NAME) != int:
+      POST_OUTPUT_DOMAIN_NAME = lowercase(POST_OUTPUT_DOMAIN_NAME)
+
     #
     # -----------------------------------------------------------------------
     #

@@ -2376,7 +2376,7 @@ cpl_aqm_parm:
   AQM_LBCS_DIR: ""
   AQM_LBCS_FILES: "gfs_bndy_chen_<MM>.tile7.000.nc"
   AQM_GEFS_DIR: ""
-  AQM_GEFS_CYC: "00"
+  AQM_GEFS_CYC: 0
 
   RUN_ADD_AQM_CHEM_LBCS: true
   RUN_ADD_AQM_GEFS_LBCS: false

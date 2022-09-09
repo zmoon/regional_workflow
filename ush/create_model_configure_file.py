@@ -321,8 +321,6 @@ class Testing(unittest.TestCase):
         set_env_var("DEBUG", True)
         set_env_var("VERBOSE", True)
         set_env_var("QUILTING", True)
-        set_env_var("PRINT_ESMF", True)
-        set_env_var("CPL", True)
         set_env_var("WRITE_DOPOST", True)
         set_env_var("USHDIR", USHDIR)
         set_env_var("MODEL_CONFIG_FN", MODEL_CONFIG_FN)
