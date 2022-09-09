@@ -155,7 +155,7 @@ def parse_args(argv):
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
     cfg = load_shell_config(args.path_to_defns)
-    cfg = faltten_dict(cfg)
+    cfg = flatten_dict(cfg)
     import_vars(dictionary=cfg)
     create_aqm_rc_file(
         run_dir=args.run_dir,
