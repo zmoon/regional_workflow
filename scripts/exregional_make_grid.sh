@@ -626,7 +626,7 @@ Call to function to generate the mosaic file for a grid without halo failed."
 #
 #-----------------------------------------------------------------------
 #
-python3  $USHDIR/link_fix.py \
+python3 $USHDIR/link_fix.py \
   --path-to-defns ${GLOBAL_VAR_DEFNS_FP} \
   --file-group "grid" || \
 print_err_msg_exit "\
