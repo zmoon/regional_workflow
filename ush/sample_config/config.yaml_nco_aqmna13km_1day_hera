@@ -1,5 +1,5 @@
 metadata:
-  description: config for Online-CMAQ, AQM_NA_13km, cold start, 1cycle a day
+  description: config for Online-CMAQ, AQM_NA_13km, NCO mode, 1cycle a day
 user:
   RUN_ENVIR: nco
   MACHINE: hera
@@ -9,15 +9,15 @@ platform:
 workflow:
   USE_CRON_TO_RELAUNCH: true
   CRON_RELAUNCH_INTVL_MNTS: 3
-#  EXPT_BASEDIR: /scratch2/NCEPDEV/stmp3/Chan-hoo.Jeon/expt_dirs
+  EXPT_BASEDIR: /scratch2/NCEPDEV/stmp3/Chan-hoo.Jeon/expt_dirs
   EXPT_SUBDIR: aqm_nco_aqmna13_1day
   EXEC_SUBDIR: exec
   NET: aqm
   model_ver: v7.0
   RUN: aqm_test
-  COMIN: /scratch1/NCEPDEV/rstprod/com/gfs/prod
-  STMP: /scratch2/NCEPDEV/stmp3/$LOGNAME/NCO_OUTPUT/stmp
-  PTMP: /scratch2/NCEPDEV/stmp3/$LOGNAME/NCO_OUTPUT/ptmp
+#  COMIN: /scratch1/NCEPDEV/rstprod/com/gfs/prod
+  STMP: /scratch2/NCEPDEV/stmp3/Chan-hoo.Jeon/NCO_OUTPUT/stmp
+  PTMP: /scratch2/NCEPDEV/stmp3/Chan-hoo.Jeon/NCO_OUTPUT/ptmp
   CCPP_PHYS_SUITE: FV3_GFS_v16
   DATE_FIRST_CYCL: '20190805'
   DATE_LAST_CYCL: '20190805'
@@ -58,6 +58,8 @@ task_run_fcst:
   QUILTING: true
   PRINT_ESMF: false
   PREDEF_GRID_NAME: AQM_NA_13km
+task_run_post:
+  POST_OUTPUT_DOMAIN_NAME: 793
 global:
   DO_ENSEMBLE: false
   NUM_ENS_MEMBERS: 2
