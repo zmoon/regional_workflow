@@ -1,3 +1,5 @@
-ush/config.sh
+ush/config.yaml
+ush/__pycache__/
+ush/python_utils/__pycache/
 
 *.swp
